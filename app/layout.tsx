@@ -4,7 +4,6 @@ import "./globals.css";
 import { HudFrame } from "@/components/layout/HudFrame";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { Nav } from "@/components/layout/Nav";
 import { ScanlineOverlay } from "@/components/hud/ScanlineOverlay";
 import { CrtNoise } from "@/components/hud/CrtNoise";
 import { Vignette } from "@/components/hud/Vignette";
@@ -65,7 +64,6 @@ export default function RootLayout({
             <CrtNoise />
             <HudFrame />
             <Header />
-            <Nav />
             <ChannelSwitch />
             <ChannelSweep />
             <div className="relative z-[1] flex min-h-screen flex-col">

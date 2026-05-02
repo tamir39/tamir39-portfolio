@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Mail, Phone, Github } from "lucide-react";
+import { channels } from "@/lib/data/nav";
+import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
+import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 
 function useClock() {
   const [now, setNow] = useState<string>("--:--:--");
@@ -30,14 +34,34 @@ const ICON_LINKS = [
 
 export function Header() {
   const time = useClock();
+  const pathname = usePathname() ?? "/";
+  const active = useActiveSection();
+  const reduced = usePrefersReducedMotion();
+
+  const onDetail = pathname.startsWith("/missions/");
+  const effectiveActive = onDetail ? "missions" : active;
+
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({
+          behavior: reduced ? "auto" : "smooth",
+          block: "start",
+        });
+        window.history.replaceState(null, "", id === "hero" ? "/" : `/#${id}`);
+      }
+    }
+  };
 
   return (
     <header className="fixed inset-x-0 top-0 z-[58] border-b border-stroke-bright/80 bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-2.5 md:px-10">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2.5 md:px-10">
         <Link
           href="/"
           aria-label="Tamir home"
-          className="group flex items-center gap-3"
+          className="group flex shrink-0 items-center gap-3"
         >
           <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-cyan/50 bg-bg-elev transition-colors group-hover:border-cyan">
             <Image src="/tamir-avatar.png" alt="" fill sizes="28px" />
@@ -52,28 +76,85 @@ export function Header() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-1.5 sm:gap-3">
-          {ICON_LINKS.map(({ Icon, href, label }) => {
-            const external = href.startsWith("http");
+        <nav
+          aria-label="Channels"
+          className="hidden flex-1 items-center justify-center gap-5 md:flex lg:gap-7"
+        >
+          {channels.map((c) => {
+            const isActive = c.id === effectiveActive;
             return (
-              <a
-                key={label}
-                href={href}
-                aria-label={label}
-                target={external ? "_blank" : undefined}
-                rel={external ? "noopener noreferrer" : undefined}
-                className="group relative flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+              <Link
+                key={c.id}
+                href={c.id === "hero" ? "/" : `/#${c.id}`}
+                onClick={(e) => handleNav(e, c.id)}
+                aria-current={isActive ? "true" : undefined}
+                className="group relative flex items-center gap-2 py-1"
               >
-                <Icon size={14} strokeWidth={1.5} />
-              </a>
+                <span
+                  aria-hidden
+                  className={`block h-1.5 w-1.5 rounded-full transition-colors ${
+                    isActive ? "bg-cyan" : "bg-text-dim/40"
+                  }`}
+                  style={
+                    isActive
+                      ? {
+                          animation: "pulse-dot 1.4s ease-in-out infinite",
+                          boxShadow: "0 0 6px var(--color-cyan)",
+                        }
+                      : undefined
+                  }
+                />
+                <span
+                  className={`font-mono text-[10px] uppercase tracking-[0.22em] transition-colors ${
+                    isActive
+                      ? "text-glow-cyan text-cyan"
+                      : "text-text-dim group-hover:text-text"
+                  }`}
+                >
+                  {c.channelId}
+                  <span
+                    className={`ml-1.5 ${
+                      isActive ? "text-cyan/70" : "text-text-dim/60"
+                    } hidden lg:inline`}
+                  >
+                    — {c.label}
+                  </span>
+                </span>
+                <span
+                  aria-hidden
+                  className={`absolute -bottom-[3px] left-0 h-px bg-cyan transition-all duration-300 ${
+                    isActive ? "w-full" : "w-0 group-hover:w-full"
+                  }`}
+                  style={isActive ? { boxShadow: "0 0 6px var(--color-cyan)" } : undefined}
+                />
+              </Link>
             );
           })}
-        </div>
+        </nav>
 
-        <div className="flex items-center gap-3">
-          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim md:inline">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
+          <div className="hidden items-center gap-2 sm:flex">
+            {ICON_LINKS.map(({ Icon, href, label }) => {
+              const external = href.startsWith("http");
+              return (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="group relative flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+                >
+                  <Icon size={14} strokeWidth={1.5} />
+                </a>
+              );
+            })}
+          </div>
+
+          <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim xl:inline">
             {time} <span className="text-cyan">UTC+7</span>
           </span>
+
           <a
             href="/PHIVUONGTUONGTAM_RESUME.pdf"
             download
