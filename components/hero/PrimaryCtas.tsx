@@ -1,39 +1,56 @@
 "use client";
 
 import Link from "next/link";
+import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 
 type Cta = {
   label: string;
   href: string;
-  external?: boolean;
   download?: boolean;
-  cursor: string;
   variant: "cyan" | "violet";
 };
 
 const CTAS: Cta[] = [
   {
     label: "VIEW MISSIONS",
-    href: "/missions",
-    cursor: "view missions",
+    href: "/#missions",
     variant: "cyan",
   },
   {
-    label: "OPEN TRANSMISSION",
-    href: "/transmission",
-    cursor: "open transmission",
+    label: "OPEN PROFILE",
+    href: "/#profile",
     variant: "cyan",
   },
   {
     label: "DOWNLOAD DOSSIER",
     href: "/PHIVUONGTUONGTAM_RESUME.pdf",
     download: true,
-    cursor: "download resume",
     variant: "violet",
   },
 ];
 
 export function PrimaryCtas() {
+  const reduced = usePrefersReducedMotion();
+
+  const handleAnchor = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!href.startsWith("/#")) return;
+    if (typeof window === "undefined") return;
+    if (window.location.pathname !== "/") return;
+    e.preventDefault();
+    const id = href.slice(2);
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({
+        behavior: reduced ? "auto" : "smooth",
+        block: "start",
+      });
+      window.history.replaceState(null, "", href);
+    }
+  };
+
   return (
     <div className="flex flex-wrap gap-3">
       {CTAS.map((cta) => {
@@ -45,7 +62,6 @@ export function PrimaryCtas() {
         const inner = (
           <span
             className={`group relative inline-flex items-center justify-center overflow-hidden border ${borderColor} px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] ${textColor} transition-colors duration-200 hover:text-bg`}
-            data-cursor={cta.cursor}
             style={{ minWidth: "11rem" }}
           >
             <span
@@ -59,19 +75,18 @@ export function PrimaryCtas() {
 
         if (cta.download) {
           return (
-            <a
-              key={cta.label}
-              href={cta.href}
-              download
-              data-cursor={cta.cursor}
-            >
+            <a key={cta.label} href={cta.href} download>
               {inner}
             </a>
           );
         }
 
         return (
-          <Link key={cta.label} href={cta.href} data-cursor={cta.cursor}>
+          <Link
+            key={cta.label}
+            href={cta.href}
+            onClick={(e) => handleAnchor(e, cta.href)}
+          >
             {inner}
           </Link>
         );
