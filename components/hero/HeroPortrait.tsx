@@ -6,26 +6,44 @@ import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 
 export function HeroPortrait() {
   const ref = useRef<HTMLVideoElement | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     const v = ref.current;
-    if (!v) return;
+    const w = wrapRef.current;
+    if (!v || !w) return;
     if (reduced) {
       v.pause();
-    } else {
-      v.play().catch(() => {
-        /* autoplay blocked — keeps the first frame */
-      });
+      return;
     }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            v.play().catch(() => {
+              /* autoplay blocked */
+            });
+          } else {
+            v.pause();
+          }
+        }
+      },
+      { threshold: 0.15 },
+    );
+    obs.observe(w);
+    return () => obs.disconnect();
   }, [reduced]);
 
   return (
     <motion.div
-      initial={{ scale: 0.92, opacity: 0 }}
+      ref={wrapRef}
+      initial={{ scale: 0.94, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.8, ease: [0.65, 0, 0.35, 1], delay: 0.2 }}
+      transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
       className="relative aspect-square w-[260px] md:w-[340px]"
+      style={{ willChange: "transform" }}
     >
       <motion.div
         aria-hidden
@@ -37,9 +55,9 @@ export function HeroPortrait() {
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 0.2, 1, 0.85, 1] }}
         transition={{
-          duration: 0.9,
-          times: [0, 0.4, 0.45, 0.6, 1],
-          delay: 0.3,
+          duration: 0.6,
+          times: [0, 0.35, 0.45, 0.65, 1],
+          delay: 0.15,
         }}
       />
 

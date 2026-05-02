@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { findChannel } from "@/lib/data/nav";
 
-const DURATION_MS = 650;
+const DURATION_MS = 420;
 
 export function ChannelSwitch() {
   const pathname = usePathname();

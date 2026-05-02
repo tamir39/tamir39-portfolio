@@ -4,27 +4,23 @@ import { easeHud } from "./variants";
 export const pageVariants: Variants = {
   initial: {
     opacity: 0,
-    scaleY: 0.04,
-    filter: "blur(2px)",
+    scaleY: 0.06,
   },
   enter: {
     opacity: 1,
     scaleY: 1,
-    filter: "blur(0px)",
     transition: {
-      duration: 0.55,
+      duration: 0.32,
       ease: easeHud,
-      opacity: { duration: 0.4, delay: 0.15 },
-      scaleY: { duration: 0.55, ease: easeHud },
-      filter: { duration: 0.4, delay: 0.15 },
+      opacity: { duration: 0.22, delay: 0.06 },
+      scaleY: { duration: 0.32, ease: easeHud },
     },
   },
   exit: {
     opacity: 0,
-    scaleY: 0.04,
-    filter: "blur(2px)",
+    scaleY: 0.06,
     transition: {
-      duration: 0.4,
+      duration: 0.22,
       ease: easeHud,
     },
   },
@@ -32,6 +28,6 @@ export const pageVariants: Variants = {
 
 export const reducedPageVariants: Variants = {
   initial: { opacity: 0 },
-  enter: { opacity: 1, transition: { duration: 0.15 } },
-  exit: { opacity: 0, transition: { duration: 0.15 } },
+  enter: { opacity: 1, transition: { duration: 0.12 } },
+  exit: { opacity: 0, transition: { duration: 0.12 } },
 };

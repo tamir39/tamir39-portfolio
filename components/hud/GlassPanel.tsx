@@ -21,8 +21,8 @@ export function GlassPanel({
       whileInView="visible"
       viewport={{ once: false, margin: "-10%" }}
       variants={{
-        hidden: { opacity: 0, y: 16 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+        hidden: { opacity: 0, y: 12 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.32 } },
       }}
       className={`glass relative ${className}`}
     >

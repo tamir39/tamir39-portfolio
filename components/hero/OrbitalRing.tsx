@@ -12,7 +12,7 @@ export function OrbitalRing({ size = 480 }: { size?: number }) {
         height={size}
         viewBox={`0 0 ${size} ${size}`}
         className="absolute"
-        style={{ animation: "spin-slow 40s linear infinite" }}
+        style={{ animation: "spin-slow 40s linear infinite", willChange: "transform" }}
       >
         <defs>
           <linearGradient id="orbit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -47,7 +47,7 @@ export function OrbitalRing({ size = 480 }: { size?: number }) {
         height={size * 0.62}
         viewBox={`0 0 ${size} ${size}`}
         className="absolute"
-        style={{ animation: "spin-slow-reverse 60s linear infinite" }}
+        style={{ animation: "spin-slow-reverse 60s linear infinite", willChange: "transform" }}
       >
         <circle
           cx={size / 2}
@@ -66,7 +66,7 @@ export function OrbitalRing({ size = 480 }: { size?: number }) {
         height={size * 1.18}
         viewBox={`0 0 ${size} ${size}`}
         className="absolute"
-        style={{ animation: "spin-slow 90s linear infinite reverse" }}
+        style={{ animation: "spin-slow 90s linear infinite reverse", willChange: "transform" }}
       >
         <circle
           cx={size / 2}

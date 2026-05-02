@@ -7,10 +7,10 @@ const bracketBase = "absolute h-3 w-3 border-cyan";
 export function BioPanel() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: "-10%" }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.32 }}
       className="glass-strong relative px-6 py-5"
     >
       <span className={`${bracketBase} -left-px -top-px border-l border-t`} />

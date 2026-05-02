@@ -16,14 +16,14 @@ export function SectionHeader({
       viewport={{ once: false, margin: "-15%" }}
       variants={{
         hidden: {},
-        visible: { transition: { staggerChildren: 0.08 } },
+        visible: { transition: { staggerChildren: 0.05 } },
       }}
       className="relative flex flex-col gap-3"
     >
       <motion.span
         variants={{
           hidden: { opacity: 0, x: -8 },
-          visible: { opacity: 1, x: 0 },
+          visible: { opacity: 1, x: 0, transition: { duration: 0.28 } },
         }}
         className="text-hud-label text-cyan"
       >
@@ -32,7 +32,7 @@ export function SectionHeader({
       <motion.h2
         variants={{
           hidden: { opacity: 0, y: 8 },
-          visible: { opacity: 1, y: 0 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.32 } },
         }}
         className="text-glow-cyan font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl"
       >
@@ -44,7 +44,7 @@ export function SectionHeader({
           hidden: { scaleX: 0 },
           visible: {
             scaleX: 1,
-            transition: { duration: 0.45, ease: [0.65, 0, 0.35, 1] },
+            transition: { duration: 0.3, ease: [0.65, 0, 0.35, 1] },
           },
         }}
         style={{ transformOrigin: "left" }}

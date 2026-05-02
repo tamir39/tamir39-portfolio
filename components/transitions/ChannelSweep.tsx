@@ -34,7 +34,7 @@ export function ChannelSweep() {
     animatingRef.current = true;
     window.setTimeout(() => {
       animatingRef.current = false;
-    }, 720);
+    }, 480);
   }, [active]);
 
   if (tick === 0) return null;
@@ -49,7 +49,7 @@ export function ChannelSweep() {
       className="pointer-events-none fixed inset-x-0 z-[90]"
       initial={{ top: fromTop, opacity: 1 }}
       animate={{ top: toTop, opacity: [1, 1, 0] }}
-      transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1], times: [0, 0.75, 1] }}
+      transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1], times: [0, 0.75, 1] }}
     >
       <div className="relative">
         <div

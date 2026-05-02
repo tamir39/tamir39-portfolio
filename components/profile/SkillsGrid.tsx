@@ -14,7 +14,7 @@ export function SkillsGrid() {
           viewport={{ once: false, margin: "-10%" }}
           variants={{
             hidden: {},
-            visible: { transition: { staggerChildren: 0.04 } },
+            visible: { transition: { staggerChildren: 0.025 } },
           }}
           className="flex flex-col gap-3"
         >
@@ -24,8 +24,8 @@ export function SkillsGrid() {
               <motion.li
                 key={item}
                 variants={{
-                  hidden: { opacity: 0, y: 6 },
-                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 4 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.22 } },
                 }}
                 className="border border-stroke-bright bg-bg-elev/40 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-text-soft transition-colors duration-200 hover:border-violet hover:text-text"
               >

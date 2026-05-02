@@ -11,7 +11,7 @@ export function MissionHeader({ project }: { project: Project }) {
       animate="visible"
       variants={{
         hidden: {},
-        visible: { transition: { staggerChildren: 0.06 } },
+        visible: { transition: { staggerChildren: 0.04 } },
       }}
       className="flex flex-col gap-4"
     >

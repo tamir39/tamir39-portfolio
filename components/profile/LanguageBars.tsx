@@ -20,7 +20,7 @@ export function LanguageBars() {
                 initial={{ width: 0 }}
                 whileInView={{ width: `${lang.level}%` }}
                 viewport={{ once: false, margin: "-15%" }}
-                transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
+                transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
                 style={{ boxShadow: "0 0 6px var(--color-cyan)" }}
               />
             </div>

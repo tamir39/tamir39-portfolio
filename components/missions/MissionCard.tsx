@@ -46,7 +46,7 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: "-10%" }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: [0.65, 0, 0.35, 1] }}
+      transition={{ duration: 0.32, delay: index * 0.05, ease: [0.65, 0, 0.35, 1] }}
       style={{
         transformStyle: "preserve-3d",
         rotateX: hoverDevice && !reduced ? rotateX : 0,

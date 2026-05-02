@@ -14,11 +14,10 @@ export function CrtNoise() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[58] opacity-[0.05] mix-blend-overlay"
+      className="pointer-events-none fixed inset-0 z-[58] opacity-[0.035] mix-blend-overlay"
       style={{
         backgroundImage: `url("${NOISE_SVG}")`,
         backgroundSize: "200px 200px",
-        animation: "crt-jitter 0.4s steps(4) infinite",
       }}
     />
   );

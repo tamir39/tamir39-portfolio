@@ -32,7 +32,7 @@ export function StatReadout({
       return;
     }
     const start = performance.now();
-    const duration = 1100;
+    const duration = 650;
     let raf = 0;
     const tick = (t: number) => {
       const k = Math.min(1, (t - start) / duration);
@@ -59,7 +59,7 @@ export function StatReadout({
         aria-hidden
         initial={{ scaleX: 0 }}
         animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
-        transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
+        transition={{ duration: 0.32, ease: [0.65, 0, 0.35, 1], delay: 0.05 }}
         style={{ transformOrigin: "left" }}
         className={`block h-px w-12 ${accentBg}`}
       />

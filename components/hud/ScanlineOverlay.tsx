@@ -5,8 +5,7 @@ export function ScanlineOverlay() {
       className="pointer-events-none fixed inset-0 z-[55] mix-blend-overlay"
       style={{
         backgroundImage:
-          "repeating-linear-gradient(to bottom, rgba(0,229,255,0.08) 0 1px, transparent 1px 3px)",
-        animation: "scanline-drift 8s linear infinite",
+          "repeating-linear-gradient(to bottom, rgba(0,229,255,0.07) 0 1px, transparent 1px 3px)",
       }}
     />
   );

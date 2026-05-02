@@ -72,23 +72,17 @@
   }
 
   .glass {
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(8, 12, 20, 0.55);
     border: 1px solid var(--color-stroke);
   }
 
   .glass-strong {
     background: var(--color-bg-panel);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-stroke);
   }
 
   .glass-hi {
     background: var(--color-bg-panel-hi);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--color-stroke-bright);
   }
 
@@ -128,31 +122,6 @@
 }
 
 /* ============== KEYFRAMES ============== */
-
-@keyframes scanline-drift {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 0 3px;
-  }
-}
-
-@keyframes crt-jitter {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-1px, 1px);
-  }
-  50% {
-    transform: translate(1px, -1px);
-  }
-  75% {
-    transform: translate(-1px, -1px);
-  }
-}
 
 @keyframes pulse-dot {
   0%,

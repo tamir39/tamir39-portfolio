@@ -10,7 +10,7 @@ export function MissionBody({ project }: { project: Project }) {
       animate="visible"
       variants={{
         hidden: {},
-        visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
+        visible: { transition: { staggerChildren: 0.05, delayChildren: 0.1 } },
       }}
       className="flex flex-col gap-8"
     >
@@ -35,7 +35,7 @@ export function MissionBody({ project }: { project: Project }) {
               key={i}
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
+              transition={{ delay: 0.2 + i * 0.05, duration: 0.28 }}
               className="flex gap-3 text-base leading-relaxed text-text-soft"
             >
               <span
