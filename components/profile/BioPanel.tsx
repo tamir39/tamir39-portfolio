@@ -20,16 +20,17 @@ export function BioPanel() {
 
       <div className="flex flex-col gap-4">
         <span className="text-hud-label text-cyan">▸ BIOGRAPHY</span>
-        <p className="text-base leading-relaxed text-text md:text-lg">
-          A computer-science undergrad in Ho Chi Minh City who builds at the
-          seam of code and play. I write Python and C# for game systems —
-          A* searches, physics-driven survival loops — and ship product on
-          Agile teams when the work calls for coordination over solo craft.
+        <p className="font-mono text-[13px] leading-[1.75] tracking-[0.01em] text-text md:text-sm">
+          <span className="text-cyan">$</span> A computer-science undergrad in
+          Ho Chi Minh City who builds at the seam of code and play. I write
+          Python and C# for game systems &mdash; A* searches, physics-driven
+          survival loops &mdash; and ship product on Agile teams when the work
+          calls for coordination over solo craft.
         </p>
-        <p className="text-base leading-relaxed text-text-soft">
-          Currently focused on game AI, real-time interaction, and the small
-          set of details that make a thing feel alive instead of merely
-          working.
+        <p className="font-mono text-[13px] leading-[1.75] tracking-[0.01em] text-text-soft md:text-sm">
+          <span className="text-cyan">$</span> Currently focused on game AI,
+          real-time interaction, and the small set of details that make a
+          thing feel alive instead of merely working.
         </p>
       </div>
     </motion.div>
