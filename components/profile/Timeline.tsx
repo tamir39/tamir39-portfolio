@@ -30,7 +30,7 @@ export function Timeline() {
             key={entry.id}
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-15%" }}
+            viewport={{ once: false, margin: "-15%" }}
             transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1], delay: i * 0.05 }}
             className="relative"
           >

@@ -19,7 +19,7 @@ export function LanguageBars() {
                 className="absolute inset-y-0 left-0 bg-cyan"
                 initial={{ width: 0 }}
                 whileInView={{ width: `${lang.level}%` }}
-                viewport={{ once: true, margin: "-15%" }}
+                viewport={{ once: false, margin: "-15%" }}
                 transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
                 style={{ boxShadow: "0 0 6px var(--color-cyan)" }}
               />

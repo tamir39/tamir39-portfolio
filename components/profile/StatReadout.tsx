@@ -18,14 +18,17 @@ export function StatReadout({
   tone?: "cyan" | "violet";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
-  const inView = useInView(ref, { once: true, margin: "-15%" });
+  const inView = useInView(ref, { once: false, margin: "-15%" });
   const reduced = usePrefersReducedMotion();
   const [display, setDisplay] = useState(reduced ? value : 0);
 
   useEffect(() => {
-    if (!inView) return;
     if (reduced) {
       setDisplay(value);
+      return;
+    }
+    if (!inView) {
+      setDisplay(0);
       return;
     }
     const start = performance.now();

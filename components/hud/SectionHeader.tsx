@@ -13,7 +13,7 @@ export function SectionHeader({
     <motion.header
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-15%" }}
+      viewport={{ once: false, margin: "-15%" }}
       variants={{
         hidden: {},
         visible: { transition: { staggerChildren: 0.08 } },

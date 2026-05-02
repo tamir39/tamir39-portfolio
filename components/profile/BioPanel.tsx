@@ -9,7 +9,7 @@ export function BioPanel() {
     <motion.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10%" }}
+      viewport={{ once: false, margin: "-10%" }}
       transition={{ duration: 0.5 }}
       className="glass-strong relative px-6 py-5"
     >

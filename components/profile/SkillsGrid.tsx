@@ -11,7 +11,7 @@ export function SkillsGrid() {
           key={group.category}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-10%" }}
+          viewport={{ once: false, margin: "-10%" }}
           variants={{
             hidden: {},
             visible: { transition: { staggerChildren: 0.04 } },
