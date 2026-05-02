@@ -7,7 +7,6 @@ import { Nav } from "@/components/layout/Nav";
 import { ScanlineOverlay } from "@/components/hud/ScanlineOverlay";
 import { CrtNoise } from "@/components/hud/CrtNoise";
 import { Vignette } from "@/components/hud/Vignette";
-import { HudCursor } from "@/components/hud/HudCursor";
 import { ChannelSwitch } from "@/components/transitions/ChannelSwitch";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 
@@ -61,7 +60,6 @@ export default function RootLayout({
           <HudFrame />
           <Nav />
           <ChannelSwitch />
-          <HudCursor />
           <div className="relative z-[1] flex min-h-screen flex-col">
             <div className="flex-1">{children}</div>
             <Footer />
