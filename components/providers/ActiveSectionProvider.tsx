@@ -45,5 +45,16 @@ export function ActiveSectionProvider({ children }: { children: React.ReactNode 
     return () => obs.disconnect();
   }, []);
 
+  // Sync URL hash with the active section while the user scrolls on /.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.pathname !== "/") return;
+    const targetHash = active === sectionIds[0] ? "" : `#${active}`;
+    const current = window.location.hash;
+    if (current !== targetHash) {
+      window.history.replaceState(null, "", `/${targetHash}`);
+    }
+  }, [active]);
+
   return <Ctx.Provider value={active}>{children}</Ctx.Provider>;
 }
