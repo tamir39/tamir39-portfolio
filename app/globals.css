@@ -26,6 +26,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+  }
+
+  section[id] {
+    scroll-margin-top: 4rem;
   }
 
   html,

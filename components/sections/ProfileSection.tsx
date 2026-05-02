@@ -11,7 +11,7 @@ export function ProfileSection() {
     <section
       id="profile"
       aria-labelledby="profile-heading"
-      className="relative px-6 pb-32 pt-32 md:px-16 lg:px-32"
+      className="relative px-6 pb-32 pt-12 md:px-16 lg:px-32"
     >
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-12">
         <SectionHeader channel="LOG_01 :: OPERATOR PROFILE" title="OPERATOR DOSSIER" />

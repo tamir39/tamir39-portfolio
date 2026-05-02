@@ -6,7 +6,7 @@ export function MissionsSection() {
     <section
       id="missions"
       aria-labelledby="missions-heading"
-      className="relative px-6 pb-32 pt-32 md:px-16 lg:px-32"
+      className="relative px-6 pb-32 pt-12 md:px-16 lg:px-32"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
         <SectionHeader channel="LOG_02 :: MISSION ARCHIVE" title="MISSION LOGS" />
