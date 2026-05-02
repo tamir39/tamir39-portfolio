@@ -32,7 +32,7 @@ export function Header() {
   const time = useClock();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[58] border-b border-stroke/70 bg-bg/65 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-[58] border-b border-stroke-bright/80 bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-2.5 md:px-10">
         <Link
           href="/"
@@ -43,7 +43,7 @@ export function Header() {
             <Image src="/tamir-avatar.png" alt="" fill sizes="28px" />
           </span>
           <span className="hidden flex-col leading-none sm:flex">
-            <span className="font-display text-sm font-semibold tracking-[0.18em] text-text">
+            <span className="text-glow-cyan font-display text-sm font-semibold tracking-[0.22em]">
               TAMIR
             </span>
             <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-text-dim">
@@ -78,7 +78,8 @@ export function Header() {
             href="/PHIVUONGTUONGTAM_RESUME.pdf"
             download
             aria-label="Download dossier"
-            className="group relative inline-flex items-center gap-2 overflow-hidden border border-cyan px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-cyan transition-colors duration-200 hover:text-bg"
+            className="group relative inline-flex items-center gap-2 overflow-hidden border-[1.5px] border-cyan px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-cyan transition-colors duration-200 hover:text-bg"
+            style={{ boxShadow: "0 0 12px var(--color-cyan-soft)" }}
           >
             <span
               aria-hidden

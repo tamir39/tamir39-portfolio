@@ -9,11 +9,13 @@ export function StatReadout({
   value,
   suffix = "",
   decimals = 0,
+  tone = "cyan",
 }: {
   label: string;
   value: number;
   suffix?: string;
   decimals?: number;
+  tone?: "cyan" | "violet";
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const inView = useInView(ref, { once: true, margin: "-15%" });
@@ -39,12 +41,16 @@ export function StatReadout({
     return () => cancelAnimationFrame(raf);
   }, [inView, reduced, value]);
 
+  const glow = tone === "violet" ? "text-glow-violet" : "text-glow-cyan";
+  const accentBg = tone === "violet" ? "bg-violet" : "bg-cyan";
+  const accentText = tone === "violet" ? "text-violet" : "text-cyan";
+
   return (
     <div ref={ref} className="relative flex flex-col gap-1.5 px-1 py-2">
       <span className="text-hud-label text-text-dim">{label}</span>
-      <span className="font-display text-3xl font-semibold tracking-wide text-text">
+      <span className={`${glow} font-display text-4xl font-semibold tracking-tight md:text-5xl`}>
         {display.toFixed(decimals)}
-        <span className="ml-1 text-base text-cyan">{suffix}</span>
+        <span className={`ml-1 text-base ${accentText}`}>{suffix}</span>
       </span>
       <motion.span
         aria-hidden
@@ -52,7 +58,7 @@ export function StatReadout({
         animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
         transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
         style={{ transformOrigin: "left" }}
-        className="block h-px w-12 bg-cyan"
+        className={`block h-px w-12 ${accentBg}`}
       />
     </div>
   );

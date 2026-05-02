@@ -18,7 +18,7 @@ export function SectionHeader({
         hidden: {},
         visible: { transition: { staggerChildren: 0.08 } },
       }}
-      className="flex flex-col gap-3"
+      className="relative flex flex-col gap-3"
     >
       <motion.span
         variants={{
@@ -27,14 +27,14 @@ export function SectionHeader({
         }}
         className="text-hud-label text-cyan"
       >
-        {`// ${channel}`}
+        {`▸ ${channel}`}
       </motion.span>
       <motion.h2
         variants={{
           hidden: { opacity: 0, y: 8 },
           visible: { opacity: 1, y: 0 },
         }}
-        className="font-display text-3xl font-semibold tracking-wide md:text-4xl"
+        className="text-glow-cyan font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl"
       >
         {title}
       </motion.h2>
@@ -48,8 +48,9 @@ export function SectionHeader({
           },
         }}
         style={{ transformOrigin: "left" }}
-        className="block h-px w-32 bg-cyan"
+        className="block h-px w-44 bg-cyan"
       />
+      <span aria-hidden className="divider-cyan absolute -bottom-2 left-0 right-0 opacity-50" />
     </motion.header>
   );
 }

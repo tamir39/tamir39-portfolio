@@ -16,18 +16,20 @@ export function Hero() {
           <AvatarPortrait />
         </div>
 
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
             <span className="text-hud-label text-cyan">// MAIN_00 :: OPERATOR</span>
-            <h1 className="font-display text-4xl font-semibold tracking-wide md:text-5xl">
-              PHI VUONG TUONG TAM
+            <h1 className="text-glow-cyan font-display text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">
+              PHI VUONG
+              <br />
+              TUONG TAM
             </h1>
-            <p className="text-hud-label text-text-dim">
+            <p className="font-mono text-sm uppercase tracking-[0.18em] text-text-soft">
               tamir39 · computer science · game dev · builder
             </p>
           </div>
 
-          <div className="glass relative max-w-xl px-5 py-4">
+          <div className="glass-hi relative max-w-xl px-5 py-4">
             <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan" />
             <span className="absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan" />
             <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan" />
@@ -42,14 +44,20 @@ export function Hero() {
       <a
         href="#profile"
         aria-label="Continue to profile"
-        className="group absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
+        className="group absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
       >
-        <span className="text-hud-label text-text-dim transition-colors group-hover:text-cyan">
-          SCROLL ↓ TO CONTINUE
+        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-text-dim transition-colors group-hover:text-cyan">
+          ▸ LOG_01
         </span>
         <span
           aria-hidden
-          className="block h-4 w-px bg-text-dim transition-colors group-hover:bg-cyan"
+          className="block h-9 w-px"
+          style={{
+            background:
+              "linear-gradient(to bottom, var(--color-cyan), transparent)",
+            boxShadow: "0 0 8px var(--color-cyan-soft)",
+            animation: "pulse-dot 1.4s ease-in-out infinite",
+          }}
         />
       </a>
     </section>

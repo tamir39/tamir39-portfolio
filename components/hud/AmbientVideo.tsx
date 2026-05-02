@@ -32,8 +32,8 @@ export function AmbientVideo() {
         poster=""
         className="pointer-events-none fixed inset-0 z-0 h-full w-full object-cover"
         style={{
-          opacity: 0.22,
-          filter: "grayscale(0.55) contrast(1.08) brightness(0.85)",
+          opacity: 0.14,
+          filter: "grayscale(0.6) contrast(1.05) brightness(0.7)",
         }}
       >
         <source src="/tamir-video.mp4" type="video/mp4" />
@@ -43,7 +43,7 @@ export function AmbientVideo() {
         className="pointer-events-none fixed inset-0 z-0"
         style={{
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.8) 100%)",
+            "linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.75) 50%, rgba(0,0,0,0.92) 100%)",
         }}
       />
     </>

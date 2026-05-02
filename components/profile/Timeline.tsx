@@ -14,13 +14,13 @@ export function Timeline() {
 
   return (
     <div ref={ref} className="relative pl-10">
-      <span className="absolute left-3 top-0 h-full w-px bg-stroke" aria-hidden />
+      <span className="absolute left-3 top-0 h-full w-px bg-stroke-bright" aria-hidden />
       <motion.span
         aria-hidden
         className="absolute left-3 top-0 w-px bg-cyan"
         style={{
           height: lineHeight,
-          boxShadow: "0 0 12px var(--color-cyan-soft)",
+          boxShadow: "0 0 12px var(--color-cyan)",
         }}
       />
 
@@ -36,15 +36,18 @@ export function Timeline() {
           >
             <span
               aria-hidden
-              className="absolute -left-[1.875rem] top-1.5 h-3 w-3 rounded-full border border-cyan bg-bg"
+              className="absolute -left-[1.875rem] top-2 h-3 w-3 rounded-full border border-cyan bg-bg"
+              style={{ boxShadow: "0 0 12px var(--color-cyan-soft)" }}
             />
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-2">
               <span className="text-hud-label text-cyan">{entry.id} · {entry.span}</span>
-              <h3 className="font-display text-xl text-text">{entry.school}</h3>
+              <h3 className="text-glow-cyan font-display text-2xl leading-tight tracking-tight">
+                {entry.school}
+              </h3>
               {entry.highlight ? (
                 <span className="text-hud-label text-violet">{entry.highlight}</span>
               ) : null}
-              <p className="text-sm leading-relaxed text-text-dim">{entry.detail}</p>
+              <p className="text-sm leading-relaxed text-text-soft">{entry.detail}</p>
             </div>
           </motion.li>
         ))}

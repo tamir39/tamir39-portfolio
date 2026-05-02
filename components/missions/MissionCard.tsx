@@ -56,20 +56,17 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
     >
       <Link
         href={`/missions/${project.slug}`}
-        data-cursor={`open ${project.id.toLowerCase()}`}
         className="block focus:outline-none"
       >
         <div
-          className="glass relative flex h-full flex-col gap-4 overflow-hidden px-5 py-5 transition-all duration-300 group-hover:border-cyan"
-          style={{
-            transform: "translateZ(0)",
-          }}
+          className="glass-strong relative flex h-full flex-col gap-4 overflow-hidden px-5 py-5 transition-all duration-300 group-hover:border-cyan"
+          style={{ transform: "translateZ(0)" }}
         >
           {/* corner brackets */}
-          <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan opacity-60 group-hover:opacity-100 transition-opacity" />
-          <span className="absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan opacity-60 group-hover:opacity-100 transition-opacity" />
-          <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan opacity-60 group-hover:opacity-100 transition-opacity" />
-          <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan opacity-60 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
 
           {/* hover glow */}
           <span
@@ -77,7 +74,7 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
             style={{
               boxShadow:
-                "0 0 0 1px var(--color-cyan), 0 0 24px var(--color-cyan-soft) inset",
+                "0 0 0 1px var(--color-cyan), 0 0 28px var(--color-cyan-soft) inset",
             }}
           />
 
@@ -89,16 +86,16 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
           />
 
           <header className="flex items-start justify-between gap-3">
-            <div className="flex flex-col gap-1">
-              <span className="text-hud-label text-cyan">{project.id}</span>
-              <h3 className="font-display text-lg leading-tight text-text">
+            <div className="flex flex-col gap-1.5">
+              <span className="text-glow-cyan text-hud-label text-cyan">{project.id}</span>
+              <h3 className="text-glow-cyan font-display text-xl leading-tight tracking-tight">
                 {project.name}
               </h3>
             </div>
             <StatusPill status={project.status} />
           </header>
 
-          <p className="text-sm leading-relaxed text-text-dim">{project.tagline}</p>
+          <p className="text-sm leading-relaxed text-text-soft">{project.tagline}</p>
 
           <div className="mt-auto flex flex-col gap-2">
             <span className="text-hud-label text-text-dim">{project.dates}</span>

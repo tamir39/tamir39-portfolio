@@ -18,8 +18,8 @@ export function MissionBody({ project }: { project: Project }) {
         variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
         className="flex flex-col gap-3"
       >
-        <span className="text-hud-label text-cyan">// SUMMARY</span>
-        <p className="max-w-3xl text-base leading-relaxed text-text">
+        <span className="text-hud-label text-cyan">▸ SUMMARY</span>
+        <p className="max-w-3xl text-base leading-relaxed text-text md:text-lg">
           {project.summary}
         </p>
       </motion.section>
@@ -28,7 +28,7 @@ export function MissionBody({ project }: { project: Project }) {
         variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
         className="flex flex-col gap-4"
       >
-        <span className="text-hud-label text-cyan">// HIGHLIGHTS</span>
+        <span className="text-hud-label text-cyan">▸ HIGHLIGHTS</span>
         <ul className="flex flex-col gap-3">
           {project.highlights.map((h, i) => (
             <motion.li
@@ -36,9 +36,15 @@ export function MissionBody({ project }: { project: Project }) {
               initial={{ opacity: 0, x: -8 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
-              className="flex gap-3 text-base leading-relaxed text-text"
+              className="flex gap-3 text-base leading-relaxed text-text-soft"
             >
-              <span aria-hidden className="mt-2 block h-px w-3 shrink-0 bg-cyan" />
+              <span
+                aria-hidden
+                className="text-glow-cyan shrink-0 font-mono text-cyan"
+                style={{ lineHeight: "1.6" }}
+              >
+                ▸
+              </span>
               <span>{h}</span>
             </motion.li>
           ))}

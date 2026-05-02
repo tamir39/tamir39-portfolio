@@ -1,5 +1,4 @@
 import { SectionHeader } from "@/components/hud/SectionHeader";
-import { GlassPanel } from "@/components/hud/GlassPanel";
 import { BioPanel } from "@/components/profile/BioPanel";
 import { StatReadout } from "@/components/profile/StatReadout";
 import { Timeline } from "@/components/profile/Timeline";
@@ -14,37 +13,43 @@ export function ProfileSection() {
       aria-labelledby="profile-heading"
       className="relative px-6 pb-32 pt-32 md:px-16 lg:px-32"
     >
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-16">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-12">
         <SectionHeader channel="LOG_01 :: OPERATOR PROFILE" title="OPERATOR DOSSIER" />
 
-        <div className="grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+        <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
           <BioPanel />
-          <GlassPanel className="px-6 py-5">
-            <span className="mb-3 block text-hud-label text-cyan">// READOUTS</span>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="glass-strong relative px-6 py-5">
+            <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan" />
+            <span className="absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan" />
+            <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan" />
+            <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan" />
+            <span className="mb-3 block text-hud-label text-cyan">▸ READOUTS</span>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
               <StatReadout label="GPA" value={7.62} decimals={2} />
               <StatReadout label="Recent Sem" value={8.21} decimals={2} />
               <StatReadout label="Missions" value={3} />
-              <StatReadout label="Year Out" value={2027} />
+              <StatReadout label="Year Out" value={2027} tone="violet" />
             </div>
-          </GlassPanel>
+          </div>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
-          <div className="flex flex-col gap-6">
-            <span className="text-hud-label text-cyan">// LOG_01.A :: TIMELINE</span>
+        <span aria-hidden className="divider-cyan opacity-60" />
+
+        <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+          <div className="flex flex-col gap-5">
+            <span className="text-hud-label text-cyan">▸ LOG_01.A :: TIMELINE</span>
             <Timeline />
           </div>
 
           <div className="flex flex-col gap-10">
             <LanguageBars />
             <div className="flex flex-col gap-3">
-              <span className="text-hud-label text-cyan">// SOFT-SKILL ARRAY</span>
+              <span className="text-hud-label text-cyan">▸ SOFT-SKILL ARRAY</span>
               <ul className="flex flex-wrap gap-2">
                 {softSkills.map((s) => (
                   <li
                     key={s}
-                    className="border border-stroke px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-text-dim transition-colors hover:border-violet hover:text-text"
+                    className="border border-stroke-bright px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-text-soft transition-colors hover:border-violet hover:text-text"
                   >
                     {s}
                   </li>
@@ -54,8 +59,10 @@ export function ProfileSection() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6">
-          <span className="text-hud-label text-cyan">// LOG_01.B :: SKILL MATRIX</span>
+        <span aria-hidden className="divider-cyan opacity-60" />
+
+        <div className="flex flex-col gap-5">
+          <span className="text-hud-label text-cyan">▸ LOG_01.B :: SKILL MATRIX</span>
           <SkillsGrid />
         </div>
       </div>

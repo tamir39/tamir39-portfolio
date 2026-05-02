@@ -10,7 +10,7 @@ export function Footer() {
   const channel = findChannelByPath(pathname) ?? findChannel(active);
 
   return (
-    <footer className="fixed inset-x-0 bottom-0 z-[58] border-t border-stroke/70 bg-bg/65 backdrop-blur-md">
+    <footer className="fixed inset-x-0 bottom-0 z-[58] border-t border-stroke-bright/80 bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-2.5 md:px-10">
         <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-text-dim">
           <span
@@ -49,7 +49,7 @@ export function Footer() {
           </a>
         </div>
 
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-cyan">
+        <span className="text-glow-cyan font-mono text-[10px] uppercase tracking-[0.22em] text-cyan">
           CHANNEL :: {channel.channelId}
         </span>
       </div>

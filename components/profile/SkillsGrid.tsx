@@ -18,7 +18,7 @@ export function SkillsGrid() {
           }}
           className="flex flex-col gap-3"
         >
-          <span className="text-hud-label text-cyan">// {group.category}</span>
+          <span className="text-hud-label text-cyan">▸ {group.category}</span>
           <ul className="flex flex-wrap gap-2">
             {group.items.map((item) => (
               <motion.li
@@ -27,9 +27,7 @@ export function SkillsGrid() {
                   hidden: { opacity: 0, y: 6 },
                   visible: { opacity: 1, y: 0 },
                 }}
-                className="group cursor-default border border-stroke bg-bg-elev/40 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-text-dim transition-colors duration-200 hover:border-violet hover:text-text"
-                style={{ transition: "border-color 200ms, color 200ms" }}
-                data-cursor={item.toLowerCase()}
+                className="border border-stroke-bright bg-bg-elev/40 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-text-soft transition-colors duration-200 hover:border-violet hover:text-text"
               >
                 {item}
               </motion.li>

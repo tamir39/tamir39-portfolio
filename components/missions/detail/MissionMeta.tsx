@@ -20,14 +20,14 @@ export function MissionMeta({ project }: { project: Project }) {
   return (
     <aside
       aria-label="Mission metadata"
-      className="glass relative flex flex-col gap-5 px-5 py-5"
+      className="glass-strong relative flex flex-col gap-5 px-5 py-5"
     >
       <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan" />
       <span className="absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan" />
       <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan" />
       <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan" />
 
-      <span className="text-hud-label text-cyan">// META</span>
+      <span className="text-hud-label text-cyan">▸ META</span>
       <Row label="Role" value={project.role} />
       <Row label="Window" value={project.dates} />
       <div className="flex flex-col gap-2">

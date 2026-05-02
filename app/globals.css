@@ -3,13 +3,18 @@
 @theme {
   --color-bg: #000000;
   --color-bg-elev: #07090d;
+  --color-bg-panel: rgba(8, 12, 20, 0.78);
+  --color-bg-panel-hi: rgba(12, 18, 28, 0.92);
   --color-cyan: #00e5ff;
   --color-cyan-soft: #00e5ff33;
+  --color-cyan-bright: #5bffff;
   --color-violet: #8b5cf6;
   --color-violet-soft: #8b5cf633;
-  --color-text: #e6f4ff;
+  --color-text: #f1f8ff;
+  --color-text-soft: #bccddd;
   --color-text-dim: #7a8a99;
-  --color-stroke: #1a2230;
+  --color-stroke: #243043;
+  --color-stroke-bright: #38506b;
 
   --ease-hud: cubic-bezier(0.65, 0, 0.35, 1);
 
@@ -71,6 +76,46 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--color-stroke);
+  }
+
+  .glass-strong {
+    background: var(--color-bg-panel);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-stroke);
+  }
+
+  .glass-hi {
+    background: var(--color-bg-panel-hi);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-stroke-bright);
+  }
+
+  .text-glow-cyan {
+    color: var(--color-text);
+    text-shadow:
+      0 0 18px rgba(0, 229, 255, 0.45),
+      0 0 2px rgba(0, 229, 255, 0.6);
+  }
+
+  .text-glow-violet {
+    color: var(--color-text);
+    text-shadow:
+      0 0 18px rgba(139, 92, 246, 0.5),
+      0 0 2px rgba(139, 92, 246, 0.6);
+  }
+
+  .divider-cyan {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-cyan-soft),
+      var(--color-cyan),
+      var(--color-cyan-soft),
+      transparent
+    );
   }
 
   .text-hud-label {
