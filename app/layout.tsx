@@ -63,7 +63,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`} style={{ background: "#000" }}>
+    <html
+      lang="en"
+      className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      style={{ background: "#000" }}
+      suppressHydrationWarning
+    >
       <head>
         <style
           dangerouslySetInnerHTML={{
@@ -86,7 +91,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-bg text-text antialiased">
+      <body className="bg-bg text-text antialiased" suppressHydrationWarning>
         <ThemeProvider>
         <BootStatusProvider>
           <BootSequence />
