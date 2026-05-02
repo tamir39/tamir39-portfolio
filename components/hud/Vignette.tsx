@@ -2,6 +2,7 @@ export function Vignette() {
   return (
     <div
       aria-hidden
+      data-theme-only="dark"
       className="pointer-events-none fixed inset-0 z-[54]"
       style={{
         background:

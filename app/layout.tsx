@@ -14,6 +14,7 @@ import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ActiveSectionProvider } from "@/components/providers/ActiveSectionProvider";
 import { BootSequence } from "@/components/boot/BootSequence";
 import { BootStatusProvider } from "@/components/providers/BootStatusProvider";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -64,6 +65,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-bg text-text antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('tamir.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}})();",
+          }}
+        />
+        <ThemeProvider>
         <BootStatusProvider>
           <BootSequence />
           <MotionProvider>
@@ -83,6 +91,7 @@ export default function RootLayout({
           </ActiveSectionProvider>
           </MotionProvider>
         </BootStatusProvider>
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>

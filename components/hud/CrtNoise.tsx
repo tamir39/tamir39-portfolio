@@ -14,6 +14,7 @@ export function CrtNoise() {
   return (
     <div
       aria-hidden
+      data-theme-only="dark"
       className="pointer-events-none fixed inset-0 z-[58] opacity-[0.035] mix-blend-overlay"
       style={{
         backgroundImage: `url("${NOISE_SVG}")`,

@@ -5,6 +5,7 @@ export function AmbientBackdrop() {
     <>
       <div
         aria-hidden
+        data-theme-only="dark"
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
       >
         <Image
@@ -24,6 +25,7 @@ export function AmbientBackdrop() {
       </div>
       <div
         aria-hidden
+        data-theme-only="dark"
         className="pointer-events-none fixed inset-0 z-0"
         style={{
           background:

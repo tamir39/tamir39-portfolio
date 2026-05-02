@@ -8,6 +8,7 @@ import { Mail, Phone, Github } from "lucide-react";
 import { channels } from "@/lib/data/nav";
 import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
+import { ThemeToggle } from "./ThemeToggle";
 
 function useClock() {
   const [now, setNow] = useState<string>("--:--:--");
@@ -150,6 +151,8 @@ export function Header() {
               );
             })}
           </div>
+
+          <ThemeToggle />
 
           <span className="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim xl:inline">
             {time} <span className="text-cyan">UTC+7</span>

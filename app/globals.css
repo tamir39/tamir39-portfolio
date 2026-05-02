@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #000000;
-  --color-bg-elev: #07090d;
-  --color-bg-panel: rgba(8, 12, 20, 0.78);
-  --color-bg-panel-hi: rgba(12, 18, 28, 0.92);
-  --color-cyan: #00e5ff;
-  --color-cyan-soft: #00e5ff33;
-  --color-cyan-bright: #5bffff;
-  --color-violet: #8b5cf6;
-  --color-violet-soft: #8b5cf633;
-  --color-text: #f1f8ff;
-  --color-text-soft: #bccddd;
-  --color-text-dim: #7a8a99;
-  --color-stroke: #243043;
-  --color-stroke-bright: #38506b;
+  --color-bg: var(--bg);
+  --color-bg-elev: var(--bg-elev);
+  --color-bg-panel: var(--bg-panel);
+  --color-bg-panel-hi: var(--bg-panel-hi);
+  --color-cyan: var(--cyan);
+  --color-cyan-soft: var(--cyan-soft);
+  --color-cyan-bright: var(--cyan-bright);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  --color-text: var(--text);
+  --color-text-soft: var(--text-soft);
+  --color-text-dim: var(--text-dim);
+  --color-stroke: var(--stroke);
+  --color-stroke-bright: var(--stroke-bright);
 
   --ease-hud: cubic-bezier(0.65, 0, 0.35, 1);
 
@@ -24,6 +24,41 @@
 }
 
 @layer base {
+  :root,
+  :root[data-theme="dark"] {
+    --bg: #000000;
+    --bg-elev: #07090d;
+    --bg-panel: rgba(8, 12, 20, 0.78);
+    --bg-panel-hi: rgba(12, 18, 28, 0.92);
+    --cyan: #00e5ff;
+    --cyan-soft: rgba(0, 229, 255, 0.2);
+    --cyan-bright: #5bffff;
+    --violet: #8b5cf6;
+    --violet-soft: rgba(139, 92, 246, 0.2);
+    --text: #f1f8ff;
+    --text-soft: #bccddd;
+    --text-dim: #7a8a99;
+    --stroke: #243043;
+    --stroke-bright: #38506b;
+  }
+
+  :root[data-theme="light"] {
+    --bg: #ecece4;
+    --bg-elev: #ffffff;
+    --bg-panel: rgba(255, 255, 255, 0.86);
+    --bg-panel-hi: rgba(255, 255, 255, 0.96);
+    --cyan: #0094b0;
+    --cyan-soft: rgba(0, 148, 176, 0.22);
+    --cyan-bright: #00b6d6;
+    --violet: #5e3bb6;
+    --violet-soft: rgba(94, 59, 182, 0.2);
+    --text: #0e1622;
+    --text-soft: #3e4a5d;
+    --text-dim: #6f7d8f;
+    --stroke: #cdd5e0;
+    --stroke-bright: #94a3b6;
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 4rem;
@@ -31,6 +66,11 @@
 
   section[id] {
     scroll-margin-top: 4rem;
+  }
+
+  /* Hide dark-only chrome when in light theme */
+  :root[data-theme="light"] [data-theme-only="dark"] {
+    display: none !important;
   }
 
   html,
