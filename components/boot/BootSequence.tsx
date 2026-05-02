@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
+import { useBootStatus } from "@/components/providers/BootStatusProvider";
 
 const SESSION_KEY = "tamir.boot.shown";
 const TOTAL_MS = 1700;
@@ -22,6 +23,7 @@ const BOOT_LINES: BootLine[] = [
 
 export function BootSequence() {
   const reduced = usePrefersReducedMotion();
+  const { markBooted } = useBootStatus();
   const [mounted, setMounted] = useState(true);
   const [exiting, setExiting] = useState(false);
   const [lineIndex, setLineIndex] = useState(0);
@@ -30,9 +32,10 @@ export function BootSequence() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Already booted in this session — skip immediately, no flash visible.
+    // Already booted in this session — release gate immediately and unmount.
     if (sessionStorage.getItem(SESSION_KEY) === "1") {
       setMounted(false);
+      markBooted();
       return;
     }
     sessionStorage.setItem(SESSION_KEY, "1");
@@ -42,7 +45,10 @@ export function BootSequence() {
       setLineIndex(BOOT_LINES.length);
       setProgress(100);
       const t1 = window.setTimeout(() => setExiting(true), 300);
-      const t2 = window.setTimeout(() => setMounted(false), 300 + EXIT_MS);
+      const t2 = window.setTimeout(() => {
+        setMounted(false);
+        markBooted();
+      }, 300 + EXIT_MS);
       return () => {
         window.clearTimeout(t1);
         window.clearTimeout(t2);
@@ -67,12 +73,18 @@ export function BootSequence() {
 
     timers.push(window.setTimeout(() => setExiting(true), TOTAL_MS));
     timers.push(
-      window.setTimeout(() => setMounted(false), TOTAL_MS + EXIT_MS),
+      window.setTimeout(() => {
+        setMounted(false);
+        markBooted();
+      }, TOTAL_MS + EXIT_MS),
     );
 
     const skip = () => {
       setExiting(true);
-      window.setTimeout(() => setMounted(false), EXIT_MS);
+      window.setTimeout(() => {
+        setMounted(false);
+        markBooted();
+      }, EXIT_MS);
     };
     window.addEventListener("click", skip);
     window.addEventListener("keydown", skip);
@@ -83,7 +95,7 @@ export function BootSequence() {
       window.removeEventListener("click", skip);
       window.removeEventListener("keydown", skip);
     };
-  }, [reduced]);
+  }, [reduced, markBooted]);
 
   if (!mounted) return null;
 

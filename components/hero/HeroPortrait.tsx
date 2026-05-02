@@ -3,13 +3,16 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
+import { useBootStatus } from "@/components/providers/BootStatusProvider";
 
 export function HeroPortrait() {
   const ref = useRef<HTMLVideoElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const reduced = usePrefersReducedMotion();
+  const { isBooted } = useBootStatus();
 
   useEffect(() => {
+    if (!isBooted) return;
     const v = ref.current;
     const w = wrapRef.current;
     if (!v || !w) return;
@@ -34,13 +37,13 @@ export function HeroPortrait() {
     );
     obs.observe(w);
     return () => obs.disconnect();
-  }, [reduced]);
+  }, [isBooted, reduced]);
 
   return (
     <motion.div
       ref={wrapRef}
       initial={{ scale: 0.94, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
+      animate={isBooted ? { scale: 1, opacity: 1 } : { scale: 0.94, opacity: 0 }}
       transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1], delay: 0.1 }}
       className="relative aspect-square w-[260px] md:w-[340px]"
       style={{ willChange: "transform" }}
@@ -53,7 +56,7 @@ export function HeroPortrait() {
             "0 0 0 1px var(--color-violet), 0 0 60px var(--color-violet-soft)",
         }}
         initial={{ opacity: 0 }}
-        animate={{ opacity: [0, 0.2, 1, 0.85, 1] }}
+        animate={isBooted ? { opacity: [0, 0.2, 1, 0.85, 1] } : { opacity: 0 }}
         transition={{
           duration: 0.6,
           times: [0, 0.35, 0.45, 0.65, 1],

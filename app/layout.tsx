@@ -13,6 +13,7 @@ import { ChannelSweep } from "@/components/transitions/ChannelSweep";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ActiveSectionProvider } from "@/components/providers/ActiveSectionProvider";
 import { BootSequence } from "@/components/boot/BootSequence";
+import { BootStatusProvider } from "@/components/providers/BootStatusProvider";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -57,9 +58,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-bg text-text antialiased">
-        <BootSequence />
-        <MotionProvider>
-          <ActiveSectionProvider>
+        <BootStatusProvider>
+          <BootSequence />
+          <MotionProvider>
+            <ActiveSectionProvider>
             <AmbientBackdrop />
             <Vignette />
             <ScanlineOverlay />
@@ -73,7 +75,8 @@ export default function RootLayout({
             </div>
             <Footer />
           </ActiveSectionProvider>
-        </MotionProvider>
+          </MotionProvider>
+        </BootStatusProvider>
       </body>
     </html>
   );

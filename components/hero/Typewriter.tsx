@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
+import { useBootStatus } from "@/components/providers/BootStatusProvider";
 
 const LINES = [
   { prefix: ">", text: "booting tamir.os …", tone: "dim" as const },
@@ -22,10 +23,12 @@ type Frame = {
 
 export function Typewriter() {
   const reduced = usePrefersReducedMotion();
+  const { isBooted } = useBootStatus();
   const [frame, setFrame] = useState<Frame>({ lineIndex: 0, charIndex: 0 });
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    if (!isBooted) return;
     if (reduced) {
       setDone(true);
       return;
@@ -54,12 +57,12 @@ export function Typewriter() {
       }
     };
 
-    timer = window.setTimeout(step, 600);
+    timer = window.setTimeout(step, 250);
     return () => {
       cancelled = true;
       if (timer) window.clearTimeout(timer);
     };
-  }, [reduced]);
+  }, [isBooted, reduced]);
 
   return (
     <pre
