@@ -5,7 +5,7 @@ import Link from "next/link";
 export function BackToGrid() {
   return (
     <Link
-      href="/missions"
+      href="/#missions"
       data-cursor="return to archive"
       className="group relative inline-flex items-center gap-2 self-start overflow-hidden border border-cyan px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] text-cyan transition-colors duration-200 hover:text-bg"
     >

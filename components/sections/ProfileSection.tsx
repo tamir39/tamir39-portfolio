@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { SectionHeader } from "@/components/hud/SectionHeader";
 import { GlassPanel } from "@/components/hud/GlassPanel";
 import { BioPanel } from "@/components/profile/BioPanel";
@@ -8,15 +7,13 @@ import { SkillsGrid } from "@/components/profile/SkillsGrid";
 import { LanguageBars } from "@/components/profile/LanguageBars";
 import { softSkills } from "@/lib/data/skills";
 
-export const metadata: Metadata = {
-  title: "PROFILE // TAMIR.OS",
-  description:
-    "Profile dossier — bio, stats, education timeline, and skills for Phi Vuong Tuong Tam.",
-};
-
-export default function ProfilePage() {
+export function ProfileSection() {
   return (
-    <main className="px-6 pb-32 pt-32 md:px-16 lg:px-32">
+    <section
+      id="profile"
+      aria-labelledby="profile-heading"
+      className="relative px-6 pb-32 pt-32 md:px-16 lg:px-32"
+    >
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-16">
         <SectionHeader channel="LOG_01 :: OPERATOR PROFILE" title="OPERATOR DOSSIER" />
 
@@ -62,6 +59,6 @@ export default function ProfilePage() {
           <SkillsGrid />
         </div>
       </div>
-    </main>
+    </section>
   );
 }

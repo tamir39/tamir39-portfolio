@@ -3,9 +3,30 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { channels } from "@/lib/data/nav";
+import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
+import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 
 export function Nav() {
   const pathname = usePathname() ?? "/";
+  const active = useActiveSection();
+  const reduced = usePrefersReducedMotion();
+
+  const onDetail = pathname.startsWith("/missions/");
+  const effectiveActive = onDetail ? "missions" : active;
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({
+          behavior: reduced ? "auto" : "smooth",
+          block: "start",
+        });
+        window.history.replaceState(null, "", id === "hero" ? "/" : `/#${id}`);
+      }
+    }
+  };
 
   return (
     <nav
@@ -14,16 +35,13 @@ export function Nav() {
     >
       <ul className="flex flex-col gap-3">
         {channels.map((c) => {
-          const isActive =
-            c.href === "/"
-              ? pathname === "/"
-              : pathname === c.href || pathname.startsWith(`${c.href}/`);
+          const isActive = c.id === effectiveActive;
           return (
             <li key={c.id}>
               <Link
-                href={c.href}
-                data-cursor={`open ${c.label.toLowerCase()}`}
-                aria-current={isActive ? "page" : undefined}
+                href={c.id === "hero" ? "/" : `/#${c.id}`}
+                onClick={(e) => handleClick(e, c.id)}
+                aria-current={isActive ? "true" : undefined}
                 className="group relative flex items-center gap-3 py-1 pr-4 transition-transform duration-200 hover:translate-x-1"
               >
                 <span
@@ -42,7 +60,7 @@ export function Nav() {
                     isActive ? "text-cyan" : "text-text-dim"
                   } group-hover:text-text`}
                 >
-                  {c.id}
+                  {c.channelId}
                   <span className="ml-2 text-text-dim/60">— {c.label}</span>
                 </span>
                 <span

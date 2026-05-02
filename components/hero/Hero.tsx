@@ -6,6 +6,7 @@ import { PrimaryCtas } from "./PrimaryCtas";
 export function Hero() {
   return (
     <section
+      id="hero"
       aria-label="Hero"
       className="relative flex min-h-screen items-center justify-center px-6 pb-24 pt-32 md:px-16 lg:px-32"
     >
@@ -38,12 +39,19 @@ export function Hero() {
         </div>
       </div>
 
-      <span
-        aria-hidden
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-hud-label text-text-dim"
+      <a
+        href="#profile"
+        aria-label="Continue to profile"
+        className="group absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5"
       >
-        SCROLL ↓ TO CONTINUE
-      </span>
+        <span className="text-hud-label text-text-dim transition-colors group-hover:text-cyan">
+          SCROLL ↓ TO CONTINUE
+        </span>
+        <span
+          aria-hidden
+          className="block h-4 w-px bg-text-dim transition-colors group-hover:bg-cyan"
+        />
+      </a>
     </section>
   );
 }

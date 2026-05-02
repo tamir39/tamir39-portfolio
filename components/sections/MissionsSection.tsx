@@ -1,15 +1,13 @@
-import type { Metadata } from "next";
 import { SectionHeader } from "@/components/hud/SectionHeader";
 import { MissionGrid } from "@/components/missions/MissionGrid";
 
-export const metadata: Metadata = {
-  title: "MISSIONS // TAMIR.OS",
-  description: "Mission logs — projects shipped by tamir39 across game AI, Unity, and full-stack delivery.",
-};
-
-export default function MissionsPage() {
+export function MissionsSection() {
   return (
-    <main className="px-6 pb-32 pt-32 md:px-16 lg:px-32">
+    <section
+      id="missions"
+      aria-labelledby="missions-heading"
+      className="relative px-6 pb-32 pt-32 md:px-16 lg:px-32"
+    >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
         <SectionHeader channel="LOG_02 :: MISSION ARCHIVE" title="MISSION LOGS" />
         <p className="max-w-2xl text-sm leading-relaxed text-text-dim">
@@ -18,6 +16,6 @@ export default function MissionsPage() {
         </p>
         <MissionGrid />
       </div>
-    </main>
+    </section>
   );
 }

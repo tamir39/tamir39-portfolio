@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { findChannel } from "@/lib/data/nav";
+import { findChannel, findChannelByPath } from "@/lib/data/nav";
+import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
 
 function CornerBracket({ position }: { position: "tl" | "tr" | "bl" | "br" }) {
   const map = {
@@ -37,9 +38,12 @@ function useClock() {
 }
 
 export function HudFrame() {
-  const pathname = usePathname();
-  const channel = findChannel(pathname ?? "/");
+  const pathname = usePathname() ?? "/";
+  const active = useActiveSection();
   const time = useClock();
+
+  const routeChannel = findChannelByPath(pathname);
+  const channel = routeChannel ?? findChannel(active);
 
   return (
     <>
@@ -66,7 +70,7 @@ export function HudFrame() {
           // LAT 10.78°N · LON 106.66°E
         </span>
         <span className="text-hud-label text-cyan">
-          CHANNEL :: {channel.id}
+          CHANNEL :: {channel.channelId}
         </span>
       </div>
     </>

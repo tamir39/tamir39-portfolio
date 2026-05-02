@@ -1,18 +1,15 @@
-import type { Metadata } from "next";
 import { SectionHeader } from "@/components/hud/SectionHeader";
 import { VideoFrame } from "@/components/transmission/VideoFrame";
 import { ContactCard } from "@/components/transmission/ContactCard";
 import { ResumeDownload } from "@/components/transmission/ResumeDownload";
 
-export const metadata: Metadata = {
-  title: "TRANSMISSION // TAMIR.OS",
-  description:
-    "Live feed, contact channels, and downloadable dossier for Phi Vuong Tuong Tam.",
-};
-
-export default function TransmissionPage() {
+export function TransmissionSection() {
   return (
-    <main className="px-6 pb-32 pt-32 md:px-16 lg:px-32">
+    <section
+      id="transmission"
+      aria-labelledby="transmission-heading"
+      className="relative px-6 pb-32 pt-32 md:px-16 lg:px-32"
+    >
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-12">
         <SectionHeader channel="LOG_03 :: OPEN CHANNEL" title="TRANSMISSION" />
 
@@ -30,6 +27,6 @@ export default function TransmissionPage() {
           </div>
         </div>
       </div>
-    </main>
+    </section>
   );
 }

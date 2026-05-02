@@ -1,23 +1,25 @@
 export type Channel = {
   id: string;
+  channelId: string;
   label: string;
-  href: string;
 };
 
 export const channels: Channel[] = [
-  { id: "MAIN_00", label: "MAIN", href: "/" },
-  { id: "LOG_01", label: "PROFILE", href: "/profile" },
-  { id: "LOG_02", label: "MISSIONS", href: "/missions" },
-  { id: "LOG_03", label: "TRANSMISSION", href: "/transmission" },
+  { id: "hero", channelId: "MAIN_00", label: "MAIN" },
+  { id: "profile", channelId: "LOG_01", label: "PROFILE" },
+  { id: "missions", channelId: "LOG_02", label: "MISSIONS" },
+  { id: "transmission", channelId: "LOG_03", label: "TRANSMISSION" },
 ];
 
-export function findChannel(pathname: string): Channel {
-  // exact match first
-  const exact = channels.find((c) => c.href === pathname);
-  if (exact) return exact;
-  // detail routes fall back to their parent
+export const sectionIds = channels.map((c) => c.id);
+
+export function findChannel(id: string): Channel {
+  return channels.find((c) => c.id === id) ?? channels[0];
+}
+
+export function findChannelByPath(pathname: string): Channel | null {
   if (pathname.startsWith("/missions/")) {
-    return channels.find((c) => c.href === "/missions") ?? channels[0];
+    return channels.find((c) => c.id === "missions") ?? null;
   }
-  return channels[0];
+  return null;
 }

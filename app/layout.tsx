@@ -8,7 +8,9 @@ import { ScanlineOverlay } from "@/components/hud/ScanlineOverlay";
 import { CrtNoise } from "@/components/hud/CrtNoise";
 import { Vignette } from "@/components/hud/Vignette";
 import { ChannelSwitch } from "@/components/transitions/ChannelSwitch";
+import { ChannelSweep } from "@/components/transitions/ChannelSweep";
 import { MotionProvider } from "@/components/providers/MotionProvider";
+import { ActiveSectionProvider } from "@/components/providers/ActiveSectionProvider";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -54,16 +56,19 @@ export default function RootLayout({
     <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-bg text-text antialiased">
         <MotionProvider>
-          <Vignette />
-          <ScanlineOverlay />
-          <CrtNoise />
-          <HudFrame />
-          <Nav />
-          <ChannelSwitch />
-          <div className="relative z-[1] flex min-h-screen flex-col">
-            <div className="flex-1">{children}</div>
-            <Footer />
-          </div>
+          <ActiveSectionProvider>
+            <Vignette />
+            <ScanlineOverlay />
+            <CrtNoise />
+            <HudFrame />
+            <Nav />
+            <ChannelSwitch />
+            <ChannelSweep />
+            <div className="relative z-[1] flex min-h-screen flex-col">
+              <div className="flex-1">{children}</div>
+              <Footer />
+            </div>
+          </ActiveSectionProvider>
         </MotionProvider>
       </body>
     </html>
