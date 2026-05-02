@@ -8,7 +8,6 @@ export const channels: Channel[] = [
   { id: "hero", channelId: "MAIN_00", label: "MAIN" },
   { id: "profile", channelId: "LOG_01", label: "PROFILE" },
   { id: "missions", channelId: "LOG_02", label: "MISSIONS" },
-  { id: "transmission", channelId: "LOG_03", label: "TRANSMISSION" },
 ];
 
 export const sectionIds = channels.map((c) => c.id);
