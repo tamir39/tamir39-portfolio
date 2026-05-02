@@ -123,6 +123,36 @@
 
 /* ============== KEYFRAMES ============== */
 
+@keyframes circuit-breath {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes circuit-pulse {
+  0%,
+  100% {
+    filter: brightness(0.92) saturate(1);
+  }
+  50% {
+    filter: brightness(1.06) saturate(1.1);
+  }
+}
+
+@keyframes avatar-breath {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+}
+
 @keyframes pulse-dot {
   0%,
   100% {
