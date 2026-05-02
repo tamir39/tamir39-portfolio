@@ -14,6 +14,8 @@ import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ActiveSectionProvider } from "@/components/providers/ActiveSectionProvider";
 import { BootSequence } from "@/components/boot/BootSequence";
 import { BootStatusProvider } from "@/components/providers/BootStatusProvider";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -33,11 +35,15 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
+const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
   title: "Tamir - Portfolio",
   description:
     "Portfolio of Phi Vuong Tuong Tam (tamir39) — Computer Science student, game developer, builder. HCMC, Vietnam.",
-  metadataBase: new URL("https://tamir39.vercel.app"),
+  metadataBase: new URL(baseUrl),
   openGraph: {
     title: "Tamir - Portfolio",
     description: "Computer Science · Game Dev · Builder",
@@ -77,6 +83,8 @@ export default function RootLayout({
           </ActiveSectionProvider>
           </MotionProvider>
         </BootStatusProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
