@@ -63,14 +63,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-bg text-text antialiased">
-        <script
+    <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`} style={{ background: "#000" }}>
+      <head>
+        <style
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('tamir.theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;}catch(e){}})();",
+              "html,body{margin:0;padding:0;color:#f1f8ff}html{background:#000}",
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: [
+              "(function(){try{",
+              "var t=localStorage.getItem('tamir.theme');",
+              "if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;",
+              "var booted=sessionStorage.getItem('tamir.boot.shown')==='1';",
+              "var bg=(booted&&t==='light')?'#ECECE4':'#000';",
+              "document.documentElement.style.background=bg;",
+              "document.body&&(document.body.style.background=bg);",
+              "}catch(e){}})();",
+            ].join(""),
+          }}
+        />
+      </head>
+      <body className="bg-bg text-text antialiased">
         <ThemeProvider>
         <BootStatusProvider>
           <BootSequence />

@@ -109,7 +109,18 @@ export function BootSequence() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scaleY: 0.05 }}
           transition={{ duration: EXIT_MS / 1000, ease: [0.65, 0, 0.35, 1] }}
-          style={{ transformOrigin: "center" }}
+          style={{
+            transformOrigin: "center",
+            position: "fixed",
+            inset: 0,
+            zIndex: 200,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+            background: "#000",
+          }}
         >
           {/* scanlines */}
           <div
