@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ScanlineOverlay } from "@/components/hud/ScanlineOverlay";
 import { CrtNoise } from "@/components/hud/CrtNoise";
 import { Vignette } from "@/components/hud/Vignette";
-import { AmbientVideo } from "@/components/hud/AmbientVideo";
+import { AmbientBackdrop } from "@/components/hud/AmbientBackdrop";
 import { ChannelSwitch } from "@/components/transitions/ChannelSwitch";
 import { ChannelSweep } from "@/components/transitions/ChannelSweep";
 import { MotionProvider } from "@/components/providers/MotionProvider";
@@ -58,7 +58,7 @@ export default function RootLayout({
       <body className="bg-bg text-text antialiased">
         <MotionProvider>
           <ActiveSectionProvider>
-            <AmbientVideo />
+            <AmbientBackdrop />
             <Vignette />
             <ScanlineOverlay />
             <CrtNoise />

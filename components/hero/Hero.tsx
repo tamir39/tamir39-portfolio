@@ -1,5 +1,5 @@
 import { OrbitalRing } from "./OrbitalRing";
-import { AvatarPortrait } from "./AvatarPortrait";
+import { HeroPortrait } from "./HeroPortrait";
 import { Typewriter } from "./Typewriter";
 import { PrimaryCtas } from "./PrimaryCtas";
 
@@ -13,7 +13,7 @@ export function Hero() {
       <div className="grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-20">
         <div className="relative mx-auto flex aspect-square w-full max-w-md items-center justify-center">
           <OrbitalRing />
-          <AvatarPortrait />
+          <HeroPortrait />
         </div>
 
         <div className="flex flex-col gap-6">
