@@ -68,8 +68,11 @@
     scroll-margin-top: 4rem;
   }
 
-  /* Hide dark-only chrome when in light theme */
+  /* Theme-scoped chrome */
   :root[data-theme="light"] [data-theme-only="dark"] {
+    display: none !important;
+  }
+  :root:not([data-theme="light"]) [data-theme-only="light"] {
     display: none !important;
   }
 
