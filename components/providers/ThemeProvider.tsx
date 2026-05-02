@@ -26,16 +26,22 @@ const ThemeCtx = createContext<Ctx>({
 export const useTheme = (): Ctx => useContext(ThemeCtx);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  // Read what the pre-paint script already wrote to <html data-theme="..."> so
+  // the very first client render returns the user's chosen theme — keeps the
+  // theme-aware backdrop from rendering the wrong image and swapping later.
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof document === "undefined") return "dark";
+    const t = document.documentElement.dataset.theme as Theme | undefined;
+    return t === "light" || t === "dark" ? t : "dark";
+  });
 
-  // Sync from the inline pre-paint script's result on hydration.
   useEffect(() => {
     if (typeof document === "undefined") return;
     const current = document.documentElement.dataset.theme as Theme | undefined;
-    if (current === "light" || current === "dark") {
+    if ((current === "light" || current === "dark") && current !== theme) {
       setThemeState(current);
     }
-  }, []);
+  }, [theme]);
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);

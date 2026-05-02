@@ -13,6 +13,8 @@ const TILT = 8;
 
 export function MissionCard({ project, index }: { project: Project; index: number }) {
   const ref = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const pendingRef = useRef<{ x: number; y: number } | null>(null);
   const hoverDevice = useHoverDevice();
   const reduced = usePrefersReducedMotion();
 
@@ -23,17 +25,32 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
   const rotateX = useTransform(sy, [-0.5, 0.5], [TILT, -TILT]);
   const rotateY = useTransform(sx, [-0.5, 0.5], [-TILT, TILT]);
 
+  // rAF-throttled pointer tracking — pointermove on some devices fires up to
+  // ~1000Hz; we only need 60Hz to drive the spring smoothly.
   const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!hoverDevice || reduced) return;
     const r = ref.current?.getBoundingClientRect();
     if (!r) return;
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    px.set(x);
-    py.set(y);
+    pendingRef.current = {
+      x: (e.clientX - r.left) / r.width - 0.5,
+      y: (e.clientY - r.top) / r.height - 0.5,
+    };
+    if (rafRef.current != null) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      if (pendingRef.current) {
+        px.set(pendingRef.current.x);
+        py.set(pendingRef.current.y);
+      }
+    });
   };
 
   const handleLeave = () => {
+    if (rafRef.current != null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+    pendingRef.current = null;
     px.set(0);
     py.set(0);
   };
