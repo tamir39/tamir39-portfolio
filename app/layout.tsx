@@ -12,6 +12,7 @@ import { ChannelSwitch } from "@/components/transitions/ChannelSwitch";
 import { ChannelSweep } from "@/components/transitions/ChannelSweep";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ActiveSectionProvider } from "@/components/providers/ActiveSectionProvider";
+import { BootSequence } from "@/components/boot/BootSequence";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${orbitron.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="bg-bg text-text antialiased">
+        <BootSequence />
         <MotionProvider>
           <ActiveSectionProvider>
             <AmbientBackdrop />
