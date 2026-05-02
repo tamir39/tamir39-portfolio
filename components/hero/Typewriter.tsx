@@ -64,7 +64,7 @@ export function Typewriter() {
   return (
     <pre
       className="font-mono text-sm leading-relaxed text-text-dim"
-      aria-live="polite"
+      aria-hidden={!reduced && !done ? true : undefined}
       aria-label="System boot log"
     >
       {LINES.map((line, i) => {
@@ -100,6 +100,11 @@ export function Typewriter() {
           style={{ animation: "blink 1s steps(1) infinite" }}
         />
       ) : null}
+      <span className="sr-only" aria-live="polite">
+        {done || reduced
+          ? "Tamir.os online. Operator: Phi Vuong Tuong Tam. Computer Science, game developer, based in Ho Chi Minh City, Vietnam."
+          : ""}
+      </span>
     </pre>
   );
 }
