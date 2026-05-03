@@ -3,9 +3,15 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useBootStatus } from "@/components/providers/BootStatusProvider";
+import { useTheme } from "@/components/providers/ThemeProvider";
 
 export function HeroPortrait() {
   const { isBooted } = useBootStatus();
+  const { theme } = useTheme();
+  const avatarSrc =
+    theme === "light"
+      ? "/tamir-avatar-lightmode.png"
+      : "/tamir-avatar-darkmode.png";
 
   return (
     <motion.div
@@ -40,7 +46,8 @@ export function HeroPortrait() {
         }}
       >
         <Image
-          src="/tamir-avatar.png"
+          key={avatarSrc}
+          src={avatarSrc}
           alt="Tamir cybercat avatar"
           fill
           priority
