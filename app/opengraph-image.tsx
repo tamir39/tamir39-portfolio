@@ -61,6 +61,8 @@ export default function OpengraphImage() {
           </div>
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontFamily: "sans-serif",
               fontWeight: 700,
               fontSize: 96,
@@ -69,7 +71,8 @@ export default function OpengraphImage() {
               color: "#E6F4FF",
             }}
           >
-            PHI VUONG{"\n"}TUONG TAM
+            <div>PHI VUONG</div>
+            <div>TUONG TAM</div>
           </div>
           <div style={{ color: "#7A8A99", fontSize: 26, letterSpacing: 3 }}>
             tamir39 · computer science · game dev · builder
