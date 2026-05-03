@@ -146,7 +146,7 @@ export function BootSequence() {
           {/* avatar with spinning rings */}
           <div className="relative mb-10 h-28 w-28 md:h-36 md:w-36">
             <Image
-              src="/tamir-avatar.png"
+              src="/tamir-avatar-darkmode.png"
               alt=""
               fill
               priority

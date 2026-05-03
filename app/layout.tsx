@@ -45,6 +45,11 @@ export const metadata: Metadata = {
   description:
     "Portfolio of Phi Vuong Tuong Tam (tamir39) — Computer Science student, game developer, builder. HCMC, Vietnam.",
   metadataBase: new URL(baseUrl),
+  icons: {
+    icon: "/tamir-favicon.png",
+    shortcut: "/tamir-favicon.png",
+    apple: "/tamir-favicon.png",
+  },
   openGraph: {
     title: "Tamir - Portfolio",
     description: "Computer Science · Game Dev · Builder",

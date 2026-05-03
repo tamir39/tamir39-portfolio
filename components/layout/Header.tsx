@@ -9,6 +9,7 @@ import { channels } from "@/lib/data/nav";
 import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { ThemeToggle } from "./ThemeToggle";
+import { useTheme } from "@/components/providers/ThemeProvider";
 
 function useClock() {
   const [now, setNow] = useState<string>("--:--:--");
@@ -38,6 +39,11 @@ export function Header() {
   const pathname = usePathname() ?? "/";
   const active = useActiveSection();
   const reduced = usePrefersReducedMotion();
+  const { theme } = useTheme();
+  const avatarSrc =
+    theme === "light"
+      ? "/tamir-avatar-lightmode.png"
+      : "/tamir-avatar-darkmode.png";
 
   const onDetail = pathname.startsWith("/missions/");
   const effectiveActive = onDetail ? "missions" : active;
@@ -65,7 +71,7 @@ export function Header() {
           className="group flex shrink-0 items-center gap-3"
         >
           <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-cyan/50 bg-bg-elev transition-colors group-hover:border-cyan">
-            <Image src="/tamir-avatar.png" alt="" fill sizes="28px" />
+            <Image key={avatarSrc} src={avatarSrc} alt="" fill sizes="28px" />
           </span>
           <span className="hidden flex-col leading-none sm:flex">
             <span className="text-glow-cyan font-display text-sm font-semibold tracking-[0.22em]">
