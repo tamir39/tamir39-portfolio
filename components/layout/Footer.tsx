@@ -61,7 +61,7 @@ export function Footer() {
         </div>
 
         <span className="text-glow-cyan font-mono text-[10px] uppercase tracking-[0.22em] text-cyan">
-          CHANNEL :: {channel.channelId}
+          {channel.channelId} · {channel.label}
         </span>
       </div>
     </footer>

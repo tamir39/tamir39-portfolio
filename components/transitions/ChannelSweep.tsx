@@ -12,7 +12,7 @@ export function ChannelSweep() {
   const animatingRef = useRef(false);
   const [tick, setTick] = useState(0);
   const [direction, setDirection] = useState<"down" | "up">("down");
-  const [channelId, setChannelId] = useState("MAIN_00");
+  const [channelId, setChannelId] = useState("00");
 
   useEffect(() => {
     if (firstRef.current) {
@@ -57,7 +57,7 @@ export function ChannelSweep() {
           style={{ boxShadow: "0 0 24px var(--color-cyan), 0 0 48px var(--color-cyan-soft)" }}
         />
         <div className="absolute left-1/2 mt-3 -translate-x-1/2 whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.3em] text-cyan">
-          {`// CHANNEL :: ${channelId}`}
+          {`→ ${channelId}`}
         </div>
       </div>
     </motion.div>

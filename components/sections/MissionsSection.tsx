@@ -9,10 +9,10 @@ export function MissionsSection() {
       className="relative px-6 pb-32 pt-12 md:px-16 lg:px-32"
     >
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-12">
-        <SectionHeader channel="LOG_02 :: MISSION ARCHIVE" title="MISSION LOGS" />
+        <SectionHeader channel="02 — Work" title="Selected Work" />
         <p className="max-w-2xl text-sm leading-relaxed text-text-dim">
-          Selected logs from the field. Each entry expands into a full debrief —
-          objectives, tools, and what was learned shipping it.
+          Active builds first, then archived work. Each entry opens a case study —
+          context, stack, and what was learned shipping it.
         </p>
         <MissionGrid />
       </div>

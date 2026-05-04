@@ -92,7 +92,7 @@ function PhoneButton() {
           style={{ boxShadow: "0 0 16px var(--color-cyan-soft)" }}
         >
           <span className="text-[9px] tracking-[0.24em] text-text-dim">
-            // CALL_LINE
+            Phone
           </span>
           <span className="text-glow-cyan text-sm tracking-[0.2em] text-cyan">
             {PHONE_DISPLAY}
@@ -217,7 +217,7 @@ export function Header() {
                       isActive ? "text-cyan/70" : "text-text-dim/60"
                     } hidden lg:inline`}
                   >
-                    — {c.label}
+                    · {c.label}
                   </span>
                 </span>
                 <span
@@ -267,7 +267,7 @@ export function Header() {
           <a
             href="/PHIVUONGTUONGTAM_RESUME.pdf"
             download
-            aria-label="Download dossier"
+            aria-label="Download CV"
             className="group relative inline-flex items-center gap-2 overflow-hidden border-[1.5px] border-cyan px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-cyan transition-colors duration-200 hover:text-bg"
             style={{ boxShadow: "0 0 12px var(--color-cyan-soft)" }}
           >
@@ -275,7 +275,7 @@ export function Header() {
               aria-hidden
               className="absolute inset-0 origin-left scale-x-0 bg-cyan transition-transform duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:scale-x-100"
             />
-            <span className="relative z-[1]">{"> DOSSIER"}</span>
+            <span className="relative z-[1]">{"> CV"}</span>
           </a>
         </div>
       </div>

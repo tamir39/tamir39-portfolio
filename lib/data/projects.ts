@@ -17,7 +17,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "panic-hub",
-    id: "MLOG-000",
+    id: "01",
     name: "Panic Hub",
     tagline: "Multi-agent economic crisis simulator — GDG OC Hackathon 2026",
     status: "ACTIVE",
@@ -39,7 +39,7 @@ export const projects: Project[] = [
   },
   {
     slug: "100b-studio",
-    id: "MLOG-00A",
+    id: "02",
     name: "100B Studio — Frontend",
     tagline: "Landing page for a fullstack engineering studio I co-build",
     status: "ACTIVE",
@@ -56,7 +56,7 @@ export const projects: Project[] = [
   },
   {
     slug: "mono-desk",
-    id: "MLOG-00B",
+    id: "03",
     name: "Mono Desk",
     tagline: "Multi-channel AI customer service for SEA SMBs",
     status: "ACTIVE",
@@ -74,7 +74,7 @@ export const projects: Project[] = [
   },
   {
     slug: "zuno",
-    id: "MLOG-00C",
+    id: "04",
     name: "Zuno",
     tagline: "Private timeline 'Zones' for school classes, families, and duos",
     status: "ACTIVE",
@@ -90,28 +90,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "ai-astar-pacman",
-    id: "MLOG-001",
-    name: "AI A* Pacman",
-    tagline: "Pathfinding sim with custom heuristic and teleport corners",
-    status: "ARCHIVED",
-    role: "Solo · Engineer",
-    dates: "Jan 2025 — Mar 2025",
-    stack: ["Python", "A* Search", "Game AI"],
-    summary:
-      "A pathfinding simulation built around the A* algorithm, retargeting Pacman as a multi-objective optimization problem.",
-    highlights: [
-      "Custom heuristic and pre-computed distance matrices for autonomous navigation toward multiple targets.",
-      "Specialized state-space logic for teleportation between map corners and a power-up that enables temporary wall-passing.",
-      "Visualization of the search frontier, frontier expansion, and final path in the same loop.",
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/tamir39/AI-AStar-with-Pacman" },
-    ],
-  },
-  {
     slug: "escape-the-belt",
-    id: "MLOG-002",
+    id: "05",
     name: "Escape The Belt",
     tagline: "2D space-survival physics game with adaptive difficulty",
     status: "ACTIVE",
@@ -130,48 +110,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "tenant-management",
-    id: "MLOG-003",
-    name: "Tenant Management Platform",
-    tagline: "Full-stack landlord/tenant system, shipped on Agile cadence",
-    status: "ARCHIVED",
-    role: "Project Manager · Tester",
-    dates: "Sep 2025 — Dec 2025",
-    stack: ["Agile/Scrum", "QA", "Integration Testing"],
-    summary:
-      "Coordinated delivery of a full-stack management platform spanning landlord and tenant modules.",
-    highlights: [
-      "Orchestrated workflows using Agile/Scrum — sprint planning, task allocation, cross-functional comms.",
-      "Authored and executed functional + integration test plans; surfaced critical bugs before release.",
-      "Owned reliability across both modules end-to-end.",
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/tamir39/tenant-management-platform" },
-    ],
-  },
-  {
-    slug: "vqa-viet",
-    id: "MLOG-004",
-    name: "VQA Viet",
-    tagline: "Vietnamese Visual Question Answering — deep-learning final project",
-    status: "ARCHIVED",
-    role: "Team · ML Engineer",
-    dates: "2026",
-    stack: ["Python", "PyTorch", "Deep Learning", "NLP", "Computer Vision"],
-    summary:
-      "A multi-modal model that answers natural-language questions about images, trained and evaluated on Vietnamese-language data.",
-    highlights: [
-      "End-to-end pipeline: image encoder + language encoder fused into a joint representation for answer prediction.",
-      "Adapted English-first VQA techniques to Vietnamese tokenization and grammar quirks.",
-      "Final project for the Deep Learning course — full report and ablations included in the repo.",
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/tamir39/vqa-viet-project" },
-    ],
-  },
-  {
     slug: "rag-vn-law-advisor",
-    id: "MLOG-005",
+    id: "06",
     name: "VN Law RAG Advisor",
     tagline: "Retrieval-augmented LLM that answers Vietnamese legal questions",
     status: "ACTIVE",
@@ -193,28 +133,8 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "vi-finance-summarizer",
-    id: "MLOG-006",
-    name: "VI Finance Summarizer",
-    tagline: "Vietnamese financial-news summarizer — NLP final project",
-    status: "ARCHIVED",
-    role: "Team · ML Engineer",
-    dates: "2026",
-    stack: ["Python", "NLP", "Transformers", "Summarization"],
-    summary:
-      "Abstractive summarization model targeted at Vietnamese financial articles — built and evaluated for the NLP course final.",
-    highlights: [
-      "Cleaned and tokenized a corpus of Vietnamese finance articles for fine-tuning.",
-      "Compared baseline extractive methods against a fine-tuned transformer summarizer.",
-      "Course final project — graded artifact, reproducible from the repo.",
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/tamir39/vi-finance-summarizer" },
-    ],
-  },
-  {
     slug: "solar-system",
-    id: "MLOG-007",
+    id: "07",
     name: "Solar System",
     tagline: "Interactive WebGL solar system — frontend exploration",
     status: "ACTIVE",
@@ -234,8 +154,88 @@ export const projects: Project[] = [
     ],
   },
   {
+    slug: "ai-astar-pacman",
+    id: "08",
+    name: "AI A* Pacman",
+    tagline: "Pathfinding sim with custom heuristic and teleport corners",
+    status: "ARCHIVED",
+    role: "Solo · Engineer",
+    dates: "Jan 2025 — Mar 2025",
+    stack: ["Python", "A* Search", "Game AI"],
+    summary:
+      "A pathfinding simulation built around the A* algorithm, retargeting Pacman as a multi-objective optimization problem.",
+    highlights: [
+      "Custom heuristic and pre-computed distance matrices for autonomous navigation toward multiple targets.",
+      "Specialized state-space logic for teleportation between map corners and a power-up that enables temporary wall-passing.",
+      "Visualization of the search frontier, frontier expansion, and final path in the same loop.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/AI-AStar-with-Pacman" },
+    ],
+  },
+  {
+    slug: "tenant-management",
+    id: "09",
+    name: "Tenant Management Platform",
+    tagline: "Full-stack landlord/tenant system, shipped on Agile cadence",
+    status: "ARCHIVED",
+    role: "Project Manager · Tester",
+    dates: "Sep 2025 — Dec 2025",
+    stack: ["Agile/Scrum", "QA", "Integration Testing"],
+    summary:
+      "Coordinated delivery of a full-stack management platform spanning landlord and tenant modules.",
+    highlights: [
+      "Orchestrated workflows using Agile/Scrum — sprint planning, task allocation, cross-functional comms.",
+      "Authored and executed functional + integration test plans; surfaced critical bugs before release.",
+      "Owned reliability across both modules end-to-end.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/tenant-management-platform" },
+    ],
+  },
+  {
+    slug: "vqa-viet",
+    id: "10",
+    name: "VQA Viet",
+    tagline: "Vietnamese Visual Question Answering — deep-learning final project",
+    status: "ARCHIVED",
+    role: "Team · ML Engineer",
+    dates: "2026",
+    stack: ["Python", "PyTorch", "Deep Learning", "NLP", "Computer Vision"],
+    summary:
+      "A multi-modal model that answers natural-language questions about images, trained and evaluated on Vietnamese-language data.",
+    highlights: [
+      "End-to-end pipeline: image encoder + language encoder fused into a joint representation for answer prediction.",
+      "Adapted English-first VQA techniques to Vietnamese tokenization and grammar quirks.",
+      "Final project for the Deep Learning course — full report and ablations included in the repo.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/vqa-viet-project" },
+    ],
+  },
+  {
+    slug: "vi-finance-summarizer",
+    id: "11",
+    name: "VI Finance Summarizer",
+    tagline: "Vietnamese financial-news summarizer — NLP final project",
+    status: "ARCHIVED",
+    role: "Team · ML Engineer",
+    dates: "2026",
+    stack: ["Python", "NLP", "Transformers", "Summarization"],
+    summary:
+      "Abstractive summarization model targeted at Vietnamese financial articles — built and evaluated for the NLP course final.",
+    highlights: [
+      "Cleaned and tokenized a corpus of Vietnamese finance articles for fine-tuning.",
+      "Compared baseline extractive methods against a fine-tuned transformer summarizer.",
+      "Course final project — graded artifact, reproducible from the repo.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/vi-finance-summarizer" },
+    ],
+  },
+  {
     slug: "applied-ai-algorithms",
-    id: "MLOG-008",
+    id: "12",
     name: "Applied AI Algorithms",
     tagline: "Coursework collection of classical AI algorithms",
     status: "ARCHIVED",
@@ -255,7 +255,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sales-customer-management",
-    id: "MLOG-009",
+    id: "13",
     name: "Sales & Customer Management",
     tagline: "PHP-based CRM for sales pipelines and customer records",
     status: "ARCHIVED",

@@ -17,9 +17,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const p = getProject(slug);
-  if (!p) return { title: "MLOG NOT FOUND // TAMIR.OS" };
+  if (!p) return { title: "Project not found · TAMIR.OS" };
   return {
-    title: `${p.id} // ${p.name}`,
+    title: `${p.name} · ${p.id} · TAMIR.OS`,
     description: p.tagline,
   };
 }

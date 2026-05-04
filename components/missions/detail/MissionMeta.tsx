@@ -27,9 +27,9 @@ export function MissionMeta({ project }: { project: Project }) {
       <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan" />
       <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan" />
 
-      <span className="text-hud-label text-cyan">▸ META</span>
+      <span className="text-hud-label text-cyan">▸ Details</span>
       <Row label="Role" value={project.role} />
-      <Row label="Window" value={project.dates} />
+      <Row label="Timeline" value={project.dates} />
       <div className="flex flex-col gap-2">
         <span className="text-hud-label text-text-dim">Stack</span>
         <div className="flex flex-wrap gap-1.5">

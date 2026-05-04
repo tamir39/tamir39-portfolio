@@ -124,7 +124,7 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
           </div>
 
           <span className="mt-1 inline-flex items-center gap-1 self-start font-mono text-[11px] uppercase tracking-[0.2em] text-cyan opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            ▸ open log
+            ▸ View case
           </span>
         </div>
       </Link>

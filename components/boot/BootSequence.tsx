@@ -140,7 +140,7 @@ export function BootSequence() {
 
           {/* top label */}
           <span className="absolute top-5 font-mono text-[10px] uppercase tracking-[0.3em] text-cyan">
-            // BOOT_SCREEN :: SYS_INIT
+            // Loading portfolio
           </span>
 
           {/* avatar with spinning rings */}

@@ -12,17 +12,17 @@ type Cta = {
 
 const CTAS: Cta[] = [
   {
-    label: "VIEW MISSIONS",
+    label: "VIEW WORK",
     href: "/#missions",
     variant: "cyan",
   },
   {
-    label: "OPEN PROFILE",
+    label: "ABOUT ME",
     href: "/#profile",
     variant: "cyan",
   },
   {
-    label: "DOWNLOAD DOSSIER",
+    label: "DOWNLOAD CV",
     href: "/PHIVUONGTUONGTAM_RESUME.pdf",
     download: true,
     variant: "violet",
