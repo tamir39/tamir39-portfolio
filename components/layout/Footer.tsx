@@ -47,6 +47,15 @@ export function Footer() {
           >
             github.com/tamir39
           </a>
+          <span aria-hidden className="h-3 w-px bg-stroke" />
+          <a
+            href="https://www.linkedin.com/in/t%C3%A2m-ph%C3%AD-v%C6%B0%C6%A1ng-t%C6%B0%E1%BB%9Dng-686919388/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-cyan"
+          >
+            linkedin
+          </a>
         </div>
 
         <span className="text-glow-cyan font-mono text-[10px] uppercase tracking-[0.22em] text-cyan">

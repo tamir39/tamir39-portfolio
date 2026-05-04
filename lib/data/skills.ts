@@ -6,15 +6,19 @@ export type SkillGroup = {
 export const skillGroups: SkillGroup[] = [
   {
     category: "Languages",
-    items: ["Python", "C#", "Java", "TypeScript"],
+    items: ["Python", "TypeScript", "C#", "Java", "PHP", "SQL"],
   },
   {
     category: "Engines & Frameworks",
-    items: ["Unity", "Next.js"],
+    items: ["Unity", "Next.js", "Three.js", "PyTorch"],
+  },
+  {
+    category: "AI & Data",
+    items: ["LLM / RAG", "NLP", "Computer Vision", "Deep Learning", "A* Search"],
   },
   {
     category: "Concepts",
-    items: ["A* Search", "OOP", "Data Structures", "Game AI", "Software Engineering"],
+    items: ["OOP", "Data Structures", "Game AI", "Software Engineering"],
   },
   {
     category: "Delivery",

@@ -31,6 +31,9 @@ export const projects: Project[] = [
       "Specialized state-space logic for teleportation between map corners and a power-up that enables temporary wall-passing.",
       "Visualization of the search frontier, frontier expansion, and final path in the same loop.",
     ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/AI-AStar-with-Pacman" },
+    ],
   },
   {
     slug: "escape-the-belt",
@@ -48,6 +51,9 @@ export const projects: Project[] = [
       "Dynamic spawning system that scales obstacle frequency through linear interpolation tied to player progress.",
       "Tuned for short, replayable runs with escalating tension.",
     ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/escape-the-belt-2d-game" },
+    ],
   },
   {
     slug: "tenant-management",
@@ -64,6 +70,136 @@ export const projects: Project[] = [
       "Orchestrated workflows using Agile/Scrum — sprint planning, task allocation, cross-functional comms.",
       "Authored and executed functional + integration test plans; surfaced critical bugs before release.",
       "Owned reliability across both modules end-to-end.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/tenant-management-platform" },
+    ],
+  },
+  {
+    slug: "vqa-viet",
+    id: "MLOG-004",
+    name: "VQA Viet",
+    tagline: "Vietnamese Visual Question Answering — deep-learning final project",
+    status: "ARCHIVED",
+    role: "Team · ML Engineer",
+    dates: "2026",
+    stack: ["Python", "PyTorch", "Deep Learning", "NLP", "Computer Vision"],
+    summary:
+      "A multi-modal model that answers natural-language questions about images, trained and evaluated on Vietnamese-language data.",
+    highlights: [
+      "End-to-end pipeline: image encoder + language encoder fused into a joint representation for answer prediction.",
+      "Adapted English-first VQA techniques to Vietnamese tokenization and grammar quirks.",
+      "Final project for the Deep Learning course — full report and ablations included in the repo.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/vqa-viet-project" },
+    ],
+  },
+  {
+    slug: "rag-vn-law-advisor",
+    id: "MLOG-005",
+    name: "VN Law RAG Advisor",
+    tagline: "Retrieval-augmented LLM that answers Vietnamese legal questions",
+    status: "ACTIVE",
+    role: "Solo · ML Engineer",
+    dates: "2026",
+    stack: ["Python", "LLM", "RAG", "Vector DB", "NLP"],
+    summary:
+      "A retrieval-augmented chatbot that grounds LLM answers in real Vietnamese legal documents instead of model memory.",
+    highlights: [
+      "Document ingestion + chunking pipeline tuned for Vietnamese legal text.",
+      "Vector retrieval feeds an LLM that cites source articles in its responses.",
+      "Designed to reduce hallucination on a domain where wrong answers carry real consequence.",
+    ],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/tamir39/rag-llm-vietnam-law-advisor",
+      },
+    ],
+  },
+  {
+    slug: "vi-finance-summarizer",
+    id: "MLOG-006",
+    name: "VI Finance Summarizer",
+    tagline: "Vietnamese financial-news summarizer — NLP final project",
+    status: "ARCHIVED",
+    role: "Team · ML Engineer",
+    dates: "2026",
+    stack: ["Python", "NLP", "Transformers", "Summarization"],
+    summary:
+      "Abstractive summarization model targeted at Vietnamese financial articles — built and evaluated for the NLP course final.",
+    highlights: [
+      "Cleaned and tokenized a corpus of Vietnamese finance articles for fine-tuning.",
+      "Compared baseline extractive methods against a fine-tuned transformer summarizer.",
+      "Course final project — graded artifact, reproducible from the repo.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/vi-finance-summarizer" },
+    ],
+  },
+  {
+    slug: "solar-system",
+    id: "MLOG-007",
+    name: "Solar System",
+    tagline: "Interactive WebGL solar system — frontend exploration",
+    status: "ACTIVE",
+    role: "Solo · Frontend",
+    dates: "2026",
+    stack: ["TypeScript", "Three.js", "WebGL", "Next.js"],
+    summary:
+      "A browser-based, navigable solar-system visualization built to push WebGL/Three.js skills.",
+    highlights: [
+      "Real-time 3D scene with orbiting bodies and camera controls.",
+      "Optimized for smooth performance on mid-range hardware.",
+      "Live demo deployed on Vercel.",
+    ],
+    links: [
+      { label: "Live Demo", href: "https://portfolio-two-orpin-55.vercel.app" },
+      { label: "GitHub", href: "https://github.com/tamir39/solar-system" },
+    ],
+  },
+  {
+    slug: "applied-ai-algorithms",
+    id: "MLOG-008",
+    name: "Applied AI Algorithms",
+    tagline: "Coursework collection of classical AI algorithms",
+    status: "ARCHIVED",
+    role: "Solo · Engineer",
+    dates: "2026",
+    stack: ["Python", "Search", "Optimization", "Game AI"],
+    summary:
+      "A curated set of applied AI algorithm implementations from coursework — search, adversarial, and constraint problems.",
+    highlights: [
+      "Reference implementations of search and optimization algorithms.",
+      "Each module is self-contained with notes and runnable demos.",
+      "Used as a personal cheat-sheet repo for AI fundamentals.",
+    ],
+    links: [
+      { label: "GitHub", href: "https://github.com/tamir39/applied-AI-algorithms" },
+    ],
+  },
+  {
+    slug: "sales-customer-management",
+    id: "MLOG-009",
+    name: "Sales & Customer Management",
+    tagline: "PHP-based CRM for sales pipelines and customer records",
+    status: "ARCHIVED",
+    role: "Solo · Full-stack",
+    dates: "2026",
+    stack: ["PHP", "MySQL", "HTML/CSS"],
+    summary:
+      "A web-based system for tracking customers, sales activity, and pipeline state — built as a full-stack PHP exercise.",
+    highlights: [
+      "CRUD over customers, products, and sales records.",
+      "Server-rendered PHP with MySQL persistence.",
+      "Built to learn server-side fundamentals end-to-end.",
+    ],
+    links: [
+      {
+        label: "GitHub",
+        href: "https://github.com/tamir39/sales-customer-management-web",
+      },
     ],
   },
 ];
