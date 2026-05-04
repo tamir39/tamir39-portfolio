@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Orbitron, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { HudFrame } from "@/components/layout/HudFrame";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ScanlineOverlay } from "@/components/hud/ScanlineOverlay";
@@ -106,14 +105,13 @@ export default function RootLayout({
             <Vignette />
             <ScanlineOverlay />
             <CrtNoise />
-            <HudFrame />
             <Header />
             <ChannelSwitch />
             <ChannelSweep />
             <div className="relative z-[1] flex min-h-screen flex-col">
               <div className="flex-1">{children}</div>
+              <Footer />
             </div>
-            <Footer />
           </ActiveSectionProvider>
           </MotionProvider>
         </BootStatusProvider>

@@ -141,6 +141,27 @@ export function Header() {
   const onDetail = pathname.startsWith("/missions/");
   const effectiveActive = onDetail ? "missions" : active;
 
+  // Auto-hide on scroll-down past 120px, reveal on scroll-up. Less viewport tax.
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const dy = y - lastY;
+        if (y < 120) setHidden(false);
+        else if (Math.abs(dy) > 6) setHidden(dy > 0);
+        lastY = y;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     if (pathname === "/") {
       e.preventDefault();
@@ -156,8 +177,12 @@ export function Header() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[58] border-b border-stroke-bright/80 bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2.5 md:px-10">
+    <header
+      className={`fixed inset-x-0 top-0 z-[58] border-b border-stroke-bright/40 bg-bg/60 backdrop-blur-md transition-transform duration-300 ease-out ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2 md:px-10">
         <Link
           href="/"
           aria-label="Tamir home"
@@ -166,13 +191,8 @@ export function Header() {
           <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-cyan/50 bg-bg-elev transition-colors group-hover:border-cyan">
             <Image key={avatarSrc} src={avatarSrc} alt="" fill sizes="28px" />
           </span>
-          <span className="hidden flex-col leading-none sm:flex">
-            <span className="text-glow-cyan font-display text-sm font-semibold tracking-[0.22em]">
-              TAMIR
-            </span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-text-dim">
-              portfolio · v1.0
-            </span>
+          <span className="text-glow-cyan hidden font-display text-sm font-semibold tracking-[0.22em] sm:inline-block">
+            TAMIR
           </span>
         </Link>
 

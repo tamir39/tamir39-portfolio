@@ -2,8 +2,6 @@
 
 import { motion } from "framer-motion";
 
-const bracketBase = "absolute h-3 w-3 border-cyan";
-
 export function BioPanel() {
   return (
     <motion.div
@@ -11,12 +9,8 @@ export function BioPanel() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false, margin: "-10%" }}
       transition={{ duration: 0.32 }}
-      className="glass-strong relative px-6 py-5"
+      className="relative border-l border-cyan/30 px-6 py-2"
     >
-      <span className={`${bracketBase} -left-px -top-px border-l border-t`} />
-      <span className={`${bracketBase} -right-px -top-px border-r border-t`} />
-      <span className={`${bracketBase} -bottom-px -left-px border-b border-l`} />
-      <span className={`${bracketBase} -bottom-px -right-px border-b border-r`} />
 
       <div className="flex flex-col gap-4">
         <span className="text-hud-label text-cyan">▸ About</span>

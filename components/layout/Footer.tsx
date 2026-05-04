@@ -10,8 +10,8 @@ export function Footer() {
   const channel = findChannelByPath(pathname) ?? findChannel(active);
 
   return (
-    <footer className="fixed inset-x-0 bottom-0 z-[58] border-t border-stroke-bright/80 bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-2.5 md:px-10">
+    <footer className="relative z-[2] mt-16 border-t border-stroke-bright/40 bg-bg/40 backdrop-blur-sm">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-5 py-5 md:flex-row md:gap-3 md:px-10 md:py-4">
         <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-text-dim">
           <span
             aria-hidden
