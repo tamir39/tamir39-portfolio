@@ -26,7 +26,9 @@ export function Footer() {
 
         <div className="hidden items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-text-dim md:flex">
           <a
-            href="mailto:tamphi5002@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=tamphi5002@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="transition-colors hover:text-cyan"
           >
             tamphi5002@gmail.com

@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Mail, Phone, Github, Linkedin } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Mail, Phone, Github, Linkedin, Copy, Check } from "lucide-react";
 import { channels } from "@/lib/data/nav";
 import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
@@ -28,9 +28,12 @@ function useClock() {
   return now;
 }
 
-const ICON_LINKS = [
-  { Icon: Mail, href: "mailto:tamphi5002@gmail.com", label: "Email" },
-  { Icon: Phone, href: "tel:+84938419071", label: "Phone" },
+const PHONE_DISPLAY = "+84 938 419 071";
+const PHONE_TEL = "+84938419071";
+const EMAIL = "tamphi5002@gmail.com";
+const GMAIL_COMPOSE = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`;
+
+const SOCIAL_LINKS = [
   { Icon: Github, href: "https://github.com/tamir39", label: "GitHub" },
   {
     Icon: Linkedin,
@@ -38,6 +41,91 @@ const ICON_LINKS = [
     label: "LinkedIn",
   },
 ];
+
+function PhoneButton() {
+  const [open, setOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const onCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(PHONE_DISPLAY);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
+    } catch {
+      /* clipboard blocked */
+    }
+  };
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        aria-label="Phone"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="group relative flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+      >
+        <Phone size={14} strokeWidth={1.5} />
+      </button>
+      {open && (
+        <div
+          role="dialog"
+          aria-label="Phone number"
+          className="glass-strong absolute right-0 top-[calc(100%+8px)] z-[60] flex min-w-[220px] flex-col gap-2 border border-cyan/40 px-3 py-3 font-mono text-[11px] uppercase tracking-[0.18em]"
+          style={{ boxShadow: "0 0 16px var(--color-cyan-soft)" }}
+        >
+          <span className="text-[9px] tracking-[0.24em] text-text-dim">
+            // CALL_LINE
+          </span>
+          <span className="text-glow-cyan text-sm tracking-[0.2em] text-cyan">
+            {PHONE_DISPLAY}
+          </span>
+          <div className="mt-1 flex items-center gap-1.5">
+            <a
+              href={`tel:${PHONE_TEL}`}
+              className="flex flex-1 items-center justify-center gap-1.5 border border-cyan/50 px-2 py-1 text-[10px] tracking-[0.22em] text-cyan transition-colors hover:bg-cyan/10"
+            >
+              <Phone size={11} strokeWidth={1.5} /> Call
+            </a>
+            <button
+              type="button"
+              onClick={onCopy}
+              className="flex items-center justify-center gap-1.5 border border-stroke px-2 py-1 text-[10px] tracking-[0.22em] text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+              aria-label="Copy phone number"
+            >
+              {copied ? (
+                <>
+                  <Check size={11} strokeWidth={1.5} /> Copied
+                </>
+              ) : (
+                <>
+                  <Copy size={11} strokeWidth={1.5} /> Copy
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Header() {
   const time = useClock();
@@ -146,21 +234,28 @@ export function Header() {
 
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
           <div className="hidden items-center gap-2 sm:flex">
-            {ICON_LINKS.map(({ Icon, href, label }) => {
-              const external = href.startsWith("http");
-              return (
-                <a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target={external ? "_blank" : undefined}
-                  rel={external ? "noopener noreferrer" : undefined}
-                  className="group relative flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
-                >
-                  <Icon size={14} strokeWidth={1.5} />
-                </a>
-              );
-            })}
+            <a
+              href={GMAIL_COMPOSE}
+              aria-label="Email"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+            >
+              <Mail size={14} strokeWidth={1.5} />
+            </a>
+            <PhoneButton />
+            {SOCIAL_LINKS.map(({ Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+              >
+                <Icon size={14} strokeWidth={1.5} />
+              </a>
+            ))}
           </div>
 
           <ThemeToggle />
