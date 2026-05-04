@@ -5,11 +5,11 @@ import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { useBootStatus } from "@/components/providers/BootStatusProvider";
 
 const LINES = [
-  { prefix: ">", text: "booting tamir.os …", tone: "dim" as const },
-  { prefix: ">", text: "loading neural-link … OK", tone: "dim" as const },
-  { prefix: ">", text: "calibrating optics … OK", tone: "dim" as const },
-  { prefix: ">", text: "identity: PHI VUONG TUONG TAM", tone: "primary" as const },
-  { prefix: ">", text: "role: COMPUTER SCIENCE · GAME DEV", tone: "primary" as const },
+  { prefix: ">", text: "initializing portfolio …", tone: "dim" as const },
+  { prefix: ">", text: "loading projects … OK", tone: "dim" as const },
+  { prefix: ">", text: "compiling skills … OK", tone: "dim" as const },
+  { prefix: ">", text: "name: PHI VUONG TUONG TAM", tone: "primary" as const },
+  { prefix: ">", text: "focus: FRONTEND · AI · GAMES", tone: "primary" as const },
   { prefix: ">", text: "location: HCMC, VIETNAM", tone: "primary" as const },
 ];
 
@@ -105,7 +105,7 @@ export function Typewriter() {
       ) : null}
       <span className="sr-only" aria-live="polite">
         {done || reduced
-          ? "Tamir.os online. Operator: Phi Vuong Tuong Tam. Computer Science, game developer, based in Ho Chi Minh City, Vietnam."
+          ? "Portfolio loaded. Phi Vuong Tuong Tam. Frontend, AI, and game development, based in Ho Chi Minh City, Vietnam."
           : ""}
       </span>
     </pre>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Mail, Phone, Github, Linkedin, Copy, Check } from "lucide-react";
+import { Mail, Phone, Github, Linkedin, Copy, Check, Menu, X } from "lucide-react";
 import { channels } from "@/lib/data/nav";
 import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
@@ -88,11 +88,11 @@ function PhoneButton() {
         <div
           role="dialog"
           aria-label="Phone number"
-          className="glass-strong absolute right-0 top-[calc(100%+8px)] z-[60] flex min-w-[220px] flex-col gap-2 border border-cyan/40 px-3 py-3 font-mono text-[11px] uppercase tracking-[0.18em]"
+          className="glass-strong absolute right-0 top-[calc(100%+8px)] z-[60] flex w-[min(240px,calc(100vw-2rem))] flex-col gap-2 border border-cyan/40 px-3 py-3 font-mono text-[11px] uppercase tracking-[0.18em]"
           style={{ boxShadow: "0 0 16px var(--color-cyan-soft)" }}
         >
           <span className="text-[9px] tracking-[0.24em] text-text-dim">
-            // CALL_LINE
+            Phone
           </span>
           <span className="text-glow-cyan text-sm tracking-[0.2em] text-cyan">
             {PHONE_DISPLAY}
@@ -141,7 +141,36 @@ export function Header() {
   const onDetail = pathname.startsWith("/missions/");
   const effectiveActive = onDetail ? "missions" : active;
 
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Close the mobile menu on route change.
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  // Auto-hide on scroll-down past 120px, reveal on scroll-up. Less viewport tax.
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const dy = y - lastY;
+        if (y < 120) setHidden(false);
+        else if (Math.abs(dy) > 6) setHidden(dy > 0);
+        lastY = y;
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    setMobileOpen(false);
     if (pathname === "/") {
       e.preventDefault();
       const el = document.getElementById(id);
@@ -156,8 +185,12 @@ export function Header() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[58] border-b border-stroke-bright/80 bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2.5 md:px-10">
+    <header
+      className={`fixed inset-x-0 top-0 z-[58] border-b border-stroke-bright/40 bg-bg/60 backdrop-blur-md transition-transform duration-300 ease-out ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-2 md:px-10">
         <Link
           href="/"
           aria-label="Tamir home"
@@ -166,13 +199,8 @@ export function Header() {
           <span className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-cyan/50 bg-bg-elev transition-colors group-hover:border-cyan">
             <Image key={avatarSrc} src={avatarSrc} alt="" fill sizes="28px" />
           </span>
-          <span className="hidden flex-col leading-none sm:flex">
-            <span className="text-glow-cyan font-display text-sm font-semibold tracking-[0.22em]">
-              TAMIR
-            </span>
-            <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-text-dim">
-              portfolio · v1.0
-            </span>
+          <span className="text-glow-cyan hidden font-display text-sm font-semibold tracking-[0.22em] sm:inline-block">
+            TAMIR
           </span>
         </Link>
 
@@ -217,7 +245,7 @@ export function Header() {
                       isActive ? "text-cyan/70" : "text-text-dim/60"
                     } hidden lg:inline`}
                   >
-                    — {c.label}
+                    · {c.label}
                   </span>
                 </span>
                 <span
@@ -233,6 +261,16 @@ export function Header() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
+          <button
+            type="button"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            className="flex h-8 w-8 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan md:hidden"
+          >
+            {mobileOpen ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
+          </button>
+
           <div className="hidden items-center gap-2 sm:flex">
             <a
               href={GMAIL_COMPOSE}
@@ -267,7 +305,7 @@ export function Header() {
           <a
             href="/PHIVUONGTUONGTAM_RESUME.pdf"
             download
-            aria-label="Download dossier"
+            aria-label="Download CV"
             className="group relative inline-flex items-center gap-2 overflow-hidden border-[1.5px] border-cyan px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.22em] text-cyan transition-colors duration-200 hover:text-bg"
             style={{ boxShadow: "0 0 12px var(--color-cyan-soft)" }}
           >
@@ -275,9 +313,81 @@ export function Header() {
               aria-hidden
               className="absolute inset-0 origin-left scale-x-0 bg-cyan transition-transform duration-300 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:scale-x-100"
             />
-            <span className="relative z-[1]">{"> DOSSIER"}</span>
+            <span className="relative z-[1]">{"> CV"}</span>
           </a>
         </div>
+      </div>
+
+      {/* Mobile slide-down menu */}
+      <div
+        className={`overflow-hidden border-b border-stroke-bright/40 bg-bg/90 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-out md:hidden ${
+          mobileOpen ? "max-h-[60vh] opacity-100" : "max-h-0 opacity-0"
+        }`}
+        aria-hidden={!mobileOpen}
+      >
+        <nav
+          aria-label="Sections"
+          className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4"
+        >
+          {channels.map((c) => {
+            const isActive = c.id === effectiveActive;
+            return (
+              <Link
+                key={c.id}
+                href={c.id === "hero" ? "/" : `/#${c.id}`}
+                onClick={(e) => handleNav(e, c.id)}
+                aria-current={isActive ? "true" : undefined}
+                className={`flex items-center justify-between border-l-2 px-3 py-3 font-mono text-xs uppercase tracking-[0.22em] transition-colors ${
+                  isActive
+                    ? "border-cyan text-cyan"
+                    : "border-stroke text-text-dim hover:border-cyan/60 hover:text-text"
+                }`}
+              >
+                <span>
+                  {c.channelId} · {c.label}
+                </span>
+                <span aria-hidden className="text-[10px] opacity-60">▸</span>
+              </Link>
+            );
+          })}
+
+          <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-stroke pt-4">
+            <a
+              href={GMAIL_COMPOSE}
+              aria-label="Email"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              className="flex h-9 w-9 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+            >
+              <Mail size={15} strokeWidth={1.5} />
+            </a>
+            <a
+              href={`tel:${PHONE_TEL}`}
+              aria-label="Call"
+              onClick={() => setMobileOpen(false)}
+              className="flex h-9 w-9 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+            >
+              <Phone size={15} strokeWidth={1.5} />
+            </a>
+            {SOCIAL_LINKS.map(({ Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="flex h-9 w-9 items-center justify-center border border-stroke text-text-dim transition-colors hover:border-cyan hover:text-cyan"
+              >
+                <Icon size={15} strokeWidth={1.5} />
+              </a>
+            ))}
+            <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
+              {time} <span className="text-cyan">UTC+7</span>
+            </span>
+          </div>
+        </nav>
       </div>
     </header>
   );

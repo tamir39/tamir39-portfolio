@@ -52,12 +52,12 @@ export default function OpengraphImage() {
             letterSpacing: 4,
           }}
         >
-          // CHANNEL_MAIN_00
+          // PORTFOLIO · 2026
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div style={{ color: "#00E5FF", fontSize: 22, letterSpacing: 6 }}>
-            // OPERATOR
+            // PROFILE
           </div>
           <div
             style={{

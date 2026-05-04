@@ -18,7 +18,7 @@ export function MissionBody({ project }: { project: Project }) {
         variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
         className="flex flex-col gap-3"
       >
-        <span className="text-hud-label text-cyan">▸ SUMMARY</span>
+        <span className="text-hud-label text-cyan">▸ Summary</span>
         <p className="max-w-3xl text-base leading-relaxed text-text md:text-lg">
           {project.summary}
         </p>
@@ -28,7 +28,7 @@ export function MissionBody({ project }: { project: Project }) {
         variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
         className="flex flex-col gap-4"
       >
-        <span className="text-hud-label text-cyan">▸ HIGHLIGHTS</span>
+        <span className="text-hud-label text-cyan">▸ Highlights</span>
         <ul className="flex flex-col gap-3">
           {project.highlights.map((h, i) => (
             <motion.li

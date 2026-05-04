@@ -5,9 +5,9 @@ export type Channel = {
 };
 
 export const channels: Channel[] = [
-  { id: "hero", channelId: "MAIN_00", label: "MAIN" },
-  { id: "profile", channelId: "LOG_01", label: "PROFILE" },
-  { id: "missions", channelId: "LOG_02", label: "MISSIONS" },
+  { id: "hero", channelId: "00", label: "HOME" },
+  { id: "profile", channelId: "01", label: "PROFILE" },
+  { id: "missions", channelId: "02", label: "WORK" },
 ];
 
 export const sectionIds = channels.map((c) => c.id);

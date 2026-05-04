@@ -11,7 +11,7 @@ export function ChannelSwitch() {
   const pathname = usePathname();
   const firstRef = useRef(true);
   const [tick, setTick] = useState(0);
-  const [label, setLabel] = useState("MAIN_00");
+  const [label, setLabel] = useState("Home");
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -19,7 +19,8 @@ export function ChannelSwitch() {
       firstRef.current = false;
       return;
     }
-    setLabel(findChannel(pathname ?? "/").id);
+    const ch = findChannel(pathname ?? "/");
+    setLabel(`${ch.channelId} · ${ch.label}`);
     setTick((t) => t + 1);
     setActive(true);
     const id = window.setTimeout(() => setActive(false), DURATION_MS);
@@ -56,7 +57,7 @@ export function ChannelSwitch() {
           style={{ boxShadow: "0 0 24px var(--color-cyan)" }}
         />
         <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.3em] text-cyan">
-          {`// SWITCHING CHANNEL :: ${label}`}
+          {`→ ${label}`}
         </p>
       </div>
     </motion.div>

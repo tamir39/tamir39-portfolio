@@ -12,17 +12,17 @@ type Cta = {
 
 const CTAS: Cta[] = [
   {
-    label: "VIEW MISSIONS",
+    label: "VIEW WORK",
     href: "/#missions",
     variant: "cyan",
   },
   {
-    label: "OPEN PROFILE",
+    label: "ABOUT ME",
     href: "/#profile",
     variant: "cyan",
   },
   {
-    label: "DOWNLOAD DOSSIER",
+    label: "DOWNLOAD CV",
     href: "/PHIVUONGTUONGTAM_RESUME.pdf",
     download: true,
     variant: "violet",
@@ -52,7 +52,7 @@ export function PrimaryCtas() {
   };
 
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
       {CTAS.map((cta) => {
         const isViolet = cta.variant === "violet";
         const fillColor = isViolet ? "var(--color-violet)" : "var(--color-cyan)";
@@ -61,8 +61,7 @@ export function PrimaryCtas() {
 
         const inner = (
           <span
-            className={`group relative inline-flex items-center justify-center overflow-hidden border ${borderColor} px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] ${textColor} transition-colors duration-200 hover:text-bg`}
-            style={{ minWidth: "11rem" }}
+            className={`group relative inline-flex w-full items-center justify-center overflow-hidden border ${borderColor} px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.2em] ${textColor} transition-colors duration-200 hover:text-bg sm:w-auto sm:min-w-[11rem]`}
           >
             <span
               aria-hidden
@@ -75,7 +74,7 @@ export function PrimaryCtas() {
 
         if (cta.download) {
           return (
-            <a key={cta.label} href={cta.href} download>
+            <a key={cta.label} href={cta.href} download className="block w-full sm:w-auto">
               {inner}
             </a>
           );
@@ -86,6 +85,7 @@ export function PrimaryCtas() {
             key={cta.label}
             href={cta.href}
             onClick={(e) => handleAnchor(e, cta.href)}
+            className="block w-full sm:w-auto"
           >
             {inner}
           </Link>

@@ -80,10 +80,10 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
           style={{ transform: "translateZ(0)" }}
         >
           {/* corner brackets */}
-          <span className="absolute -left-px -top-px h-3 w-3 border-l border-t border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
-          <span className="absolute -right-px -top-px h-3 w-3 border-r border-t border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
-          <span className="absolute -bottom-px -left-px h-3 w-3 border-b border-l border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
-          <span className="absolute -bottom-px -right-px h-3 w-3 border-b border-r border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -left-px -top-px h-2 w-2 sm:h-3 sm:w-3 border-l border-t border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -right-px -top-px h-2 w-2 sm:h-3 sm:w-3 border-r border-t border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -bottom-px -left-px h-2 w-2 sm:h-3 sm:w-3 border-b border-l border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
+          <span className="absolute -bottom-px -right-px h-2 w-2 sm:h-3 sm:w-3 border-b border-r border-cyan opacity-70 group-hover:opacity-100 transition-opacity" />
 
           {/* hover glow */}
           <span
@@ -124,7 +124,7 @@ export function MissionCard({ project, index }: { project: Project; index: numbe
           </div>
 
           <span className="mt-1 inline-flex items-center gap-1 self-start font-mono text-[11px] uppercase tracking-[0.2em] text-cyan opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            ▸ open log
+            ▸ View case
           </span>
         </div>
       </Link>
