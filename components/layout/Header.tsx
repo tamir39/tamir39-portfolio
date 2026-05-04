@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Mail, Phone, Github } from "lucide-react";
+import { Mail, Phone, Github, Linkedin } from "lucide-react";
 import { channels } from "@/lib/data/nav";
 import { useActiveSection } from "@/components/providers/ActiveSectionProvider";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
@@ -32,6 +32,11 @@ const ICON_LINKS = [
   { Icon: Mail, href: "mailto:tamphi5002@gmail.com", label: "Email" },
   { Icon: Phone, href: "tel:+84938419071", label: "Phone" },
   { Icon: Github, href: "https://github.com/tamir39", label: "GitHub" },
+  {
+    Icon: Linkedin,
+    href: "https://www.linkedin.com/in/t%C3%A2m-ph%C3%AD-v%C6%B0%C6%A1ng-t%C6%B0%E1%BB%9Dng-686919388/",
+    label: "LinkedIn",
+  },
 ];
 
 export function Header() {

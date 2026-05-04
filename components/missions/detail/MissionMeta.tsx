@@ -38,6 +38,24 @@ export function MissionMeta({ project }: { project: Project }) {
           ))}
         </div>
       </div>
+      {project.links && project.links.length > 0 && (
+        <div className="flex flex-col gap-2">
+          <span className="text-hud-label text-text-dim">Links</span>
+          <div className="flex flex-wrap gap-1.5">
+            {project.links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-cyan/40 px-2 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan transition-colors hover:border-cyan hover:bg-cyan/10"
+              >
+                {l.label} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
