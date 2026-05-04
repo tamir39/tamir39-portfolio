@@ -16,6 +16,80 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    slug: "panic-hub",
+    id: "MLOG-000",
+    name: "Panic Hub",
+    tagline: "Multi-agent economic crisis simulator — GDG OC Hackathon 2026",
+    status: "ACTIVE",
+    role: "CS Frontend · Godot",
+    dates: "Mar 2026 — present",
+    stack: ["Godot 4", "GDScript", "WebSocket", "LLM Agents", "FastAPI"],
+    summary:
+      "A hackathon entry where the player acts as Mayor of a city whose 50 LLM-driven NPCs panic through a simulated economic crisis. CS team owns the Godot frontend; DS team owns the FastAPI backend; the two are joined over WebSocket.",
+    highlights: [
+      "Godot 4 client renders 50 pathfinding NPCs (TileMap + NavigationRegion2D + CharacterBody2D) reacting to live server events.",
+      "Network manager autoload survives disconnects, heartbeats, and a 10s server-timeout fallback to a wander loop.",
+      "Fixed message catalogue across the bridge: spawn_npcs, npc_batch_update, market_update, policy_result, post_mortem.",
+      "Built for GDG OC Hackathon 2026 (gdgochackathon.com).",
+    ],
+    links: [
+      { label: "Hackathon", href: "https://gdgochackathon.com/" },
+      { label: "GitHub", href: "https://github.com/LineLuLan/Panic-Hub" },
+    ],
+  },
+  {
+    slug: "100b-studio",
+    id: "MLOG-00A",
+    name: "100B Studio — Frontend",
+    tagline: "Landing page for a fullstack engineering studio I co-build",
+    status: "ACTIVE",
+    role: "Team · Frontend",
+    dates: "2026 — present",
+    stack: ["Next.js", "TypeScript", "Tailwind", "Motion"],
+    summary:
+      "Public-facing landing site for 100B Studio — a fullstack engineering team I co-build. Targeting Stripe / Linear / Vercel-grade frontend craft, every interaction is deliberate and signals systems thinking, not generic SaaS template.",
+    highlights: [
+      "Single-route Next.js site engineered to scale into multi-route services and case studies without rework.",
+      "Bilingual EN/VI eyebrow copy threaded through the layout for tonal texture.",
+      "Built to read as if it were made by the team it represents — production craft is the proof.",
+    ],
+  },
+  {
+    slug: "mono-desk",
+    id: "MLOG-00B",
+    name: "Mono Desk",
+    tagline: "Multi-channel AI customer service for SEA SMBs",
+    status: "ACTIVE",
+    role: "Solo · Full-stack",
+    dates: "2026 — present",
+    stack: ["Next.js", "GPT-4o", "Prisma", "Postgres", "Docker"],
+    summary:
+      "Unifies inbound chats from 7 channels (Shopify, Instagram, Discord, Facebook, WhatsApp, Zalo, web widget) into one inbox, auto-replies via a GPT-4o agent grounded in the merchant's catalog, and escalates to humans when confidence drops.",
+    highlights: [
+      "Confidence-routing layer that escalates to humans on refund/cancel keywords, repetition, or sensitive topics.",
+      "Auto-captures phone/email leads from natural conversation.",
+      "Vietnamese-first localization with EN/JA/KO/ZH on the roadmap.",
+      "Embeddable storefront widget so the same agent lives wherever the customer talks.",
+    ],
+  },
+  {
+    slug: "zuno",
+    id: "MLOG-00C",
+    name: "Zuno",
+    tagline: "Private timeline 'Zones' for school classes, families, and duos",
+    status: "ACTIVE",
+    role: "Solo · Full-stack",
+    dates: "2026 — present",
+    stack: ["Next.js", "Drizzle", "Postgres", "Cloudflare R2"],
+    summary:
+      "A small, private, time-ordered space — the MVP is a Class Zone where one school class can post, react, vote, and keep streaks together.",
+    highlights: [
+      "Full register → create-Zone → invite → post → react → vote → streak loop on a single Next.js deployment.",
+      "Every state change is a domain event on an in-process event bus, even before listeners exist — built for clean Phase-2 expansion.",
+      "Image hosting on Cloudflare R2; Postgres via Drizzle.",
+    ],
+  },
+  {
     slug: "ai-astar-pacman",
     id: "MLOG-001",
     name: "AI A* Pacman",

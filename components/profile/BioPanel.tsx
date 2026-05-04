@@ -22,16 +22,32 @@ export function BioPanel() {
         <span className="text-hud-label text-cyan">▸ BIOGRAPHY</span>
         <p className="font-mono text-[13px] leading-[1.75] tracking-[0.01em] text-text md:text-sm">
           <span className="text-cyan">$</span> A computer-science undergrad in
-          Ho Chi Minh City who builds at the seam of code and play. I write
-          Python and C# for game systems &mdash; A* searches, physics-driven
-          survival loops &mdash; and ship product on Agile teams when the work
-          calls for coordination over solo craft.
+          Ho Chi Minh City who builds across three fronts &mdash;{" "}
+          <span className="text-cyan">frontend</span>,{" "}
+          <span className="text-cyan">AI/ML</span>, and{" "}
+          <span className="text-cyan">games</span>. I like the seam where code
+          meets play: A* searches, physics loops, RAG agents, and 3D scenes
+          that feel alive instead of merely rendering.
         </p>
         <p className="font-mono text-[13px] leading-[1.75] tracking-[0.01em] text-text-soft md:text-sm">
-          <span className="text-cyan">$</span> Currently focused on game AI,
-          real-time interaction, and the small set of details that make a
-          thing feel alive instead of merely working.
+          <span className="text-cyan">$</span> Now building the frontend for{" "}
+          <span className="text-text">100B Studio</span> (my startup), plus{" "}
+          <span className="text-text">Mono Desk</span>,{" "}
+          <span className="text-text">Zuno</span>, and a stack of report-grade
+          projects. Hackathon team for{" "}
+          <span className="text-text">Panic Hub</span> &mdash; multi-agent
+          economic crisis simulator at GDG OC Hackathon 2026.
         </p>
+        <div className="flex flex-col gap-2 border border-cyan/30 bg-cyan/[0.04] px-3 py-3">
+          <span className="text-[9px] font-semibold uppercase tracking-[0.24em] text-cyan">
+            // STATUS :: AVAILABLE_FOR
+          </span>
+          <p className="font-mono text-[12px] leading-[1.6] tracking-[0.01em] text-text">
+            Junior 3D frontend &middot; game design &middot; web-app design
+            &middot; open to <span className="text-cyan">freelance</span> and{" "}
+            <span className="text-cyan">startup-team</span> roles.
+          </p>
+        </div>
       </div>
     </motion.div>
   );

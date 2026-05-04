@@ -5,6 +5,7 @@ import { Timeline } from "@/components/profile/Timeline";
 import { SkillsGrid } from "@/components/profile/SkillsGrid";
 import { LanguageBars } from "@/components/profile/LanguageBars";
 import { softSkills } from "@/lib/data/skills";
+import { projects } from "@/lib/data/projects";
 
 export function ProfileSection() {
   return (
@@ -27,7 +28,7 @@ export function ProfileSection() {
             <div className="grid grid-cols-2 gap-x-6 gap-y-4">
               <StatReadout label="GPA" value={7.62} decimals={2} />
               <StatReadout label="Recent Sem" value={8.21} decimals={2} />
-              <StatReadout label="Missions" value={3} />
+              <StatReadout label="Missions" value={projects.length} />
               <StatReadout label="Year Out" value={2027} tone="violet" />
             </div>
           </div>
