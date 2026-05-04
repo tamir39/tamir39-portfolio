@@ -144,7 +144,7 @@ export function BootSequence() {
           </span>
 
           {/* avatar with spinning rings */}
-          <div className="relative mb-10 h-28 w-28 md:h-36 md:w-36">
+          <div className="relative mb-10 h-20 w-20 sm:h-28 sm:w-28 md:h-36 md:w-36">
             <Image
               src="/tamir-avatar-darkmode.png"
               alt=""
@@ -174,7 +174,7 @@ export function BootSequence() {
           </div>
 
           {/* TAMIR.OS title */}
-          <div className="text-glow-cyan mb-6 font-display text-2xl font-semibold tracking-[0.4em] md:text-3xl">
+          <div className="text-glow-cyan mb-6 font-display text-xl font-semibold tracking-[0.3em] sm:text-2xl sm:tracking-[0.4em] md:text-3xl">
             TAMIR.OS
           </div>
 

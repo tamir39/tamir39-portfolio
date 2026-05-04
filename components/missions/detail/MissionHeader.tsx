@@ -25,7 +25,7 @@ export function MissionHeader({ project }: { project: Project }) {
       </motion.div>
       <motion.h1
         variants={{ hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0 } }}
-        className="text-glow-cyan font-display text-4xl font-semibold leading-tight tracking-tight md:text-6xl"
+        className="text-glow-cyan font-display text-3xl font-semibold leading-tight tracking-tight break-words sm:text-4xl md:text-6xl"
       >
         {project.name}
       </motion.h1>

@@ -51,7 +51,7 @@ export function StatReadout({
   return (
     <div ref={ref} className="relative flex flex-col gap-1.5 px-1 py-2">
       <span className="text-hud-label text-text-dim">{label}</span>
-      <span className={`${glow} font-display text-4xl font-semibold tracking-tight md:text-5xl`}>
+      <span className={`${glow} font-display text-3xl font-semibold tracking-tight md:text-5xl`}>
         {display.toFixed(decimals)}
         <span className={`ml-1 text-base ${accentText}`}>{suffix}</span>
       </span>

@@ -11,7 +11,7 @@ export function Hero() {
       className="relative flex min-h-screen items-center justify-center px-6 pb-24 pt-32 md:px-16 lg:px-32"
     >
       <div className="grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-20">
-        <div className="relative mx-auto flex aspect-square w-full max-w-md items-center justify-center">
+        <div className="relative mx-auto flex aspect-square w-full max-w-[280px] items-center justify-center sm:max-w-md">
           <OrbitalRing />
           <HeroPortrait />
         </div>
@@ -19,7 +19,7 @@ export function Hero() {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-3">
             <span className="text-hud-label text-cyan">00 — Tamir39</span>
-            <h1 className="text-glow-cyan font-display text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl">
+            <h1 className="text-glow-cyan font-display text-4xl font-semibold leading-[0.95] tracking-tight sm:text-5xl md:text-7xl">
               PHI VUONG
               <br />
               TUONG TAM
