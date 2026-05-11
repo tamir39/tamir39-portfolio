@@ -58,7 +58,7 @@ function ProjectCard({
   return (
     <div ref={containerRef} className="h-[85vh] flex items-start">
       <motion.div
-        className="sticky rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0c0c0c] p-4 sm:p-6 md:p-8 w-full"
+        className="sticky rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] bg-[#0c0c0c] p-4 sm:p-6 md:p-8 w-full hover:shadow-[0_0_32px_rgba(0,229,255,0.08)] transition-shadow duration-300"
         style={{
           top: `${96 + index * 28}px`,
           scale,
@@ -75,10 +75,7 @@ function ProjectCard({
               {project.id}
             </span>
             <div className="flex flex-col gap-1">
-              <span
-                className="text-[#D7E2EA]/50 uppercase tracking-widest font-medium"
-                style={{ fontSize: "clamp(0.6rem, 1vw, 0.85rem)" }}
-              >
+              <span className="text-hud-label">
                 {project.category}
               </span>
               <Link

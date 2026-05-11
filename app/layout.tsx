@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Kanit } from "next/font/google";
+import { Kanit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/layout/Footer";
 import { MotionProvider } from "@/components/providers/MotionProvider";
@@ -10,6 +10,13 @@ const kanit = Kanit({
   subsets: ["latin", "vietnamese"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-kanit",
+  display: "swap",
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono-var",
   display: "swap",
 });
 
@@ -45,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={kanit.variable} suppressHydrationWarning>
+    <html lang="en" className={`${kanit.variable} ${mono.variable}`} suppressHydrationWarning>
       <body className="antialiased" style={{ overflowX: "clip" }}>
         <MotionProvider>
           {children}

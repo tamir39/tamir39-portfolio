@@ -9,7 +9,8 @@ const LI =
 
 export function Footer() {
   return (
-    <footer className="bg-[#0c0c0c] border-t border-white/10">
+    <footer className="bg-[#0c0c0c]">
+      <div className="divider-cyan" />
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-6 md:flex-row md:gap-3 md:px-10 md:py-5">
         <span className="text-[11px] uppercase tracking-[0.2em] text-[#D7E2EA]/40">
           © 2026 Tâm — tamir39
