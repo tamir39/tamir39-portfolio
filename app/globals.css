@@ -1,262 +1,51 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: var(--bg);
-  --color-bg-elev: var(--bg-elev);
-  --color-bg-panel: var(--bg-panel);
-  --color-bg-panel-hi: var(--bg-panel-hi);
-  --color-cyan: var(--cyan);
-  --color-cyan-soft: var(--cyan-soft);
-  --color-cyan-bright: var(--cyan-bright);
-  --color-violet: var(--violet);
-  --color-violet-soft: var(--violet-soft);
-  --color-text: var(--text);
-  --color-text-soft: var(--text-soft);
-  --color-text-dim: var(--text-dim);
-  --color-stroke: var(--stroke);
-  --color-stroke-bright: var(--stroke-bright);
-
-  --ease-hud: cubic-bezier(0.65, 0, 0.35, 1);
-
-  --font-display: var(--font-orbitron), ui-sans-serif, system-ui;
-  --font-body: var(--font-inter), ui-sans-serif, system-ui;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-display: var(--font-kanit), ui-sans-serif, system-ui;
+  --color-bg: #0C0C0C;
 }
 
 @layer base {
-  :root,
-  :root[data-theme="dark"] {
-    --bg: #000000;
-    --bg-elev: #07090d;
-    --bg-panel: rgba(8, 12, 20, 0.78);
-    --bg-panel-hi: rgba(12, 18, 28, 0.92);
-    --cyan: #00e5ff;
-    --cyan-soft: rgba(0, 229, 255, 0.2);
-    --cyan-bright: #5bffff;
-    --violet: #8b5cf6;
-    --violet-soft: rgba(139, 92, 246, 0.2);
-    --text: #f1f8ff;
-    --text-soft: #bccddd;
-    --text-dim: #7a8a99;
-    --stroke: #243043;
-    --stroke-bright: #38506b;
-  }
-
-  :root[data-theme="light"] {
-    --bg: #ecece4;
-    --bg-elev: #ffffff;
-    --bg-panel: rgba(255, 255, 255, 0.86);
-    --bg-panel-hi: rgba(255, 255, 255, 0.96);
-    --cyan: #0094b0;
-    --cyan-soft: rgba(0, 148, 176, 0.22);
-    --cyan-bright: #00b6d6;
-    --violet: #5e3bb6;
-    --violet-soft: rgba(94, 59, 182, 0.2);
-    --text: #0e1622;
-    --text-soft: #3e4a5d;
-    --text-dim: #6f7d8f;
-    --stroke: #cdd5e0;
-    --stroke-bright: #94a3b6;
+  html,
+  body,
+  #__next {
+    background: #0c0c0c;
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
   }
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 4rem;
   }
 
-  section[id] {
-    scroll-margin-top: 4rem;
-  }
-
-  /* Theme-scoped chrome */
-  :root[data-theme="light"] [data-theme-only="dark"] {
-    display: none !important;
-  }
-  :root:not([data-theme="light"]) [data-theme-only="light"] {
-    display: none !important;
-  }
-
-  html,
-  body {
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-body);
-    -webkit-font-smoothing: antialiased;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
 
   ::selection {
-    background: var(--color-cyan-soft);
-    color: var(--color-text);
+    background: rgba(139, 92, 246, 0.35);
+    color: #ffffff;
   }
 
   *:focus-visible {
-    outline: 2px solid var(--color-cyan);
+    outline: 2px solid #8b5cf6;
     outline-offset: 2px;
   }
 }
 
 @layer utilities {
-  .font-display {
-    font-family: var(--font-display);
-    letter-spacing: 0.02em;
-  }
-
-  .font-mono {
-    font-family: var(--font-mono);
-  }
-
-  .neon-cyan {
-    box-shadow:
-      0 0 12px var(--color-cyan-soft),
-      inset 0 0 8px var(--color-cyan-soft);
-    border: 1px solid var(--color-cyan);
-  }
-
-  .neon-violet {
-    box-shadow:
-      0 0 12px var(--color-violet-soft),
-      inset 0 0 8px var(--color-violet-soft);
-    border: 1px solid var(--color-violet);
-  }
-
-  .glass {
-    background: rgba(8, 12, 20, 0.55);
-    border: 1px solid var(--color-stroke);
-  }
-
-  .glass-strong {
-    background: var(--color-bg-panel);
-    border: 1px solid var(--color-stroke);
-  }
-
-  .glass-hi {
-    background: var(--color-bg-panel-hi);
-    border: 1px solid var(--color-stroke-bright);
-  }
-
-  .text-glow-cyan {
-    color: var(--color-text);
-    text-shadow:
-      0 0 18px rgba(0, 229, 255, 0.45),
-      0 0 2px rgba(0, 229, 255, 0.6);
-  }
-
-  .text-glow-violet {
-    color: var(--color-text);
-    text-shadow:
-      0 0 18px rgba(139, 92, 246, 0.5),
-      0 0 2px rgba(139, 92, 246, 0.6);
-  }
-
-  .divider-cyan {
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent,
-      var(--color-cyan-soft),
-      var(--color-cyan),
-      var(--color-cyan-soft),
-      transparent
-    );
-  }
-
-  .text-hud-label {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-text-dim);
+  .hero-heading {
+    background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
-/* ============== KEYFRAMES ============== */
-
-@keyframes circuit-breath {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.03);
-  }
-}
-
-@keyframes circuit-pulse {
-  0%,
-  100% {
-    filter: brightness(0.92) saturate(1);
-  }
-  50% {
-    filter: brightness(1.06) saturate(1.1);
-  }
-}
-
-@keyframes avatar-breath {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.025);
-  }
-}
-
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 6px var(--color-cyan);
-  }
-  50% {
-    opacity: 0.4;
-    box-shadow: 0 0 2px var(--color-cyan);
-  }
-}
-
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes spin-slow-reverse {
-  to {
-    transform: rotate(-360deg);
-  }
-}
-
-@keyframes glitch-shift {
-  0%,
-  100% {
-    transform: translate(0, 0);
-    filter: none;
-  }
-  20% {
-    transform: translate(-1px, 0);
-    filter: drop-shadow(2px 0 var(--color-cyan)) drop-shadow(-2px 0 var(--color-violet));
-  }
-  40% {
-    transform: translate(1px, 0);
-    filter: drop-shadow(-2px 0 var(--color-cyan)) drop-shadow(2px 0 var(--color-violet));
-  }
-  60% {
-    transform: translate(0, 1px);
-    filter: none;
-  }
-}
-
-@keyframes blink {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-/* respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

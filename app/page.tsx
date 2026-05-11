@@ -1,15 +1,17 @@
-import { Hero } from "@/components/hero/Hero";
-import { ProfileSection } from "@/components/sections/ProfileSection";
-import { MissionsSection } from "@/components/sections/MissionsSection";
-import { HashScrollFix } from "@/components/utils/HashScrollFix";
+import HeroSection from "@/components/sections/HeroSection";
+import MarqueeSection from "@/components/sections/MarqueeSection";
+import AboutSection from "@/components/sections/AboutSection";
+import ServicesSection from "@/components/sections/ServicesSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
 
 export default function HomePage() {
   return (
-    <main>
-      <HashScrollFix />
-      <Hero />
-      <ProfileSection />
-      <MissionsSection />
+    <main style={{ overflowX: "clip" }}>
+      <HeroSection />
+      <MarqueeSection />
+      <AboutSection />
+      <ServicesSection />
+      <ProjectsSection />
     </main>
   );
 }
