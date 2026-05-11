@@ -21,7 +21,12 @@ export default function HeroSection() {
     <section
       id="hero"
       className="relative flex h-screen flex-col"
-      style={{ overflowX: "clip" }}
+      style={{
+        overflowX: "clip",
+        backgroundImage:
+          "radial-gradient(circle, rgba(0,229,255,0.07) 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
+      }}
     >
       {/* Navbar */}
       <FadeIn delay={0} y={-20} className="px-6 pt-6 md:px-10 md:pt-8">

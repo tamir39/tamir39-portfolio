@@ -2,7 +2,18 @@
 
 @theme {
   --font-display: var(--font-kanit), ui-sans-serif, system-ui;
-  --color-bg: #0C0C0C;
+  --color-bg: #0c0c0c;
+
+  /* Cybercat accent palette */
+  --font-mono: var(--font-mono-var, ui-monospace, monospace);
+  --color-cyan: #00e5ff;
+  --color-cyan-dim: rgba(0, 229, 255, 0.12);
+  --color-cyan-glow: rgba(0, 229, 255, 0.35);
+  --color-stroke: rgba(215, 226, 234, 0.12);
+  --color-stroke-bright: rgba(0, 229, 255, 0.3);
+  --color-bg-panel: rgba(12, 12, 12, 0.85);
+  --color-text-dim: rgba(215, 226, 234, 0.4);
+  --color-text-soft: rgba(215, 226, 234, 0.7);
 }
 
 @layer base {
@@ -35,6 +46,22 @@
     outline: 2px solid #8b5cf6;
     outline-offset: 2px;
   }
+
+  /* Subtle scan-line monitor texture */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.025) 2px,
+      rgba(0, 0, 0, 0.025) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
 }
 
 @layer utilities {
@@ -43,6 +70,40 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* HUD label — mono font, dim, spaced */
+  .text-hud-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-dim);
+  }
+
+  /* Cyan glow text */
+  .text-glow-cyan {
+    color: var(--color-cyan);
+    text-shadow: 0 0 8px var(--color-cyan-glow), 0 0 24px rgba(0, 229, 255, 0.15);
+  }
+
+  /* Frosted dark panel */
+  .glass-strong {
+    background: var(--color-bg-panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-stroke);
+  }
+
+  /* Cyan gradient divider line */
+  .divider-cyan {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-cyan) 50%,
+      transparent
+    );
+    opacity: 0.3;
   }
 }
 
