@@ -1,0 +1,20 @@
+.theme-cursor { position: fixed; top: 0; left: 0; inline-size: 0; block-size: 0; z-index: 90; color: var(--color-accent); pointer-events: none; visibility: hidden; }
+.theme-cursor *, .theme-cursor *::before, .theme-cursor *::after { pointer-events: none; }
+.theme-cursor[data-visible="true"] { visibility: visible; }
+.cursor-mark { position: absolute; display: grid; place-items: center; inline-size: 32px; block-size: 32px; inset: -16px; transition: scale 140ms ease-out, background-color 140ms; }
+.theme-cursor[data-interactive="true"] .cursor-mark { scale: 1.2; }
+.theme-cursor[data-pressed="true"] .cursor-mark { scale: .96; }
+.theme-cursor[data-theme="editorial"] .cursor-mark { border: 1px solid currentColor; border-radius: 50%; background: color-mix(in srgb, var(--color-accent) 6%, transparent); }
+.theme-cursor[data-theme="swiss"] .cursor-mark { inline-size: 9px; block-size: 9px; inset: 9px auto auto 12px; background: currentColor; }
+.theme-cursor[data-theme="blueprint"] .cursor-mark { border: 1px solid color-mix(in srgb, currentColor 45%, transparent); border-radius: 50%; }
+.theme-cursor[data-theme="blueprint"] .cursor-mark::before, .theme-cursor[data-theme="blueprint"] .cursor-mark::after { content: ""; position: absolute; background: currentColor; }
+.theme-cursor[data-theme="blueprint"] .cursor-mark::before { inline-size: 1px; block-size: 42px; }
+.theme-cursor[data-theme="blueprint"] .cursor-mark::after { inline-size: 42px; block-size: 1px; }
+.theme-cursor[data-theme="play"] .cursor-mark { inset: 8px auto auto 10px; color: var(--color-accent); border-radius: 50%; background: #ffe69c; }
+.theme-cursor[data-theme="botanical"] .cursor-mark { inset: 8px auto auto 10px; color: var(--color-accent); rotate: -18deg; }
+.cursor-trail { display: none; position: absolute; top: 21px; left: 23px; inline-size: 6px; block-size: 6px; border-radius: 50%; background: #d9b2ed; }
+.theme-cursor[data-theme="play"] .cursor-trail { display: block; }
+.cursor-trail:nth-child(2) { inline-size: 5px; block-size: 5px; background: #eda179; }
+.cursor-trail:nth-child(3) { inline-size: 4px; block-size: 4px; background: #8fac75; }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce), (forced-colors: active) { .theme-cursor { display: none; } }
+html[data-motion="off"] .theme-cursor, .theme-cursor[data-reduced="true"] { display: none; }

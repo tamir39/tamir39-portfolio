@@ -1,0 +1,28 @@
+/* Artwork continues behind the static heading and transparent profile card. */
+.hero-layout { -webkit-user-select:none; user-select:none; }
+.hero-artwork { position: absolute; inset: 0; z-index: 0; }
+.hero-artwork-surface { display: block; position: absolute; inset: 0; inline-size: 100%; block-size: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; color: inherit; cursor: crosshair; }
+.hero-artwork-surface:disabled { cursor: default; }
+.hero-artwork-surface:focus-visible { outline: 2px dashed var(--color-accent); outline-offset: 10px; border-radius: 12px; }
+.hero-artwork-canvas { display: block; inline-size: 100%; block-size: 100%; opacity: .65; pointer-events: none; }
+.hero-layout:has(.hero-artwork) > .hero-atmosphere { display: none; }
+.hero-layout:has(.hero-artwork) > :is(.hero-index, .hero-title, .hero-intro) { position: relative; z-index: 1; }
+html[data-theme="blueprint"] .hero-layout:has(.hero-artwork) { background-image: none; }
+@media (max-width: 1023px), (hover: none), (pointer: coarse) { .hero-artwork { display: none; } }
+@media (forced-colors: active) { .hero-artwork-canvas { opacity: .12; } .hero-artwork-surface:focus-visible { outline-color: Highlight; } }
+
+.hero-intro { inline-size:100%; max-inline-size:480px; padding:clamp(20px,2.2vw,28px); border:1px solid var(--theme-line); border-radius:var(--theme-radius); background:transparent; }
+.hero-intro-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 16px; inline-size:100%; }
+.hero-theme-hint { display:none; align-items:center; gap:6px; min-block-size:44px; margin-inline-start:auto; padding-inline:2px; color:var(--color-muted); font:10px var(--font-mono); line-height:1.5; cursor:pointer; }
+.hero-theme-hint:hover { color:var(--color-accent); }
+.hero-theme-hint:focus-visible { outline:2px solid var(--color-accent); outline-offset:4px; border-radius:4px; }
+@media (min-width:900px) and (hover:hover) and (pointer:fine) {
+  .hero-intro { cursor:pointer; }
+  .hero-intro:is(:hover,:focus-within) { border-color:var(--color-accent); }
+  .hero-theme-hint { display:inline-flex; }
+}
+@media (min-width:1280px) { .hero-intro { inline-size:calc(100% - clamp(24px,3vw,48px)); } }
+@media (max-width:480px) {
+  .hero-profile { gap:12px; }
+  .hero-profile .portrait-frame { inline-size:64px; block-size:64px; flex-shrink:0; }
+}

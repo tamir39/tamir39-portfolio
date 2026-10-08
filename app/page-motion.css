@@ -1,0 +1,30 @@
+.hero-layout { position:relative; isolation:isolate; }
+.hero-atmosphere { position:absolute; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }
+.hero-atmosphere i { position:absolute; inline-size:230px; block-size:230px; border:1px solid var(--theme-line); border-radius:50%; opacity:.45; inset:0 12% auto auto; }
+.hero-atmosphere i:nth-child(2) { inline-size:190px; block-size:190px; inset:20px calc(12% + 20px) auto auto; }
+.hero-atmosphere i:nth-child(3) { inline-size:8px; block-size:8px; background:var(--color-accent); border:0; inset:26px 18% auto auto; }
+html[data-theme="swiss"] .hero-atmosphere i { border-radius:0; inline-size:70px; block-size:70px; opacity:.13; }
+html[data-theme="swiss"] .hero-atmosphere i:nth-child(2) { background:var(--color-accent); }
+html[data-theme="blueprint"] .hero-atmosphere i { border-style:dashed; }
+html[data-theme="play"] .hero-atmosphere i { border-radius:28%; background:var(--theme-note); opacity:.25; rotate:20deg; }
+html[data-theme="botanical"] .hero-atmosphere i { border-radius:70% 30% 65% 35%; }
+@media (prefers-reduced-motion:no-preference) {
+  html:not([data-motion="off"]) .hero-atmosphere i { animation:atmosphere-orbit 14s ease-in-out infinite alternate paused; }
+  html:not([data-motion="off"]) .hero-atmosphere i:nth-child(2) { animation-direction:alternate-reverse; animation-duration:18s; }
+  html:not([data-motion="off"]) [data-scene-visible] > .hero-atmosphere i { animation-play-state:running; }
+  html:not([data-motion="off"]) [data-scene-visible] .studio-sample-art { animation:studio-turn 28s linear infinite; }
+  html:not([data-motion="off"]) .explorer-orbit { animation:studio-turn 42s linear infinite paused; }
+  html:not([data-motion="off"]) [data-scene-visible] .explorer-orbit { animation-play-state:running; }
+  html[data-theme="play"]:not([data-motion="off"]) .explorer-orbit { animation-name:profile-frame-sway; animation-duration:12s; animation-timing-function:ease-in-out; animation-direction:alternate; }
+  html:not([data-motion="off"]) .contact-art { animation:studio-turn 60s linear infinite paused; }
+  html:not([data-motion="off"]) [data-scene-visible].contact-footer .contact-art { animation-play-state:running; }
+  html[data-theme="swiss"]:not([data-motion="off"]) .hero-atmosphere i { animation-name:precision-move; animation-timing-function:steps(4,end); animation-duration:12s; }
+  html[data-theme="blueprint"]:not([data-motion="off"]) .hero-atmosphere i { animation-name:studio-turn; animation-timing-function:linear; animation-duration:28s; }
+  html[data-theme="play"]:not([data-motion="off"]) .hero-atmosphere i { animation-duration:5s; }
+  html[data-theme="botanical"]:not([data-motion="off"]) .hero-atmosphere i { animation-name:botanical-sway; animation-duration:16s; transform-origin:bottom left; }
+}
+@keyframes atmosphere-orbit { from { transform:translate(-16px,4px) rotate(-12deg); } to { transform:translate(24px,24px) rotate(24deg); } }
+@keyframes studio-turn { to { rotate:360deg; } }
+@keyframes profile-frame-sway { from { rotate:-5deg; } to { rotate:5deg; } }
+@keyframes precision-move { to { transform:translate(40px,24px); } }
+@keyframes botanical-sway { from { transform:rotate(-8deg) translateY(0); } to { transform:rotate(8deg) translateY(12px); } }

@@ -13,10 +13,16 @@
 
 # next.js
 /.next/
+/.next-dev/
 /out/
 
 # production
 /build
+
+# generated visual checks and duplicate document exports
+/output/appearance/
+/output/pdf/*.png
+/output/pdf/*.pdf
 
 # misc
 .DS_Store
