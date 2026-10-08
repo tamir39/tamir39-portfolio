@@ -1,0 +1,62 @@
+.page-intro, .page-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  place-items: center;
+  overflow: clip;
+  padding: 24px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  overscroll-behavior: contain;
+}
+.page-intro { display: none; }
+.page-loading { display: grid; }
+html:is([data-page-intro="loading"], [data-page-intro="playing"], [data-page-intro="exiting"]) { overflow: hidden; }
+html:is([data-page-intro="loading"], [data-page-intro="playing"], [data-page-intro="exiting"]) .page-intro { display: grid; }
+html:is([data-page-intro="loading"], [data-page-intro="playing"]) body > :not(.page-intro, script, style, link, nextjs-portal) { visibility: hidden; }
+.page-intro-loader, .page-intro-identity, .page-intro .page-identity-skip { display: none; }
+html[data-page-intro="loading"] .page-intro-loader { display: contents; }
+html:is([data-page-intro="playing"], [data-page-intro="exiting"]) .page-intro-identity { display: contents; }
+html:is([data-page-intro="playing"], [data-page-intro="exiting"]) .page-identity-skip { display: inline-flex; }
+body:has(.page-loading) > :not(:has(.page-loading), .page-intro, script, style, link) { visibility: hidden; }
+.brand-scene { inline-size: min(100%, 340px); }
+.brand-scene-wordmark { display: flex; align-items: center; justify-content: center; gap: clamp(16px, 5vw, 26px); }
+.brand-scene-mark { flex: none; inline-size: clamp(56px, 14vw, 78px); block-size: clamp(70px, 18vw, 98px); }
+.brand-scene-name { display: block; padding-inline-end: .06em; font-size: clamp(3.5rem, 12vw, 5.25rem); font-weight: 600; letter-spacing: -.065em; line-height: 1.2; }
+.brand-scene-dot { color: var(--color-accent); }
+.brand-scene-rule { display: block; block-size: 1px; margin-block: 28px 18px; background: var(--theme-line); transform-origin: left center; }
+.brand-scene-caption { margin: 0; color: var(--color-muted); font: 10px/1.5 var(--font-mono, monospace); letter-spacing: .16em; text-align: center; text-transform: uppercase; }
+.brand-scene[data-variant="loading"] { inline-size: 140px; }
+.brand-scene[data-variant="loading"] .brand-scene-mark { inline-size: 120px; block-size: 150px; }
+.brand-scene[data-variant="loading"] .brand-scene-rule { margin-block: 20px 18px; }
+.page-intro-skip { position: absolute; inset-inline-end: max(24px, env(safe-area-inset-right)); inset-block-end: max(24px, env(safe-area-inset-bottom)); display: inline-flex; align-items: center; gap: 12px; min-block-size: 44px; padding-inline: 12px; color: var(--color-muted); font-size: 12px; cursor: pointer; }
+.page-intro-skip:hover { color: var(--color-ink); }
+.page-intro-skip:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.page-intro .page-loader-pause { inset-inline-start: max(12px, env(safe-area-inset-left)); inset-inline-end: auto; }
+html[data-motion="off"] .page-loader-pause { display: none; }
+.page-state { display: grid; min-block-size: calc(100svh - 73px); align-content: center; justify-items: center; gap: 44px; padding: 64px 24px; text-align: center; }
+.page-state-copy { max-inline-size: 400px; }
+.page-state-code { margin-block-end: 12px; color: var(--color-accent); font: 11px/1.5 var(--font-mono, monospace); letter-spacing: .14em; text-transform: uppercase; }
+.page-state h1 { margin: 0; font-size: clamp(1.75rem, 6vw, 2.5rem); font-weight: 500; letter-spacing: -.04em; line-height: 1.15; }
+.page-state-description { margin-block: 16px 0; color: var(--color-muted); font-size: 14px; line-height: 1.7; }
+.page-state-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; margin-block-start: 28px; }
+.page-state-actions :is(a, button) { display: inline-flex; align-items: center; justify-content: center; min-block-size: 44px; padding: 12px 22px; border: 1px solid var(--theme-line); border-radius: var(--theme-control-radius, 999px); font-size: 13px; font-weight: 500; cursor: pointer; }
+.page-state-actions .page-state-primary { border-color: transparent; color: var(--theme-on-action, white); background: var(--theme-action, #493b61); }
+.page-state-actions .page-state-primary:hover { background: var(--theme-action-hover, #65527e); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="off"]) .route-content { animation: route-content-enter 250ms ease-out; }
+  html:is([data-page-intro="playing"], [data-page-intro="exiting"]) .page-intro-identity .brand-scene-mark { animation: brand-intro-reveal 700ms 100ms cubic-bezier(.16,1,.3,1) both; }
+  html:is([data-page-intro="playing"], [data-page-intro="exiting"]) .page-intro-identity .brand-scene-name { animation: brand-intro-reveal 850ms 300ms cubic-bezier(.16,1,.3,1) both; }
+  html:is([data-page-intro="playing"], [data-page-intro="exiting"]) .page-intro-identity .brand-scene-rule { animation: brand-intro-rule 800ms 380ms cubic-bezier(.16,1,.3,1) both; }
+  html:is([data-page-intro="playing"], [data-page-intro="exiting"]) .page-intro-identity .brand-scene-caption { animation: brand-intro-caption 550ms 650ms cubic-bezier(.16,1,.3,1) both; }
+  html:not([data-motion="off"]) .brand-scene[data-loading="true"] .brand-scene-mark { animation: brand-loading-breathe 1.6s ease-in-out infinite; }
+  html:not([data-motion="off"]) .brand-scene[data-loading="true"] .brand-scene-rule { background: linear-gradient(90deg, var(--theme-line) 0% 30%, var(--color-accent) 50%, var(--theme-line) 70% 100%); background-size: 250% 100%; animation: brand-loading-sweep 1.6s ease-in-out infinite; }
+}
+@media (prefers-reduced-motion: reduce) { .page-loader-pause { display: none; } }
+@keyframes route-content-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes brand-intro-reveal { from { opacity: 0; clip-path: inset(-15% 100% -15% -15%); translate: -12px 0; } to { opacity: 1; clip-path: inset(-15% -15% -15% -15%); translate: 0 0; } }
+@keyframes brand-intro-rule { from { opacity: 0; scale: 0 1; } to { opacity: 1; scale: 1 1; } }
+@keyframes brand-intro-caption { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+@keyframes brand-loading-breathe { 0%, 100% { opacity: .5; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-5px); } }
+@keyframes brand-loading-sweep { from { background-position: 100% 0; } to { background-position: 0% 0; } }

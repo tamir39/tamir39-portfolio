@@ -1,0 +1,25 @@
+Resume project start-date evidence, checked 2026-10-08.
+
+Read-only local Git history across available refs; no fetch, checkout, or source-repository changes.
+Dates below establish the earliest recorded work available locally, not necessarily the first planning day.
+
+100b.studio website, D:/Projects/100BStudio:
+2026-04-29T22:12:04+07:00, Phi Vuong Tuong Tam, feat: scaffold next.js cyberpunk landing page.
+Website development start: April 2026. The user confirmed the co-founder role began at the same time on 2026-10-08; resume period: Apr 2026 - Present.
+
+Zuno, D:/Projects/Zuno:
+2026-05-04T21:13:50+07:00, Phi Vuong Tuong Tam, Initial commit.
+Resume start: May 2026.
+
+CausaSent, D:/Projects/CausaSent:
+2026-05-07T02:55:09+07:00, Phi Vuong Tuong Tam, Initial commit.
+Resume start: May 2026. Latest local commit on May 12 is not treated as a confirmed completion date.
+
+EnStudy-Hub, D:/Projects/EnstudyHub:
+Repository created by another contributor on May 11, 2026.
+First recorded commit by Phi Vuong Tuong Tam:
+2026-05-20T18:53:03+07:00, feat(ui): port Claude Design system + responsive layout.
+Resume contribution start: May 2026.
+
+Twohearts Technology employment:
+June 2026 - Present, established in the user's existing portfolio profile evidence.

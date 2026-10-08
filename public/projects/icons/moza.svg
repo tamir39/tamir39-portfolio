@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MOZA">
+  <rect width="64" height="64" rx="10" fill="#0E1212"></rect>
+  <path d="M10 50 L10 14 L22 14 L32 30 L42 14 L54 14 L54 50 L44 50 L44 24 L35 38 L32 42 L29 38 L20 24 L20 50 Z" fill="#FBFAF2"></path>
+  <rect x="50" y="48" width="6" height="6" fill="#FF4D2D"></rect>
+  <circle cx="14" cy="14" r="2.5" fill="#D2FB3C"></circle>
+</svg>

@@ -45,7 +45,7 @@ export function MissionBody({ project }: { project: Project }) {
               >
                 ▸
               </span>
-              <span>{h}</span>
+              <div><h3 className="font-semibold">{h.title}</h3><p className="mt-2">{h.body}</p></div>
             </motion.li>
           ))}
         </ul>

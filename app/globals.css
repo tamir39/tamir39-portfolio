@@ -1,119 +1,161 @@
 @import "tailwindcss";
+@import "./themes.css";
+@import "./mockups.css";
+@import "./header.css";
+@import "./cursors.css";
+@import "./academic-motion.css";
+@import "./exploration.css";
+@import "./slideshow.css";
+@import "./contact.css";
+@import "./page-motion.css";
+@import "./studio-journey.css";
+@import "./appearance.css";
+@import "./hero-artwork.css";
+@import "./workflow.css";
+@import "./practice-finale.css";
+@import "./games.css";
+@import "./cat-companion.css";
+@import "./intro.css";
 
 @theme {
-  --font-display: var(--font-kanit), ui-sans-serif, system-ui;
-  --color-bg: #0c0c0c;
-
-  /* Cybercat accent palette */
-  --font-mono: var(--font-mono-var, ui-monospace, monospace);
-  --color-cyan: #00e5ff;
-  --color-cyan-dim: rgba(0, 229, 255, 0.12);
-  --color-cyan-glow: rgba(0, 229, 255, 0.35);
-  --color-stroke: rgba(215, 226, 234, 0.12);
-  --color-stroke-bright: rgba(0, 229, 255, 0.3);
-  --color-bg-panel: rgba(12, 12, 12, 0.85);
-  --color-text-dim: rgba(215, 226, 234, 0.4);
-  --color-text-soft: rgba(215, 226, 234, 0.7);
+  --font-display: var(--font-sans-var), ui-sans-serif, system-ui;
+  --font-editorial: var(--theme-editorial-font, var(--font-editorial-var)), Georgia, serif;
+  --font-mono: var(--font-mono-var), ui-monospace, monospace;
+  --color-paper: #fbf8f5;
+  --color-surface: #eee8f2;
+  --color-ink: #332b49;
+  --color-muted: #655c7e;
+  --color-accent: #75618d;
+  --color-lime: #d9ed9c;
+  --color-coral: #f5ad94;
+  --color-bg: #f8f7f2;
+  --color-text: #282923;
+  --color-text-soft: #64645c;
+  --color-text-dim: #64645c;
+  --color-cyan: #334bd3;
+  --color-stroke: #d8d7cf;
+  --color-stroke-bright: #334bd3;
 }
 
 @layer base {
-  html,
-  body,
-  #__next {
-    background: #0c0c0c;
-    font-family: var(--font-display);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  ::selection {
-    background: rgba(139, 92, 246, 0.35);
-    color: #ffffff;
-  }
-
-  *:focus-visible {
-    outline: 2px solid #8b5cf6;
-    outline-offset: 2px;
-  }
-
-  /* Subtle scan-line monitor texture */
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.025) 2px,
-      rgba(0, 0, 0, 0.025) 4px
-    );
-    pointer-events: none;
-    z-index: 9999;
-  }
+  html { position: relative; scroll-behavior: smooth; scroll-padding-top: 0; background: var(--color-paper); }
+  body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-display); -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  section[id], footer[id] { scroll-margin-top: 0; }
+  ::selection { background: var(--color-lime); color: var(--color-ink); }
+  :focus-visible { outline: 3px solid var(--color-ink); outline-offset: 5px; }
+  img { outline: 1px solid rgb(0 0 0 / 0.06); outline-offset: -1px; }
+  summary { list-style-position: inside; }
 }
 
+@media (forced-colors: active) { :focus-visible { outline-color: Highlight; } }
+
 @layer utilities {
-  .hero-heading {
-    background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* HUD label — mono font, dim, spaced */
-  .text-hud-label {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-text-dim);
-  }
-
-  /* Cyan glow text */
-  .text-glow-cyan {
-    color: var(--color-cyan);
-    text-shadow: 0 0 8px var(--color-cyan-glow), 0 0 24px rgba(0, 229, 255, 0.15);
-  }
-
-  /* Frosted dark panel */
-  .glass-strong {
-    background: var(--color-bg-panel);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--color-stroke);
-  }
-
-  /* Cyan gradient divider line */
-  .divider-cyan {
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      var(--color-cyan) 50%,
-      transparent
-    );
-    opacity: 0.3;
-  }
+  .skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 100; padding: 1rem; background: var(--color-ink); color: white; transform: translateY(-200%); border-radius: 0.5rem; }
+  .skip-link:focus { transform: translateY(0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* The cosmic prototype keeps story text in the DOM and scenery in WebGL. */
+@layer components {
+  .lab-demo { position: relative; display: flex; min-height: 280px; align-items: center; justify-content: center; padding: 52px 24px 24px; }
+  .lab-demo-0, .lab-demo-4 { background: #eee8f5; }
+  .lab-demo-1, .lab-demo-5 { background: #e8eee5; }
+  .lab-demo-2, .lab-demo-3 { background: #f5e9dc; }
+  .lab-save { display: inline-flex; min-height: 52px; align-items: center; gap: 10px; border-radius: 999px; background: #493b61; padding: 0 24px; color: white; font-size: 13px; box-shadow: 0 6px 14px -8px #493b61; transition: background-color 200ms, transform 200ms; }
+  .lab-save:hover { transform: translateY(-2px); }
+  .lab-save:active { transform: scale(0.96); }
+  .lab-save.is-saved { background: #416b55; }
+  @media (prefers-reduced-motion: reduce) { .lab-save { transition: none; } .lab-save:hover, .lab-save:active { transform: none; } }
+  .cosmic-journey { position: relative; height: 250svh; background: #eee5f2; }
+  .cosmic-stage { position: sticky; top: 0; height: 100svh; min-height: 600px; overflow: hidden; isolation: isolate; }
+  .cosmic-sky { position: absolute; inset: 0; background: radial-gradient(ellipse at 78% 25%, #fde3d2 0%, transparent 42%), radial-gradient(ellipse at 20% 70%, #f8e9ed 0%, transparent 50%), linear-gradient(150deg, #ebe6f7 0%, #e5ddef 50%, #cfd9ed 100%); }
+  .cosmic-canvas { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .cosmic-canvas canvas { display: block; }
+  .cosmic-haze { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgb(239 232 246 / 0.5), transparent 62%), linear-gradient(0deg, #f8f7f2 0%, rgb(248 247 242 / 0.5) 9%, transparent 28%); }
+  .cosmic-story { position: relative; z-index: 10; height: 100%; display: grid; align-items: center; pointer-events: none; padding-top: 50px; padding-bottom: 100px; }
+  .cosmic-intro, .cosmic-next { grid-area: 1 / 1; }
+  .cosmic-next { opacity: 0; }
+  .cosmic-scene-label { position: absolute; z-index: 10; right: 10%; bottom: 18%; color: #655c7e; text-align: center; }
+  .cosmic-fallback-planet { position: absolute; width: 28vw; height: 28vw; min-width: 180px; min-height: 180px; right: 9%; top: 12%; border-radius: 50%; background: radial-gradient(circle at 30% 25%, #ffe8d5, #ecbaaf 65%, #ba91b7); box-shadow: inset -20px -20px 50px #b497be55, 0 0 80px #f8d5c866; }
+  .cosmic-orbit { position: absolute; right: 3%; top: 25%; width: 40vw; height: 12vw; border: 14px solid #f1d4df88; border-radius: 50%; transform: rotate(-24deg); }
+  .cosmic-fallback-comet { position: absolute; top: 50%; left: 62%; width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 14px 7px #b2c9ff, 0 0 45px 20px #c4b5ef88; }
+  .cosmic-fallback-comet::after { content: ""; position: absolute; left: 10px; top: 3px; width: 110px; height: 5px; border-radius: 50%; background: linear-gradient(90deg, #b9b1f3, transparent); transform: rotate(-20deg); transform-origin: left; }
+  .cosmic-stage:has(.cosmic-canvas canvas) .cosmic-fallback-planet, .cosmic-stage:has(.cosmic-canvas canvas) .cosmic-fallback-comet, .cosmic-stage:has(.cosmic-canvas canvas) .cosmic-orbit { visibility: hidden; }
+  .cosmic-star { position: absolute; color: #fffdf6; text-shadow: 0 0 14px #fff; }
+  .star-one { right: 42%; top: 16%; font-size: 22px; }
+  .star-two { right: 7%; top: 55%; font-size: 35px; }
+  .star-three { left: 8%; bottom: 18%; font-size: 14px; }
+  @media (max-width: 699px) {
+    .cosmic-journey { height: 220svh; }
+    .cosmic-stage { min-height: 650px; }
+    .cosmic-story { align-items: start; padding-top: 105px; }
+    .cosmic-intro h1 { font-size: clamp(2.8rem, 10.5vw, 4.5rem); max-width: 92%; }
+    .cosmic-next h2 { font-size: clamp(2.6rem, 10vw, 4.2rem); max-width: 95%; }
+    .cosmic-intro p, .cosmic-next p { max-width: 285px; }
+    .cosmic-haze { background: linear-gradient(180deg, rgb(238 230 245 / 0.6), transparent 75%), linear-gradient(0deg, #f8f7f2, transparent 25%); }
+    .cosmic-scene-label { display: none; }
+    .cosmic-fallback-planet { top: 48%; right: -12%; opacity: 0.7; }
+    .cosmic-orbit { top: 58%; right: -25%; width: 75vw; height: 20vw; }
   }
+  @media (max-height: 650px) and (min-width: 700px) {
+    .cosmic-story h1, .cosmic-story h2 { font-size: 3.5rem; }
+    .cosmic-story { padding-top: 70px; }
+    .cosmic-scene-label { display: none; }
+  }
+}
+@layer components {
+  .cosmic-stage { height: 100svh; }
+}
+
+/* Five distinct destinations share one continuous comet journey. */
+@layer components {
+  .cosmic-journey { height: 620svh; }
+  .cosmic-story { padding-bottom: 155px; }
+  .universe-chapter { grid-area: 1 / 1; max-width: 660px; }
+  .universe-heading { font-size: clamp(3.3rem, min(6.2vw, 9svh), 6rem); line-height: 1.04; letter-spacing: -0.06em; font-weight: 500; color: #332b49; }
+  .universe-nav-link { display: inline-flex; min-width: 40px; min-height: 40px; align-items: center; justify-content: center; gap: 8px; padding: 0 12px; border: 1px solid transparent; border-radius: 999px; color: #655c7e; transition: background-color 180ms, border-color 180ms; }
+  .universe-nav-link:hover { background: #ffffff66; }
+  .universe-nav-link.is-current { background: #ffffff77; border-color: #9188aa55; color: #433953; }
+  .universe-anchor { position: absolute; left: 0; width: 1px; height: 1px; }
+  .cosmic-stage[data-universe="design"] .cosmic-sky { background: radial-gradient(ellipse at 80% 20%, #f6dcc8, transparent 55%), linear-gradient(145deg,#faf4e9,#eae7dc); }
+  .cosmic-stage[data-universe="digital"] .cosmic-sky { background: radial-gradient(ellipse at 80% 20%, #c7e8ed, transparent 60%), linear-gradient(145deg,#ecf2f7,#ccdbf1); }
+  .cosmic-stage[data-universe="pixel"] .cosmic-sky { background: radial-gradient(ellipse at 85% 20%, #fff0cb, transparent 60%), linear-gradient(145deg,#eef2da,#d6e7dc); }
+  .cosmic-stage[data-universe="garden"] .cosmic-sky { background: radial-gradient(ellipse at 75% 20%, #efd0dd, transparent 55%), linear-gradient(145deg,#f9edf1,#e5daeb); }
+  .cosmic-stage[data-universe="design"] .cosmic-fallback-planet { border-radius: 12px; background: #d99679; transform: rotate(-15deg); }
+  .cosmic-stage[data-universe="digital"] .cosmic-fallback-planet { border-radius: 6px; background: linear-gradient(145deg,#c9f0efaa,#90b5ddaa); border: 1px solid white; transform: skewY(-10deg); }
+  .cosmic-stage[data-universe="pixel"] .cosmic-fallback-planet { border-radius: 0; background: #b8cc8d; box-shadow: 18px 18px #d6b28b,36px 36px #aac2d3; }
+  .cosmic-stage[data-universe="garden"] .cosmic-fallback-planet { background: radial-gradient(circle at 25% 25%,#ffe9f0,#d7a6be); }
+  .cosmic-haze { background: linear-gradient(90deg,rgb(248 245 249 / 0.45),transparent 65%),linear-gradient(0deg,#f8f7f2,transparent 25%); }
+  @media (max-width: 699px) {
+    .cosmic-journey { height: 580svh; }
+    .cosmic-story { padding-top: 100px; padding-bottom: 120px; }
+    .universe-heading { font-size: clamp(2.7rem,10vw,4rem); }
+    .universe-chapter { max-width: 100%; }
+    .universe-chapter p { max-width: 275px; }
+    .universe-nav-link { min-width: 36px; padding: 0 8px; }
+    .cosmic-haze { background: linear-gradient(180deg,rgb(248 245 249 / 0.45),transparent 70%),linear-gradient(0deg,#f8f7f2,transparent 25%); }
+  }
+  @media (max-height:650px) and (min-width:700px) { .universe-heading { font-size:3.4rem; } .cosmic-story { padding-top:65px; } }
+}
+
+/* Shared visual language for the portfolio beyond the journey. */
+@layer components {
+  .section-eyebrow { display: flex; align-items: center; gap: 9px; margin-bottom: 1.25rem; font-family: var(--font-mono); font-size: 10px; font-weight: 400; line-height: 1.6; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-muted); }
+  .section-heading { font-size: clamp(2.4rem,4.3vw,4.5rem); font-weight: 500; line-height: 1.1; letter-spacing: -0.05em; }
+  .project-window { display: block; overflow: hidden; border-radius: 18px; padding: clamp(1.25rem,3vw,2.5rem); }
+  .cosmic-text-link { display: inline-flex; align-items: center; gap: 1rem; min-height: 44px; border-bottom: 1px solid #b4a3c6; font-size: 12px; font-weight: 600; color: #65507f; transition: color 180ms, border-color 180ms; }
+  .cosmic-text-link:hover { color: #39294d; border-color: #65507f; }
+  .logo-comet { position: relative; display: inline-block; width: 8px; height: 8px; margin-inline: 5px 10px; border-radius: 50%; background: #b5a2d0; box-shadow: 0 0 8px 3px #ded3ed; }
+  .logo-comet::after { content: ""; position: absolute; top: 2px; left: 6px; width: 20px; height: 4px; border-radius: 50%; background: linear-gradient(90deg,#b5a2d0,transparent); transform: rotate(-25deg); transform-origin: left; }
+  .explorer-orbit { position: absolute; inset: -30px -20px; border: 1px solid #bdacd0; border-radius: 50%; transform: rotate(-25deg); }
+  .explorer-orbit::after { content: ""; position: absolute; inset: 22px -18px; border: 1px solid #d1bfdc; border-radius: 50%; transform: rotate(45deg); }
+  .orbit-point { position: absolute; top: 12%; left: 13%; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 30% 20%,#fcebe1,#b6a1ce); box-shadow: 0 0 0 6px #eee8f2; }
+  .orbit-star { position: absolute; bottom: 5%; right: 16%; color: #a28db8; font-size: 30px; background: #eee8f2; padding: 0 3px; }
 }

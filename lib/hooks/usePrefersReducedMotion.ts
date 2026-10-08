@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 
 export function usePrefersReducedMotion(): boolean {
+  // The browser's first render must match SSR; read the device preference only
+  // after hydration. CSS handles reduced motion before this effect runs.
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
