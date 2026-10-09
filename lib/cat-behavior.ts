@@ -6,7 +6,7 @@ export type CatEmotion =
 export type CatSignal =
   | "welcome" | "section" | "project" | "discovery" | "pet" | "drag" | "cuddle" | "hover"
   | "idle" | "sleep" | "return" | "scroll-fast" | "theme-change"
-  | "appearance-change" | "appearance-suggest" | "theme-suggest" | "help" | "form-focus"
+  | "appearance-change" | "theme-override" | "tour-stop" | "help" | "form-focus"
   | "form-success" | "form-error" | "control-hover" | "control-use";
 
 export type CatInteraction = "navigate" | "appearance" | "play" | "choice" | "reference" | "media" | "button" | "link";
@@ -29,7 +29,7 @@ export interface CatReaction {
   priority: number;
   /** Milliseconds; zero means this actionable prompt waits for dismissal. */
   duration: number;
-  action?: "switch-appearance" | "switch-theme" | "explore";
+  action?: "explore";
   context: CatContext;
 }
 
@@ -100,28 +100,28 @@ const controlUseLines: Record<CatInteraction, readonly string[]> = {
 
 /** Copy, priorities, timing, and cooldowns live together instead of in listeners. */
 export const CAT_REACTIONS: Readonly<Record<CatSignal, ReactionDefinition>> = {
-  welcome: { emotion: "welcome", priority: 20, duration: 8500, cooldown: 3_600_000, relevance: "global", lines: ["Oh. A human. Welcome!", "Welcome to Tamir’s little studio. I’ll show you around."] },
-  section: { emotion: "curious", priority: 25, duration: 8500, cooldown: 35_000, relevance: "section", lines: context => sectionLines[context.location ?? ""] ?? sectionLines[context.section] ?? ["A new corner to explore. I’ll come with you.", "Take a look around. I’m keeping you company."] },
-  project: { emotion: "happy", priority: 45, duration: 8000, cooldown: 18_000, relevance: "section", lines: ["Excellent taste. I supervised.", "A closer look? Now you’re speaking my language.", "That one has a story. Go on, have a look."] },
-  discovery: { emotion: "excited", priority: 80, duration: 8500, cooldown: 3000, relevance: "global", lines: context => context.count !== undefined && context.count >= 4 ? ["All four discoveries! You’ve earned my most enthusiastic purr.", "Every discovery unlocked. I knew you had it in you!"] : ["You did it! We did it. Mostly you.", "A new discovery. Cue the tiny victory dance.", "Curiosity rewarded. Nicely done!"] },
-  pet: { emotion: "shy", priority: 55, duration: 7500, cooldown: 4500, relevance: "global", lines: ["Professional assistant. Amateur loaf.", "Oh. Attention. My one weakness.", "Purr received. Productivity temporarily suspended."] },
-  drag: { emotion: "oops", priority: 110, duration: 7500, cooldown: 0, relevance: "global", lines: ["Airborne! I did not file a flight plan.", "Oh, we’re travelling first class. Carry on.", "Precious cargo. Please mind the whiskers.", "A surprise relocation? My assistant will hear about this."] },
-  cuddle: { emotion: "shy", priority: 35, duration: 7000, cooldown: 60_000, relevance: "section", lines: ["Just checking whether this cursor gives good head scratches.", "A little cursor cuddle. Strictly professional.", "This cursor looked like it could use some company."] },
-  hover: { emotion: "suspicious", priority: 10, duration: 7500, cooldown: 60_000, relevance: "section", lines: ["That cursor looks suspiciously pettable.", "I see you over there. Very interesting."] },
-  idle: { emotion: "curious", priority: 12, duration: 8500, cooldown: 120_000, relevance: "section", lines: ["Reading? Take your time. I’ll keep you company.", "A thoughtful pause. I respect the technique.", "Still here if you need a little direction."] },
-  sleep: { emotion: "sleepy", priority: 5, duration: 8500, cooldown: 180_000, relevance: "section", lines: ["I’ll guard the page. Horizontally.", "Take your time. I’m testing the nap feature."] },
-  return: { emotion: "welcome", priority: 30, duration: 7500, cooldown: 120_000, relevance: "global", lines: ["You’re back! I definitely wasn’t sleeping.", "Welcome back. Your spot is still here."] },
-  "scroll-fast": { emotion: "oops", priority: 15, duration: 7500, cooldown: 90_000, relevance: "section", lines: ["Tiny legs. Big scroll energy.", "Keeping up. Barely. Don’t mind me."] },
-  "theme-change": { emotion: "happy", priority: 35, duration: 8000, cooldown: 35_000, relevance: "theme", lines: ["New mood, same excellent assistant.", "A little change of scenery. I approve.", "The whole studio got dressed up."] },
-  "appearance-change": { emotion: "happy", priority: 40, duration: 8000, cooldown: 45_000, relevance: "appearance", lines: context => context.appearance === "dark" ? ["Night shift. My whiskers are ready.", "A cozy little evening in the studio."] : ["Hello, sunshine. Well, screen-shine.", "A fresh little change of light."] },
-  "appearance-suggest": { emotion: "curious", priority: 40, duration: 0, cooldown: 900_000, relevance: "appearance", action: "switch-appearance", lines: context => context.appearance === "dark" ? ["We’ve been in dark mode a while. Fancy a little light?", "Want a change of scenery? Try the light side of the studio."] : ["We’ve been in light mode a while. Fancy a cozier view?", "Want a change of scenery? Try the dark side of the studio."] },
-  "theme-suggest": { emotion: "curious", priority: 30, duration: 0, cooldown: 0, relevance: "theme", action: "switch-theme", lines: ["Fancy a wardrobe change? The whole page has a few.", "Same work, a different mood. Want to try another look?", "I’m ready for a tiny makeover. Shall we try a new theme?"] },
+  welcome: { emotion: "welcome", priority: 20, duration: 6500, cooldown: 3_600_000, relevance: "global", lines: ["Oh. A human. Welcome!", "Welcome to Tamir’s little studio. I’ll show you around."] },
+  section: { emotion: "curious", priority: 25, duration: 6500, cooldown: 35_000, relevance: "section", lines: context => sectionLines[context.location ?? ""] ?? sectionLines[context.section] ?? ["A new corner to explore. I’ll come with you.", "Take a look around. I’m keeping you company."] },
+  project: { emotion: "happy", priority: 45, duration: 6000, cooldown: 18_000, relevance: "section", lines: ["Excellent taste. I supervised.", "A closer look? Now you’re speaking my language.", "That one has a story. Go on, have a look."] },
+  discovery: { emotion: "excited", priority: 80, duration: 6500, cooldown: 3000, relevance: "global", lines: context => context.count !== undefined && context.count >= 4 ? ["All four discoveries! You’ve earned my most enthusiastic purr.", "Every discovery unlocked. I knew you had it in you!"] : ["You did it! We did it. Mostly you.", "A new discovery. Cue the tiny victory dance.", "Curiosity rewarded. Nicely done!"] },
+  pet: { emotion: "shy", priority: 55, duration: 5500, cooldown: 4500, relevance: "global", lines: ["Professional assistant. Amateur loaf.", "Oh. Attention. My one weakness.", "Purr received. Productivity temporarily suspended."] },
+  drag: { emotion: "oops", priority: 110, duration: 5500, cooldown: 0, relevance: "global", lines: ["Airborne! I did not file a flight plan.", "Oh, we’re travelling first class. Carry on.", "Precious cargo. Please mind the whiskers.", "A surprise relocation? My assistant will hear about this."] },
+  cuddle: { emotion: "shy", priority: 35, duration: 5000, cooldown: 60_000, relevance: "section", lines: ["Just checking whether this cursor gives good head scratches.", "A little cursor cuddle. Strictly professional.", "This cursor looked like it could use some company."] },
+  hover: { emotion: "suspicious", priority: 10, duration: 5500, cooldown: 60_000, relevance: "section", lines: ["That cursor looks suspiciously pettable.", "I see you over there. Very interesting."] },
+  idle: { emotion: "curious", priority: 12, duration: 6500, cooldown: 120_000, relevance: "section", lines: ["Reading? Take your time. I’ll keep you company.", "A thoughtful pause. I respect the technique.", "Still here if you need a little direction."] },
+  sleep: { emotion: "sleepy", priority: 5, duration: 6500, cooldown: 180_000, relevance: "section", lines: ["I’ll guard the page. Horizontally.", "Take your time. I’m testing the nap feature."] },
+  return: { emotion: "welcome", priority: 30, duration: 5500, cooldown: 120_000, relevance: "global", lines: ["You’re back! I definitely wasn’t sleeping.", "Welcome back. Your spot is still here."] },
+  "scroll-fast": { emotion: "oops", priority: 15, duration: 5500, cooldown: 90_000, relevance: "section", lines: ["Tiny legs. Big scroll energy.", "Keeping up. Barely. Don’t mind me."] },
+  "theme-change": { emotion: "happy", priority: 35, duration: 6000, cooldown: 35_000, relevance: "theme", lines: ["New mood, same excellent assistant.", "A little change of scenery. I approve.", "The whole studio got dressed up."] },
+  "theme-override": { emotion: "oops", priority: 58, duration: 5000, cooldown: 10_000, relevance: "global", lines: ["Oops. Not my fault. The button was paw-shaped.", "Your choice it is. I was merely conducting a tiny experiment.", "A creative disagreement. I shall blame the paw.", "You saw nothing. My paw has its own artistic direction."] },
+  "tour-stop": { emotion: "happy", priority: 28, duration: 3200, cooldown: 0, relevance: "global", lines: ["Your turn. I’ll get out of the way.", "Tour dismissed. Chief whisker officer stepping aside."] },
+  "appearance-change": { emotion: "happy", priority: 40, duration: 6000, cooldown: 45_000, relevance: "appearance", lines: context => context.appearance === "dark" ? ["Night shift. My whiskers are ready.", "A cozy little evening in the studio."] : ["Hello, sunshine. Well, screen-shine.", "A fresh little change of light."] },
   help: { emotion: "helpful", priority: 65, duration: 0, cooldown: 15_000, relevance: "section", action: "explore", lines: ["Try the playground. I’ll point you toward something to explore.", "Need a place to start? There are little discoveries in the playground."] },
-  "form-focus": { emotion: "thinking", priority: 60, duration: 8000, cooldown: 180_000, relevance: "section", lines: ["An idea in progress. I’ll keep my paws off the keyboard.", "You write. I’ll handle the moral support.", "Take your time. Good ideas deserve a little room."] },
-  "form-success": { emotion: "happy", priority: 95, duration: 8500, cooldown: 8000, relevance: "global", lines: ["Message sent. I’ll leave the reply to Tamir.", "Your message is on its way. Thanks for reaching out."] },
-  "form-error": { emotion: "helpful", priority: 100, duration: 9000, cooldown: 8000, relevance: "section", lines: ["Your message wasn’t sent. Check the form feedback before trying again.", "Review the form feedback, then try sending your message again."] },
-  "control-hover": { emotion: "curious", priority: 18, duration: 7500, cooldown: 22_000, relevance: "section", lines: context => controlHoverLines[context.interaction ?? "button"] },
-  "control-use": { emotion: "happy", priority: 42, duration: 7500, cooldown: 12_000, relevance: "section", lines: context => controlUseLines[context.interaction ?? "button"] },
+  "form-focus": { emotion: "thinking", priority: 60, duration: 6000, cooldown: 180_000, relevance: "section", lines: ["An idea in progress. I’ll keep my paws off the keyboard.", "You write. I’ll handle the moral support.", "Take your time. Good ideas deserve a little room."] },
+  "form-success": { emotion: "happy", priority: 95, duration: 6500, cooldown: 8000, relevance: "global", lines: ["Message sent. I’ll leave the reply to Tamir.", "Your message is on its way. Thanks for reaching out."] },
+  "form-error": { emotion: "helpful", priority: 100, duration: 7000, cooldown: 8000, relevance: "section", lines: ["Your message wasn’t sent. Check the form feedback before trying again.", "Review the form feedback, then try sending your message again."] },
+  "control-hover": { emotion: "curious", priority: 18, duration: 5500, cooldown: 22_000, relevance: "section", lines: context => controlHoverLines[context.interaction ?? "button"] },
+  "control-use": { emotion: "happy", priority: 42, duration: 5500, cooldown: 12_000, relevance: "section", lines: context => controlUseLines[context.interaction ?? "button"] },
 };
 
 interface PendingReaction {
@@ -184,7 +184,7 @@ export class CatBehaviorController {
     }
 
     const definition = CAT_REACTIONS[signal];
-    const cooldownKey = signal === "appearance-suggest" ? `${signal}:${context.appearance}` : signal === "section" ? `${signal}:${context.location ?? context.section}` : signal;
+    const cooldownKey = signal === "section" ? `${signal}:${context.location ?? context.section}` : signal;
     const last = this.lastAccepted.get(cooldownKey);
     const cooldown = Math.max(0, this.cooldowns[signal] ?? definition.cooldown);
     const queued = this.pending.find(item => item.signal === signal);

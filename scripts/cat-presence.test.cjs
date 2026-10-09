@@ -13,35 +13,7 @@ const presenceModule = { exports: {} };
 vm.runInNewContext(compiled.outputText, {
   module: presenceModule, exports: presenceModule.exports, Math,
 }, { filename: sourcePath });
-const { CatAppearanceDwell, CatThemeDwell, CAT_THEME_SUGGEST_MS, chooseCatSuggestedTheme, CAT_APPEARANCE_SUGGEST_MS, chooseCatPageArea, chooseCatPerch, chooseCatNuzzle, chooseCatDrop, chooseCatRestFacing } = presenceModule.exports;
-
-test("theme invitations wait for engaged browsing and only suggest once per visit", () => {
-  const dwell = new CatThemeDwell();
-  for (let elapsed = 0; elapsed < CAT_THEME_SUGGEST_MS - 1000; elapsed += 1000) assert.equal(dwell.advance("editorial", 1000, true), false);
-  assert.equal(dwell.advance("editorial", 600_000, false), false);
-  assert.equal(dwell.advance("editorial", 1000, true), true);
-  dwell.acknowledge();
-  for (let second = 0; second < 120; second++) assert.equal(dwell.advance("botanical", 1000, true), false);
-});
-
-test("changing theme starts a fresh wait and delayed background ticks cannot skip it", () => {
-  const dwell = new CatThemeDwell();
-  for (let second = 0; second < 60; second++) dwell.advance("editorial", 1000, true);
-  assert.equal(dwell.advance("play", 1000, true), false);
-  assert.equal(dwell.advance("play", 600_000, true), false);
-  assert.equal(dwell.advance("play", -1000, true), false);
-  for (let second = 0; second < 86; second++) assert.equal(dwell.advance("play", 1000, true), false);
-  assert.equal(dwell.advance("play", 1000, true), true);
-});
-
-test("the cat suggests a different valid theme for every current theme", () => {
-  const themes = ["editorial", "swiss", "blueprint", "play", "botanical"];
-  for (const theme of themes) {
-    const suggested = chooseCatSuggestedTheme(theme);
-    assert.notEqual(suggested, theme);
-    assert.ok(themes.includes(suggested));
-  }
-});
+const { chooseCatPageArea, chooseCatPerch, chooseCatNuzzle, chooseCatDrop, chooseCatRestFacing } = presenceModule.exports;
 
 test("a resting mobile cat faces inward at either screen edge", () => {
   for (const width of [320, 390, 430, 599]) {
@@ -69,12 +41,6 @@ test("mobile roaming stays on the safe side when the opposite margin is covered"
   assert.equal(point.x, 324);
   assert.ok(Math.abs(point.y - 420) >= 64);
 });
-
-function tick(dwell, mode, seconds, engaged = true) {
-  let ready = false;
-  for (let second = 0; second < seconds; second++) ready = dwell.advance(mode, 1000, engaged);
-  return ready;
-}
 
 function seededRandom(seed) {
   let state = seed >>> 0;
@@ -111,45 +77,6 @@ test("section tracking follows both scrolling directions and ignores areas outsi
   assert.equal(chooseCatPageArea(areas.map(area => ({ ...area, top: area.top - 400, bottom: area.bottom - 400 })), 844), "independent");
   assert.equal(chooseCatPageArea(areas.map(area => ({ ...area, top: area.top + 400, bottom: area.bottom + 400 })), 844), "games");
   assert.equal(chooseCatPageArea([{ id: "later", top: 900, bottom: 2000 }], 844), null);
-});
-
-test("appearance suggestions require three minutes of engaged visible time", () => {
-  const dwell = new CatAppearanceDwell();
-  assert.equal(CAT_APPEARANCE_SUGGEST_MS, 180_000);
-  assert.equal(tick(dwell, "dark", 179), false);
-  assert.equal(tick(dwell, "dark", 600, false), false, "another tab or paused interaction adds no dwell time");
-  assert.equal(dwell.advance("dark", 1000, true), true, "the final visible second reaches three minutes");
-});
-
-test("delayed background ticks and negative deltas do not fast-forward dwell time", () => {
-  const dwell = new CatAppearanceDwell();
-  assert.equal(dwell.advance("light", 3_600_000, false), false);
-  assert.equal(dwell.advance("light", -1000, true), false);
-  assert.equal(dwell.advance("light", 3_600_000, true), false, "a delayed tick is capped rather than catching up an hour");
-  assert.equal(tick(dwell, "light", 177), false);
-  assert.equal(dwell.advance("light", 1000, true), true);
-});
-
-test("switching appearance resets dwell symmetrically in both directions", () => {
-  for (const [first, second] of [["light", "dark"], ["dark", "light"]]) {
-    const dwell = new CatAppearanceDwell();
-    assert.equal(tick(dwell, first, 170), false);
-    assert.equal(tick(dwell, second, 179), false, `${first} time must not carry into ${second}`);
-    assert.equal(dwell.advance(second, 1000, true), true);
-    assert.equal(tick(dwell, first, 179), false, `returning to ${first} starts a fresh dwell period`);
-    assert.equal(dwell.advance(first, 1000, true), true);
-  }
-});
-
-test("acknowledging a suggestion prevents repeated nudges once per appearance", () => {
-  const dwell = new CatAppearanceDwell();
-  assert.equal(tick(dwell, "dark", 180), true);
-  dwell.acknowledge("dark");
-  assert.equal(tick(dwell, "dark", 900), false);
-  assert.equal(tick(dwell, "light", 180), true, "dark acknowledgement does not suppress a light-mode suggestion");
-  dwell.acknowledge("light");
-  assert.equal(tick(dwell, "light", 900), false);
-  assert.equal(tick(dwell, "dark", 900), false, "the previous dark-mode acknowledgement survives a mode change");
 });
 
 test("perches keep the complete cat inside common phone, tablet, and desktop viewports", () => {

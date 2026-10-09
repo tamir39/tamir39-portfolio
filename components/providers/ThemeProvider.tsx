@@ -1,15 +1,18 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { MotionConfig } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { DESKTOP_THEME_CYCLE_MEDIA, isTheme, MOTION_STORAGE_KEY, THEME_STORAGE_KEY, themes, themeTransition, type ThemeId } from "@/lib/themes";
-import { APPEARANCE_STORAGE_KEY, isAppearance, type Appearance, type ResolvedAppearance } from "@/lib/appearance";
+import { APPEARANCE_STORAGE_KEY, darkSwatches, isAppearance, type Appearance, type ResolvedAppearance } from "@/lib/appearance";
+import { themeClickOrigin, themeControlAtPoint, themeRevealCircle, type ThemeOrigin } from "@/lib/theme-reveal";
+import { LIGHTWEIGHT_THEME_REVEAL_MEDIA, startThemeCoverReveal, type ThemeRevealHandle } from "@/lib/theme-cover-reveal";
 
 type ThemeContextValue = {
   theme: ThemeId;
-  setTheme: (theme: ThemeId) => void;
+  setTheme: (theme: ThemeId, origin?: ThemeOrigin) => void;
   appearance: Appearance;
   resolvedAppearance: ResolvedAppearance;
   setAppearance: (appearance: Appearance) => void;
@@ -28,15 +31,112 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const systemReduced = usePrefersReducedMotion();
   const pathname = usePathname();
   const reduced = motionPaused || Boolean(systemReduced);
+  const reveal = useRef<ThemeRevealHandle | null>(null);
+  const revealRing = useRef<HTMLDivElement | null>(null);
+  const revealVersion = useRef(0);
+  const reducedPreference = useRef(reduced);
+  const activation = useRef<{ origin: ThemeOrigin | undefined; at: number } | null>(null);
+  reducedPreference.current = reduced;
+
+  useEffect(() => {
+    if (reduced) queueMicrotask(() => { if (reducedPreference.current) reveal.current?.skipTransition(); });
+  }, [reduced]);
+
+  useEffect(() => {
+    const capture = (event: MouseEvent) => { activation.current = { origin: themeClickOrigin(event), at: performance.now() }; };
+    document.addEventListener("click", capture, true);
+    return () => {
+      document.removeEventListener("click", capture, true);
+      revealVersion.current++;
+      reveal.current?.skipTransition();
+      revealRing.current?.remove();
+      delete document.documentElement.dataset.themeReveal;
+      delete document.documentElement.dataset.themeRevealPaint;
+      document.documentElement.style.removeProperty("--theme-reveal-color");
+    };
+  }, []);
+
+  const changeWithReveal = useCallback((commit: () => void, destination: { theme: ThemeId; appearance: ResolvedAppearance }, origin?: ThemeOrigin) => {
+    const version = ++revealVersion.current;
+    reveal.current?.skipTransition();
+    revealRing.current?.remove();
+    revealRing.current = null;
+    const root = document.documentElement;
+    delete root.dataset.themeRevealPaint;
+    const apply = () => {
+      if (version !== revealVersion.current) return;
+      root.dataset.themeRevealPaint = "true";
+      flushSync(commit);
+    };
+    const finish = () => {
+      if (version !== revealVersion.current) return;
+      reveal.current = null;
+      revealRing.current = null;
+      delete root.dataset.themeReveal;
+      delete root.dataset.themeRevealPaint;
+      root.style.removeProperty("--theme-reveal-color");
+    };
+    if (reducedPreference.current || document.hidden) {
+      delete root.dataset.themeReveal;
+      apply();
+      delete root.dataset.themeRevealPaint;
+      root.style.removeProperty("--theme-reveal-color");
+      reveal.current = null;
+      return;
+    }
+    const recent = activation.current;
+    const point = origin ?? (recent && performance.now() - recent.at < 300 ? recent.origin : undefined);
+    const circle = themeRevealCircle(point, window.innerWidth, window.innerHeight);
+    const { x, y, radius } = circle;
+    const target = themes.find(item => item.id === destination.theme)!;
+    const palette = destination.appearance === "dark" ? darkSwatches[destination.theme] : { paper: target.paper, ink: target.color };
+    if (window.matchMedia(LIGHTWEIGHT_THEME_REVEAL_MEDIA).matches) {
+      root.dataset.themeReveal = "true";
+      reveal.current = startThemeCoverReveal({ circle, paper: palette.paper, accent: palette.ink, apply, isCurrent: () => version === revealVersion.current, onFinish: finish });
+      return;
+    }
+    if (typeof document.startViewTransition !== "function") { apply(); finish(); return; }
+    root.style.setProperty("--theme-reveal-color", palette.ink);
+    // A named, transparent participant gives the reveal its own crisp rim above
+    // the page snapshot. Animate its box rather than scaling the stroke width.
+    const ring = document.createElement("div");
+    ring.className = "theme-reveal-ring";
+    ring.setAttribute("aria-hidden", "true");
+    Object.assign(ring.style, { left: `${x}px`, top: `${y}px` });
+    document.body.append(ring);
+    revealRing.current = ring;
+    root.dataset.themeReveal = "true";
+    root.dataset.themeRevealPaint = "true";
+    const transition = document.startViewTransition(apply);
+    reveal.current = transition;
+    void transition.ready.then(() => {
+      if (version !== revealVersion.current) return;
+      root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] }, {
+        duration: 560, easing: "cubic-bezier(.2,.65,.3,1)", pseudoElement: "::view-transition-new(root)",
+      });
+      root.animate([
+        { width: "0px", height: "0px", transform: `translate(${x}px, ${y}px)` },
+        { width: `${radius * 2}px`, height: `${radius * 2}px`, transform: `translate(${x - radius}px, ${y - radius}px)` },
+      ], { duration: 560, easing: "cubic-bezier(.2,.65,.3,1)", pseudoElement: "::view-transition-group(theme-reveal-rim)" });
+    }).catch(() => { /* Skipping an interrupted reveal still commits the latest choice. */ });
+    void transition.finished.catch(() => {}).finally(() => {
+      ring.remove();
+      finish();
+    });
+  }, []);
 
   const setAppearance = useCallback((next: Appearance) => {
     const resolved = next === "system" ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : next;
-    document.documentElement.dataset.appearancePreference = next;
-    document.documentElement.dataset.appearance = resolved;
-    updateAppearance(next);
-    updateResolvedAppearance(resolved);
-    try { localStorage.setItem(APPEARANCE_STORAGE_KEY, next); } catch { /* Optional persistence. */ }
-  }, []);
+    const commit = () => {
+      document.documentElement.dataset.appearancePreference = next;
+      document.documentElement.dataset.appearance = resolved;
+      updateAppearance(next);
+      updateResolvedAppearance(resolved);
+      try { localStorage.setItem(APPEARANCE_STORAGE_KEY, next); } catch { /* Optional persistence. */ }
+    };
+    if (document.documentElement.dataset.appearance === resolved && !reveal.current) commit();
+    else changeWithReveal(commit, { theme: isTheme(document.documentElement.dataset.theme) ? document.documentElement.dataset.theme : "editorial", appearance: resolved });
+  }, [changeWithReveal]);
 
   useEffect(() => {
     const initial = document.documentElement.dataset.theme;
@@ -97,11 +197,29 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return () => icons.disconnect();
   }, [theme, resolvedAppearance, pathname]);
 
-  const setTheme = useCallback((next: ThemeId) => {
-    document.documentElement.dataset.theme = next;
-    updateTheme(next);
-    try { localStorage.setItem(THEME_STORAGE_KEY, next); } catch { /* The session still works when storage is unavailable. */ }
-  }, []);
+  const setTheme = useCallback((next: ThemeId, origin?: ThemeOrigin) => {
+    if (next === document.documentElement.dataset.theme && !reveal.current) return;
+    changeWithReveal(() => {
+      document.documentElement.dataset.theme = next;
+      updateTheme(next);
+      try { localStorage.setItem(THEME_STORAGE_KEY, next); } catch { /* The session still works when storage is unavailable. */ }
+    }, { theme: next, appearance: document.documentElement.dataset.appearance === "dark" ? "dark" : "light" }, origin);
+  }, [changeWithReveal]);
+
+  useEffect(() => {
+    const capturedChoice = (event: MouseEvent) => {
+      if (!event.isTrusted || event.detail === 0 || event.target !== document.documentElement || document.documentElement.dataset.themeReveal !== "true") return;
+      // Root snapshot capture retargets input to <html>. Recover only a real,
+      // visible palette hit, preserving fast consecutive visitor selections.
+      const origin = { x: event.clientX, y: event.clientY };
+      const button = themeControlAtPoint(origin);
+      const next = button?.dataset.themeOption;
+      if (isTheme(next)) setTheme(next, origin);
+      else if (isAppearance(button?.dataset.modeOption)) setAppearance(button.dataset.modeOption);
+    };
+    document.addEventListener("click", capturedChoice, true);
+    return () => document.removeEventListener("click", capturedChoice, true);
+  }, [setTheme, setAppearance]);
 
   useEffect(() => {
     let tap: { id: number; x: number; y: number; scrollX: number; scrollY: number; target: EventTarget | null } | null = null;
@@ -109,6 +227,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const interactive = 'a,button,input,select,textarea,label,summary,iframe,video,audio,[contenteditable]:not([contenteditable="false"]),[role="button"],[role="link"],[role="slider"],[role="switch"],[role="checkbox"],[role="radio"],[role="tab"],.appearance-dock,[data-theme-cycle-ignore]';
     const start = (event: PointerEvent) => {
       tap = null;
+      // During snapshot capture browsers retarget pointer hit tests to <html>.
+      // That synthetic background target must never cycle the theme again.
+      if (document.documentElement.dataset.themeReveal === "true" && event.target === document.documentElement) return;
       if (!desktop.matches || event.pointerType === "touch") return;
       if (!event.isPrimary || event.button !== 0 || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey || !(event.target instanceof Element) || event.target.closest(interactive)) return;
       tap = { id: event.pointerId, x: event.clientX, y: event.clientY, scrollX: window.scrollX, scrollY: window.scrollY, target: event.target };
@@ -123,7 +244,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (!desktop.matches) return;
       if (!started || started.id !== event.pointerId || started.target !== event.target || event.defaultPrevented || Math.hypot(event.clientX - started.x, event.clientY - started.y) > 8 || Math.abs(window.scrollX - started.scrollX) > 2 || Math.abs(window.scrollY - started.scrollY) > 2 || window.getSelection()?.isCollapsed === false) return;
       const current = document.documentElement.dataset.theme;
-      setTheme(themes[(themes.findIndex(item => item.id === current) + 1) % themes.length].id);
+      setTheme(themes[(themes.findIndex(item => item.id === current) + 1) % themes.length].id, { x: event.clientX, y: event.clientY });
     };
     window.addEventListener("pointerdown", start, { passive: true });
     window.addEventListener("pointermove", move, { passive: true });

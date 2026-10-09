@@ -53,7 +53,7 @@ export class CatActivityCycle {
 
     if (this.phase === "blocked") {
       this.phase = "waiting";
-      this.deadline = time + this.delay(6000, 9000);
+      this.deadline = time + this.delay(3000, 5000);
       return null;
     }
 
@@ -61,7 +61,7 @@ export class CatActivityCycle {
       if (time < this.deadline) return this.activity;
       this.activity = null;
       this.phase = "waiting";
-      this.deadline = time + this.delay(7000, 12_000);
+      this.deadline = time + this.delay(4000, 7000);
       return null;
     }
 

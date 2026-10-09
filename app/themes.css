@@ -116,14 +116,28 @@ html[data-theme="botanical"] {
 .portrait-frame { border-color: var(--theme-panel); }
 .portfolio-hero { padding-block-start: 28px; }
 .hero-layout { display: grid; grid-template-areas: "eyebrow" "title" "intro"; gap: 24px; padding-block-end: 32px; align-items: start; }
-.hero-title { grid-area: title; min-width: 0; font-size: clamp(3.4rem, 6.8vw, 6.7rem); line-height: 1.06; font-weight: 500; letter-spacing: -0.065em; }
+.hero-title { grid-area: title; position: relative; min-width: 0; font-family: var(--font-sans-var), sans-serif; font-size: clamp(3.4rem, 6.8vw, 6.7rem); line-height: 1.06; font-weight: 500; letter-spacing: -0.065em; }
 .hero-title > span { display: block; }
-.hero-title-accent { font-family: var(--theme-editorial-font), Georgia, serif; color: var(--color-accent); font-style: italic; font-weight: 400; }
+.hero-title-accent { font-family: var(--font-editorial-var), Georgia, serif; color: var(--color-accent); font-style: italic; font-weight: 400; }
+.hero-title-word { white-space: nowrap; }
+.hero-title-letter { transition: opacity 70ms ease-out; }
+.hero-title-samples, .hero-title-sample { position: absolute; inset: 0 0 auto; visibility: hidden; pointer-events: none; }
+.hero-title-sample { display: block; margin: 0; }
+.hero-title:not([data-hero-reveal="complete"]) > .hero-title-accent { text-decoration-color: transparent; }
+@media (prefers-reduced-motion: reduce) { .hero-title-letter { transition: none; } }
 .hero-intro { grid-area: intro; display: flex; min-width: 0; max-width: 430px; flex-direction: column; align-items: start; gap: 20px; }
 .hero-profile { display: flex; min-width: 0; align-items: center; gap: 16px; }
 .hero-description { max-width: 42ch; }
 .hero-projects-link { align-self: start; }
 .hero-index { grid-area: eyebrow; display: flex; align-items: center; gap: 12px; align-self: center; }
+.hero-layout[data-hero-stage="showcase"] .hero-title { grid-column: 1 / -1; inline-size: 100%; text-align: center; translate: 0 var(--hero-showcase-offset, 0px); }
+.hero-layout:is([data-hero-stage="showcase"], [data-hero-stage="settling"]) .hero-intro { visibility: hidden; opacity: 0; pointer-events: none; }
+.hero-layout:is([data-hero-stage="showcase"], [data-hero-stage="settling"]) + .hero-studio-cue { visibility: hidden; }
+.hero-intro-word { white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-intro { transition: opacity 180ms ease-out; }
+  .hero-intro-letter { transition: opacity 55ms ease-out; }
+}
 .hero-index .section-eyebrow { margin: 0; }
 .hero-emblem { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--theme-line); border-radius: 50%; color: var(--color-accent); font-family: var(--theme-editorial-font); font-size: 24px; }
 .theme-studio { padding: 1.25rem 0 1.75rem; }
@@ -181,8 +195,8 @@ html[data-theme="botanical"] {
 
 /* Art direction changes geometry and hierarchy, beyond swapping the palette. */
 html[data-theme="swiss"] .font-editorial, html[data-theme="play"] .font-editorial, html[data-theme="blueprint"] .font-editorial { font-family: var(--theme-editorial-font), sans-serif; font-style: normal; }
-html[data-theme="swiss"] .hero-title { font-weight: 800; letter-spacing: -0.075em; }
-html[data-theme="swiss"] .hero-title-accent { font-weight: 800; font-style: normal; }
+:is(html[data-theme="swiss"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="swiss"]) { font-weight: 800; letter-spacing: -0.075em; }
+:is(html[data-theme="swiss"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="swiss"]) > .hero-title-accent { font-family: var(--font-sans-var), sans-serif; font-weight: 800; font-style: normal; }
 /* Keep the Swiss rule decorative so it does not enlarge the shared hero row. */
 html[data-theme="swiss"] .hero-index { position: relative; }
 html[data-theme="swiss"] .hero-index::before { content: ""; position: absolute; inset-inline: 0; inset-block-start: -22px; border-block-start: 4px solid var(--color-ink); pointer-events: none; }
@@ -194,23 +208,23 @@ html[data-theme="swiss"] .profile-card::before { border-top: 5px solid var(--the
 html[data-theme="swiss"] .explorer-orbit { border-color: color-mix(in srgb, var(--color-accent) 35%, var(--theme-line)); }
 html[data-theme="swiss"] .portfolio-project h3 { font-weight: 700; letter-spacing: -0.055em; }
 html[data-theme="blueprint"] .hero-layout, html[data-theme="blueprint"] .lab-demo { background-image: linear-gradient(#1644b80b 1px, transparent 1px), linear-gradient(90deg, #1644b80b 1px, transparent 1px); background-size: 24px 24px; }
-html[data-theme="blueprint"] .hero-title { font-size: clamp(2.8rem, 5.5vw, 5.3rem); letter-spacing: -0.07em; }
-html[data-theme="blueprint"] .hero-title-accent { font-style: normal; font-weight: 400; }
+:is(html[data-theme="blueprint"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="blueprint"]) { font-size: clamp(2.8rem, 5.5vw, 5.3rem); letter-spacing: -0.07em; }
+:is(html[data-theme="blueprint"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="blueprint"]) > .hero-title-accent { font-family: var(--font-mono-var), monospace; font-style: normal; font-weight: 400; }
 html[data-theme="blueprint"] .hero-emblem { border-radius: 0; border-style: dashed; }
 html[data-theme="blueprint"] .portfolio-project { position: relative; border-style: dashed; }
 html[data-theme="blueprint"] .portfolio-project h3 { font-size: clamp(1.45rem, 2vw, 2.2rem); letter-spacing: -0.06em; }
 html[data-theme="blueprint"] .profile-card { --profile-tilt: 0deg; }
 html[data-theme="blueprint"] .profile-card::before { outline: 1px dashed var(--theme-line); outline-offset: 8px; }
 html[data-theme="blueprint"] .explorer-orbit, html[data-theme="blueprint"] .explorer-orbit::after { border-style: dashed; }
-html[data-theme="play"] .hero-title { font-weight: 800; letter-spacing: -0.065em; }
-html[data-theme="play"] .hero-title-accent { font-style: normal; font-weight: 800; text-decoration: underline; text-decoration-color: #edbe39; text-decoration-thickness: 9px; text-underline-offset: 7px; }
+:is(html[data-theme="play"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="play"]) { font-weight: 800; letter-spacing: -0.065em; }
+:is(html[data-theme="play"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="play"]) > .hero-title-accent { font-family: var(--font-sans-var), sans-serif; font-style: normal; font-weight: 800; text-decoration: underline; text-decoration-color: #edbe39; text-decoration-thickness: 9px; text-underline-offset: 7px; }
 html[data-theme="play"] .hero-emblem { border: 1px solid var(--color-ink); background: #f5da78; box-shadow: 3px 3px var(--color-ink); font-size: 34px; }
 html[data-theme="play"] .lab-card, html[data-theme="play"] .portfolio-project { border-color: var(--color-ink); }
 html[data-theme="play"] .theme-button, html[data-theme="play"] .lab-save { box-shadow: 3px 3px var(--color-ink); }
 html[data-theme="play"] .profile-card { --profile-tilt: 2deg; }
 html[data-theme="play"] .explorer-orbit { border-radius: 28px; transform: none; rotate: 5deg; }
 html[data-theme="play"] .portfolio-project h3 { font-weight: 700; letter-spacing: -0.06em; }
-html[data-theme="botanical"] .hero-title { font-family: var(--font-editorial-var), Georgia, serif; font-weight: 400; font-size: clamp(3.2rem, 6.1vw, 6rem); letter-spacing: -0.045em; }
+:is(html[data-theme="botanical"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="botanical"]) { font-family: var(--font-editorial-var), Georgia, serif; font-weight: 400; font-size: clamp(3.2rem, 6.1vw, 6rem); letter-spacing: -0.045em; }
 html[data-theme="botanical"] .hero-emblem { border-radius: 50% 3px 50% 3px; background: var(--color-surface); font-size: 32px; }
 html[data-theme="botanical"] .profile-card { --profile-tilt: -1deg; }
 html[data-theme="botanical"] .explorer-orbit { border-radius: 45% 55% 65% 35%; }
@@ -234,8 +248,8 @@ html[data-theme="botanical"] .explorer-orbit { border-radius: 45% 55% 65% 35%; }
   .theme-option { min-height: 62px; }
   .theme-caption > span:last-child { display: none; }
   .hero-title { font-size: clamp(2.8rem, 12.8vw, 3.6rem); }
-  html[data-theme="blueprint"] .hero-title { font-size: clamp(2.5rem, 11vw, 3.2rem); }
-  html[data-theme="botanical"] .hero-title { font-size: clamp(2.8rem, 11.5vw, 3.5rem); }
+  :is(html[data-theme="blueprint"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="blueprint"]) { font-size: clamp(2.5rem, 11vw, 3.2rem); }
+  :is(html[data-theme="botanical"] .hero-title:not([data-hero-theme]), .hero-title[data-hero-theme="botanical"]) { font-size: clamp(2.8rem, 11.5vw, 3.5rem); }
   .portfolio-project { padding: 24px; }
 }
 @media (max-width: 360px) {
