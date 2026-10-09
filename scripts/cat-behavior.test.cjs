@@ -47,26 +47,18 @@ function harness(options = {}) {
   return { clock, events, controller, current: () => events.at(-1) };
 }
 
-test("theme invitations wait for an explicit choice and disappear when their theme is stale", () => {
+test("a tour interruption gives one finite goodbye and direct feedback can replace it", () => {
   const h = harness();
-  h.controller.signal("theme-suggest", context);
-  assert.equal(h.current().action, "switch-theme");
-  assert.equal(h.clock.tasks.size, 0);
-  h.clock.advance(60_000);
-  assert.equal(h.current().signal, "theme-suggest");
-  h.controller.signal("theme-change", { ...context, theme: "play" });
-  assert.equal(h.current().signal, "theme-change");
-  h.clock.advance(8000);
+  h.controller.signal("tour-stop", context);
+  const first = h.current().text;
+  assert.equal(h.current().action, undefined);
+  h.clock.advance(3200);
   assert.equal(h.current(), null);
-});
-
-test("a theme invitation yields to important feedback and does not return afterward", () => {
-  const h = harness();
-  h.controller.signal("theme-suggest", context);
-  h.controller.signal("form-success", context);
-  assert.equal(h.current().signal, "form-success");
-  h.clock.advance(8500);
-  assert.equal(h.current(), null);
+  h.controller.signal("tour-stop", context);
+  assert.notEqual(h.current().text, first);
+  h.controller.signal("pet", context);
+  assert.equal(h.current().signal, "pet");
+  assert.equal(h.clock.tasks.size, 1);
 });
 
 test("a higher priority event replaces one emotion and cancels its old timer", () => {
@@ -76,7 +68,7 @@ test("a higher priority event replaces one emotion and cancels its old timer", (
   h.controller.signal("discovery", { ...context, count: 2 });
   assert.equal(h.current().emotion, "excited");
   assert.equal(h.clock.tasks.size, 1);
-  h.clock.advance(7500);
+  h.clock.advance(CAT_REACTIONS.discovery.duration - 1000);
   assert.equal(h.current().signal, "discovery", "the interrupted welcome timer cannot clear the discovery");
   h.clock.advance(1000);
   assert.equal(h.current(), null);
@@ -88,10 +80,10 @@ test("cooldowns prevent repeated reactions and copy rotates after the cooldown",
   assert.equal(h.controller.signal("pet", context), true);
   const firstText = h.current().text;
   assert.equal(h.controller.signal("pet", context), false);
-  h.clock.advance(7500);
+  h.clock.advance(CAT_REACTIONS.pet.duration);
   assert.equal(h.current(), null);
   assert.equal(h.controller.signal("pet", context), false);
-  h.clock.advance(2500);
+  h.clock.advance(10_000 - CAT_REACTIONS.pet.duration);
   assert.equal(h.controller.signal("pet", context), true);
   assert.notEqual(h.current().text, firstText);
 });
@@ -113,7 +105,7 @@ test("repeated pending signals coalesce to the latest context", () => {
   h.controller.signal("form-error", context);
   h.controller.signal("discovery", { ...context, count: 1 });
   h.controller.signal("discovery", { ...context, count: 4 });
-  h.clock.advance(9000);
+  h.clock.advance(CAT_REACTIONS["form-error"].duration);
   assert.equal(h.current().context.count, 4);
   assert.match(h.current().text, /four|Every discovery/);
   assert.equal(h.events.filter(event => event?.signal === "discovery").length, 1);
@@ -123,7 +115,7 @@ test("old location events and expired pending reactions are dropped", () => {
   const h = harness({ pendingTtl: 1000 });
   h.controller.signal("form-focus", context);
   h.controller.signal("idle", context);
-  h.clock.advance(8000);
+  h.clock.advance(CAT_REACTIONS["form-focus"].duration);
   assert.equal(h.current(), null);
   assert.deepEqual(h.events.filter(Boolean).map(event => event.signal), ["form-focus"]);
 
@@ -131,45 +123,12 @@ test("old location events and expired pending reactions are dropped", () => {
   second.controller.signal("form-focus", context);
   second.controller.signal("idle", context);
   second.controller.signal("section", { ...context, section: "work" });
-  second.clock.advance(8000);
+  second.clock.advance(CAT_REACTIONS["form-focus"].duration);
   assert.equal(second.current().signal, "section");
   assert.equal(second.current().context.section, "work");
-  second.clock.advance(8500);
+  second.clock.advance(CAT_REACTIONS.section.duration);
   assert.equal(second.current(), null);
   assert.equal(second.events.some(event => event?.signal === "idle"), false);
-});
-
-test("actionable suggestions stay until dismissed and dismissal purges pending chatter", () => {
-  const h = harness();
-  h.controller.signal("appearance-suggest", { ...context, appearance: "dark" });
-  assert.equal(h.current().action, "switch-appearance");
-  assert.equal(h.current().duration, 0);
-  assert.match(h.current().text, /light/);
-  h.controller.signal("hover", { ...context, appearance: "dark" });
-  h.clock.advance(60_000);
-  assert.equal(h.current().signal, "appearance-suggest");
-  h.controller.dismiss();
-  assert.equal(h.current(), null);
-  h.clock.advance(60_000);
-  assert.equal(h.current(), null);
-  assert.equal(h.clock.tasks.size, 0);
-});
-
-test("appearance prompts work both ways and become stale when appearance changes", () => {
-  const h = harness();
-  h.controller.signal("appearance-suggest", context);
-  assert.match(h.current().text, /cozier|dark/);
-  h.controller.signal("appearance-change", { ...context, appearance: "dark" });
-  assert.equal(h.current().signal, "appearance-change");
-  assert.equal(h.current().action, undefined);
-
-  const second = harness();
-  second.controller.signal("form-error", context);
-  second.controller.signal("appearance-suggest", context);
-  second.controller.signal("appearance-change", { ...context, appearance: "dark" });
-  second.clock.advance(9000);
-  assert.equal(second.current().signal, "appearance-change");
-  assert.equal(second.events.some(event => event?.signal === "appearance-suggest"), false);
 });
 
 test("persistent prompts yield to important events without later resurfacing", () => {
@@ -178,7 +137,7 @@ test("persistent prompts yield to important events without later resurfacing", (
   assert.equal(h.current().action, "explore");
   h.controller.signal("discovery", context);
   assert.equal(h.current().signal, "discovery");
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.discovery.duration);
   assert.equal(h.current(), null);
   assert.deepEqual(h.events.filter(Boolean).map(event => event.signal), ["help", "discovery"]);
 });
@@ -225,13 +184,13 @@ test("cursor cuddles wait for discoveries, expire once, and respect their cooldo
   h.controller.signal("cuddle", context);
   assert.equal(h.current().signal, "discovery", "cursor cuddles cannot interrupt a celebration");
   assert.equal(h.clock.tasks.size, 1);
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.discovery.duration);
   assert.equal(h.current().signal, "cuddle");
   assert.equal(h.current().emotion, "shy");
-  h.clock.advance(7000);
+  h.clock.advance(CAT_REACTIONS.cuddle.duration);
   assert.equal(h.current(), null);
   assert.equal(h.controller.signal("cuddle", context), false);
-  h.clock.advance(44_500);
+  h.clock.advance(60_000 - CAT_REACTIONS.discovery.duration - CAT_REACTIONS.cuddle.duration);
   assert.equal(h.controller.signal("cuddle", context), true);
   assert.equal(h.events.filter(event => event?.signal === "cuddle").length, 2);
 });
@@ -248,10 +207,10 @@ test("holding a bubble pauses its timer and resumes with exactly the remaining t
   h.controller.hold(false);
   h.controller.hold(false);
   assert.equal(h.clock.tasks.size, 1, "repeated hover or focus events do not create extra timers");
-  h.clock.advance(5499);
+  h.clock.advance(CAT_REACTIONS.pet.duration - 2001);
   assert.equal(h.current().signal, "pet");
   h.clock.advance(1);
-  assert.equal(h.current(), null, "only the unconsumed 5.5 seconds run after reading ends");
+  assert.equal(h.current(), null, "only the unconsumed 3.5 seconds run after reading ends");
 });
 
 test("preemption resets a held bubble so the new emotion expires normally", () => {
@@ -264,7 +223,7 @@ test("preemption resets a held bubble so the new emotion expires normally", () =
   assert.equal(h.current().signal, "discovery");
   assert.equal(h.clock.tasks.size, 1, "a held welcome cannot hold its replacement");
   h.controller.hold(false);
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.discovery.duration);
   assert.equal(h.current(), null);
 });
 
@@ -281,7 +240,7 @@ test("dismissal, suspension, and destruction clear a held reaction", () => {
       assert.equal(h.controller.signal("project", context), false);
     } else {
       h.controller.signal("project", context);
-      h.clock.advance(8000);
+      h.clock.advance(CAT_REACTIONS.project.duration);
       assert.equal(h.current(), null, `${exit} must not leave the next reaction held`);
     }
   }
@@ -297,22 +256,11 @@ test("holding an actionable prompt leaves it persistent without creating a timer
   assert.equal(h.clock.tasks.size, 0);
 });
 
-test("appearance suggestion cooldowns are independent for light and dark", () => {
-  const h = harness();
-  assert.equal(h.controller.signal("appearance-suggest", { ...context, appearance: "dark" }), true);
-  h.controller.dismiss();
-  h.clock.advance(180_000);
-  assert.equal(h.controller.signal("appearance-suggest", context), true, "the opposite mode can suggest after its own three-minute dwell");
-  h.controller.dismiss();
-  assert.equal(h.controller.signal("appearance-suggest", { ...context, appearance: "dark" }), false, "the original mode still honors its own cooldown");
-  h.clock.advance(720_000);
-  assert.equal(h.controller.signal("appearance-suggest", { ...context, appearance: "dark" }), true);
-});
-
-test("all ordinary reactions have readable durations and action prompts are persistent", () => {
-  for (const definition of Object.values(CAT_REACTIONS)) {
+test("ordinary comments allow reading time, the brief goodbye expires, and help waits for dismissal", () => {
+  for (const [signal, definition] of Object.entries(CAT_REACTIONS)) {
+    if (signal === "tour-stop") { assert.equal(definition.duration, 3200); continue; }
     if (definition.action) assert.equal(definition.duration, 0);
-    else assert.ok(definition.duration >= 7000 && definition.duration <= 9000);
+    else assert.ok(definition.duration >= 5000 && definition.duration <= 7000);
   }
 });
 
@@ -328,7 +276,7 @@ test("picking up the cat owns one rotating comment until it is put down", () => 
   assert.equal(h.current().signal, "drag", "a long carry keeps its pickup comment");
   assert.equal(h.clock.tasks.size, 0, "holding does not accumulate timers");
   h.controller.hold(false);
-  h.clock.advance(7499);
+  h.clock.advance(CAT_REACTIONS.drag.duration - 1);
   assert.equal(h.current().signal, "drag");
   h.clock.advance(1);
   assert.equal(h.current(), null, "the comment closes after release");
@@ -342,12 +290,12 @@ test("section comments have independent cooldowns for each page area", () => {
   const motion = { ...context, location: "studio-motion" };
   assert.equal(h.controller.signal("section", visual), true);
   assert.match(h.current().text, /moods|wardrobe/);
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.section.duration);
   assert.equal(h.controller.signal("section", motion), true, "the previous area does not silence this chapter");
   assert.match(h.current().text, /heart|response/);
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.section.duration);
   assert.equal(h.controller.signal("section", visual), false, "quickly returning to the same area stays quiet");
-  h.clock.advance(18_000);
+  h.clock.advance(35_000 - CAT_REACTIONS.section.duration * 2);
   assert.equal(h.controller.signal("section", visual), true);
 });
 
@@ -356,10 +304,10 @@ test("pending comments from an earlier chapter do not follow the visitor to anot
   h.controller.signal("discovery", { ...context, location: "studio-visual" });
   h.controller.signal("section", { ...context, location: "studio-motion" });
   h.controller.signal("section", { ...context, location: "studio-ux" });
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.discovery.duration);
   assert.equal(h.current().context.location, "studio-ux");
   assert.match(h.current().text, /tablet/);
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.section.duration);
   assert.equal(h.current(), null);
   assert.equal(h.events.filter(event => event?.signal === "section").length, 1);
 });
@@ -372,6 +320,6 @@ test("control comments describe the action, throttle repeated clicks, and yield 
   h.controller.signal("discovery", { ...context, count: 1 });
   assert.equal(h.current().signal, "discovery");
   assert.equal(h.clock.tasks.size, 1);
-  h.clock.advance(8500);
+  h.clock.advance(CAT_REACTIONS.discovery.duration);
   assert.equal(h.current(), null, "the earlier control comment does not replay after the success");
 });

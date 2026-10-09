@@ -22,7 +22,11 @@ export function PageIntro() {
       root.dataset.pageIntro = "complete";
       return;
     }
-    if (root.dataset.pageIntro !== "loading") return;
+    if (root.dataset.pageIntro !== "loading") {
+      // Anchor visits intentionally skip the intro; publish their ready state too.
+      root.dataset.pageIntro = "complete";
+      return;
+    }
 
     let disposed = false;
     let complete = false;

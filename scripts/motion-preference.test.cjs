@@ -24,6 +24,7 @@ test("the theme provider renders the same motion state on the server and a reduc
     const react = {
       createContext: () => ({ Provider: "provider" }),
       useState: initial => [initial, () => {}],
+      useRef: initial => ({ current: initial }),
       useEffect: () => {}, useMemo: fn => fn(), useCallback: fn => fn,
     };
     const hook = loadSource("lib/hooks/usePrefersReducedMotion.ts", { react });
