@@ -1,7 +1,7 @@
 /* Brightness and visual direction are independent preferences. */
 :root { --brand-mark: var(--color-accent); --theme-on-success: #ffffff; }
 /* Freeze color interpolation so the new snapshot is already the chosen theme. */
-html[data-theme-reveal-paint="true"] *, html[data-theme-reveal-paint="true"] *::before, html[data-theme-reveal-paint="true"] *::after { transition-duration: 0s !important; }
+html[data-theme-reveal-paint="true"] *:not(.cat-companion), html[data-theme-reveal-paint="true"] *::before, html[data-theme-reveal-paint="true"] *::after { transition-duration: 0s !important; }
 html[data-theme-reveal="true"]::view-transition-old(root), html[data-theme-reveal="true"]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 html[data-theme-reveal="true"]::view-transition-old(root) { z-index: 1; }
 html[data-theme-reveal="true"]::view-transition-new(root) { z-index: 2; }
@@ -15,9 +15,6 @@ html[data-theme-reveal="true"]::view-transition-group(*),
 html[data-theme-reveal="true"]::view-transition-image-pair(*),
 html[data-theme-reveal="true"]::view-transition-old(*),
 html[data-theme-reveal="true"]::view-transition-new(*) { pointer-events: none !important; }
-.theme-reveal-cover { position: fixed; z-index: 120; inset: 0; overflow: hidden; contain: strict; pointer-events: none; will-change: opacity; }
-.theme-reveal-disc { position: absolute; transform-origin: center; will-change: transform; }
-.theme-reveal-disc > svg { display: block; inline-size: 100%; block-size: 100%; overflow: visible; }
 html[data-appearance="light"] { color-scheme: light; }
 html[data-appearance="dark"] { color-scheme: dark; --theme-shadow: 0 20px 45px -24px #00000099; --theme-on-success: #14251a; }
 

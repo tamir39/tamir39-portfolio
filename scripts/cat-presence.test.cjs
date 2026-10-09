@@ -13,7 +13,34 @@ const presenceModule = { exports: {} };
 vm.runInNewContext(compiled.outputText, {
   module: presenceModule, exports: presenceModule.exports, Math,
 }, { filename: sourcePath });
-const { chooseCatPageArea, chooseCatPerch, chooseCatNuzzle, chooseCatDrop, chooseCatRestFacing } = presenceModule.exports;
+const { chooseCatPageArea, chooseCatPerch, chooseCatNuzzle, chooseCatDrop, chooseCatRestFacing, chooseCatMobileEdgeReturn, catInMobileCenter } = presenceModule.exports;
+
+test("a phone's center visit lasts briefly, then chooses a clear margin", () => {
+  const from = { x: 170, y: 300 };
+  assert.equal(chooseCatMobileEdgeReturn(from, 390, 844, 48, 111, 3999, []), null);
+  const point = chooseCatMobileEdgeReturn(from, 390, 844, 48, 111, 4000, []);
+  assert.ok(point);
+  assert.equal(catInMobileCenter(point.x, 390, 48), false);
+  assertWithinViewport(point, 390, 844, 48, 111);
+});
+
+test("a center return uses the other margin when the preferred edge is blocked", () => {
+  const obstacle = { x: 0, y: 0, width: 95, height: 844 };
+  const point = chooseCatMobileEdgeReturn({ x: 170, y: 300 }, 390, 844, 48, 111, 5000, [obstacle]);
+  assert.equal(point.x, 324);
+  assert.equal(intersects(point, 48, 111, obstacle, 10), false);
+});
+
+test("a center return waits rather than covering content when both margins are blocked", () => {
+  assert.equal(chooseCatMobileEdgeReturn({ x: 170, y: 300 }, 390, 844, 48, 111, 5000, [
+    { x: 0, y: 0, width: 100, height: 844 }, { x: 290, y: 0, width: 100, height: 844 },
+  ]), null);
+});
+
+test("the shorter center visit does not move resting edge cats or desktop placements", () => {
+  for (const x of [18, 324]) assert.equal(chooseCatMobileEdgeReturn({ x, y: 300 }, 390, 844, 48, 111, 5000, []), null);
+  assert.equal(chooseCatMobileEdgeReturn({ x: 500, y: 300 }, 1200, 844, 76, 140, 5000, []), null);
+});
 
 test("a resting mobile cat faces inward at either screen edge", () => {
   for (const width of [320, 390, 430, 599]) {

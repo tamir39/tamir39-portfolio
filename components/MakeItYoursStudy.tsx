@@ -15,7 +15,7 @@ export const practiceSteps = [
 /** The last chapter turns shared principles into a visible point of view. */
 export function MakeItYoursStudy({ stage = 2, scrollDriven = false }: { stage?: number; scrollDriven?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
-  const visible = useInView(root, { amount: .25, once: true });
+  const visible = useInView(root, { amount: .25 });
   const { theme, reduced } = usePortfolioTheme();
   const currentStage = Math.max(0, Math.min(practiceSteps.length - 1, stage));
   const current = themes.find(item => item.id === theme)!;

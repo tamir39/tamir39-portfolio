@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Ellipsis, Pause, Play, X } from "lucide-react";
 import { usePortfolioTheme } from "./providers/ThemeProvider";
 import { CAT_REACTIONS, CatBehaviorController, type CatContext, type CatEmotion, type CatInteraction, type CatReaction, type CatSignal } from "@/lib/cat-behavior";
-import { chooseCatPageArea, chooseCatPerch, chooseCatNuzzle, chooseCatDrop, chooseCatRestFacing, type CatObstacle, type CatPoint } from "@/lib/cat-presence";
+import { catInMobileCenter, CAT_MOBILE_CENTER_VISIT_MS, chooseCatMobileEdgeReturn, chooseCatPageArea, chooseCatPerch, chooseCatNuzzle, chooseCatDrop, chooseCatRestFacing, type CatObstacle, type CatPoint } from "@/lib/cat-presence";
 import { CatActivityCycle, CAT_ACTIVITY_DURATIONS, type CatActivity } from "@/lib/cat-activities";
 import { useCatThemeTour } from "@/lib/hooks/useCatThemeTour";
 import { CatThemePlayCycle, catHeroStop, catHeroArcPoint, CAT_HERO_TRAVEL_MS, type CatTourStep, type CatHeroArc } from "@/lib/cat-theme-tour";
@@ -726,6 +726,21 @@ export function CatCompanion() {
       if (tourBusy.current || document.documentElement.dataset.pageIntro !== "complete" || document.hidden || prefs.paused || prefs.napping || prefs.hidden || prefs.typing || prefs.menuOpen || prefs.dragging) { stopActivity(); return; }
       const quiet = now - presence.current.lastActivity;
       const engaged = quiet < SLEEP_AFTER;
+      if (!prefs.reduced && !requestedActivity.current && !interacting.current.pointer && !interacting.current.focus && !bubbleEngagement.current.pointer && !bubbleEngagement.current.focus && currentNode && now > presence.current.manualUntil && now - presence.current.lastScroll > 1200 && now - presence.current.lastMove >= CAT_MOBILE_CENTER_VISIT_MS && catInMobileCenter(position.current.x, window.innerWidth, currentNode.offsetWidth) && document.documentElement.dataset.themeReveal !== "true") {
+        const point = chooseCatMobileEdgeReturn(position.current, window.innerWidth, window.innerHeight, currentNode.offsetWidth, currentNode.offsetHeight, now - presence.current.lastMove, visibleObstacles(currentNode));
+        if (point) {
+          stopActivity();
+          currentNode.dataset.cuddling = "false";
+          currentNode.dataset.side = point.x > window.innerWidth / 2 ? "right" : "left";
+          faceForTravel(currentNode, point, 1800);
+          currentNode.style.setProperty("--companion-x", `${point.x}px`);
+          currentNode.style.setProperty("--companion-y", `${point.y}px`);
+          position.current = { ...point, variation: position.current.variation };
+          presence.current.lastMove = now; presence.current.lastRoam = now;
+          fitBubble();
+          return;
+        }
+      }
       const canPlay = pathname === "/" && quiet > 3000 && !prefs.reduced && !currentActivity.current && !activeReaction.current && !interacting.current.pointer && !interacting.current.focus && now > presence.current.manualUntil && now - presence.current.lastScroll > 3000 && now - presence.current.lastMove > 2200 && !document.querySelector('.appearance-dock[data-open="true"]');
       if (themePlayCycle.current.advance(elapsed, pathname === "/" && engaged && !prefs.reduced, canPlay)) { playWithPicker.current(); return; }
       const manualActivity = requestedActivity.current && Boolean(currentActivity.current);
@@ -786,7 +801,7 @@ export function CatCompanion() {
       document.removeEventListener("focusin", focus); document.removeEventListener("focusout", blur); document.removeEventListener("input", input); document.removeEventListener("change", change); document.removeEventListener("pointerover", over); document.removeEventListener("pointerout", out);
       document.removeEventListener("click", click); document.removeEventListener("keydown", escape); document.removeEventListener("visibilitychange", visibility); window.removeEventListener("portfolio:cat", onSignal);
     };
-  }, [mounted, pathname, relocate, keepClear, signal, fitBubble, faceForTravel, stopActivity, theme]);
+  }, [mounted, pathname, relocate, keepClear, signal, fitBubble, faceForTravel, stopActivity]);
 
   useEffect(() => {
     if (!reaction || !ai.current.enabled || !AI_SIGNALS.has(reaction.signal) || ai.current.attempts >= 6 || Date.now() - ai.current.lastRequest < 45000) return;
@@ -806,7 +821,7 @@ export function CatCompanion() {
     const point = chooseCatDrop(requested, window.innerWidth, window.innerHeight, node.offsetWidth, node.offsetHeight, visibleObstacles(node));
     const now = performance.now();
     position.current = { ...point, variation: position.current.variation };
-    presence.current.lastMove = now; presence.current.lastRoam = now; presence.current.manualUntil = now + 10_000; lastCuddle.current = now;
+    presence.current.lastMove = now; presence.current.lastRoam = now; presence.current.manualUntil = now + (catInMobileCenter(point.x, window.innerWidth, node.offsetWidth) ? CAT_MOBILE_CENTER_VISIT_MS : 10_000); lastCuddle.current = now;
     node.dataset.side = point.x > window.innerWidth / 2 ? "right" : "left";
     node.dataset.landing = "true";
     delete node.dataset.dragging;

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { BrandScene } from "./BrandScene";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
 
 export function PageLoading() {
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   const [paused, setPaused] = useState(false);
   return <div className="page-loading" data-theme-cycle-ignore>
     <BrandScene loading={!paused} variant="loading" />

@@ -1,4 +1,17 @@
 export type CatPoint = { x: number; y: number };
+export const CAT_MOBILE_CENTER_VISIT_MS = 4000;
+
+export function catInMobileCenter(x: number, width: number, catWidth: number) {
+  const center = x + catWidth / 2;
+  return width < 600 && center > width * .25 && center < width * .75;
+}
+
+/** End a short center visit only when a margin has room for the complete cat. */
+export function chooseCatMobileEdgeReturn(from: CatPoint, width: number, height: number, catWidth: number, catHeight: number, settledFor: number, obstacles: CatObstacle[]): CatPoint | null {
+  if (settledFor < CAT_MOBILE_CENTER_VISIT_MS || !catInMobileCenter(from.x, width, catWidth)) return null;
+  const point = chooseCatPerch(width, height, catWidth, catHeight, obstacles, from.x < width / 2 ? "left" : "right", 0, () => .5, from);
+  return overlapArea(point, catWidth, catHeight, obstacles) === 0 ? point : null;
+}
 export type CatObstacle = CatPoint & { width: number; height: number };
 
 /** At a screen edge, a resting cat looks into the page rather than offscreen. */

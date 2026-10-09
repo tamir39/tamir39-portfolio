@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Check, GraduationCap, Leaf, Sparkles } from "lucide-react";
 import { ProjectLogo } from "./ProjectLogo";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
 
 type SlideProject = {
   slug: string;
@@ -47,7 +47,7 @@ export function IndependentSlideshow({ projects }: { projects: SlideProject[] })
   const [direction, setDirection] = useState(1);
   const [announcement, setAnnouncement] = useState("");
   const dragStart = useRef<{ x: number; y: number } | null>(null);
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   const project = projects[active];
   if (!project) return null;
 

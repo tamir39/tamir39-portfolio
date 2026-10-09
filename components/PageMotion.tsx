@@ -2,17 +2,23 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
+import { isTheme } from "@/lib/themes";
 
 // Enhance the server-rendered page without turning every content section into a client component.
 export function PageMotion() {
   const pathname = usePathname();
-  const { reduced, theme } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   useEffect(() => {
     if (reduced || document.documentElement.dataset.motion === "off" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const animations = new Set<Animation>();
     const elements = new Set<Element>();
     const revealed = new WeakSet<Element>();
+    const pending = new Set<Element>();
+    let fullScan = false;
+    let scanFrame = 0;
+    const scenes = "main section, footer, .studio-workbench, .hero-layout";
+    const reveals = "main h1:not(.hero-title), main h2, main .section-eyebrow, .portfolio-project, #academic article, .game-project-card, .independent-slideshow, .profile-card, #experience, main section ol > li, footer .contact-heading, footer .contact-form";
     const sceneObserver = new IntersectionObserver(entries => {
       for (const entry of entries) entry.target.toggleAttribute("data-scene-visible", entry.isIntersecting);
     }, { rootMargin: "0px", threshold: 0 });
@@ -20,6 +26,8 @@ export function PageMotion() {
       for (const entry of entries) {
         if (!entry.isIntersecting || revealed.has(entry.target)) continue;
         const el = entry.target as HTMLElement;
+        const current = document.documentElement.dataset.theme;
+        const theme = isTheme(current) ? current : "editorial";
         revealed.add(el);
         revealObserver.unobserve(el);
         const heading = el.matches("h1,h2,h3");
@@ -35,25 +43,43 @@ export function PageMotion() {
         animation.finished.then(() => animations.delete(animation)).catch(() => {});
       }
     }, { threshold: 0.08, rootMargin: "0px 0px -32px 0px" });
-    function scan() {
+    function scan(container: ParentNode = document) {
       if (["loading", "playing", "exiting"].includes(document.documentElement.dataset.pageIntro ?? "")) return;
-      document.querySelectorAll("main section, footer, .studio-workbench, .hero-layout").forEach(el => {
+      const matches = (selector: string) => [
+        ...(container instanceof Element && container.matches(selector) ? [container] : []),
+        ...Array.from(container.querySelectorAll(selector)),
+      ];
+      matches(scenes).forEach(el => {
         if (!elements.has(el)) { elements.add(el); sceneObserver.observe(el); }
       });
-      document.querySelectorAll("main h1:not(.hero-title), main h2, main .section-eyebrow, .portfolio-project, #academic article, .game-project-card, .independent-slideshow, .profile-card, #experience, main section ol > li, footer .contact-heading, footer .contact-form").forEach(el => {
+      matches(reveals).forEach(el => {
         if (el.closest(".hero-layout")) return;
         if (!elements.has(el)) { elements.add(el); revealObserver.observe(el); }
       });
     }
     scan();
-    const mutations = new MutationObserver(scan);
+    // Inspect only added element subtrees. Typing and theme changes must not
+    // rescan the page or discard the record of entrances already played.
+    const mutations = new MutationObserver(records => {
+      for (const record of records) {
+        if (record.type === "attributes") fullScan = true;
+        else record.addedNodes.forEach(node => { if (node instanceof Element) pending.add(node); });
+      }
+      if ((fullScan || pending.size) && !scanFrame) scanFrame = requestAnimationFrame(() => {
+        scanFrame = 0;
+        if (fullScan) scan();
+        else pending.forEach(node => { if (node.isConnected) scan(node); });
+        fullScan = false; pending.clear();
+      });
+    });
     mutations.observe(document.querySelector("main") ?? document.body, { childList: true, subtree: true });
     mutations.observe(document.documentElement, { attributes: true, attributeFilter: ["data-page-intro"] });
     return () => {
       mutations.disconnect(); sceneObserver.disconnect(); revealObserver.disconnect();
+      cancelAnimationFrame(scanFrame);
       animations.forEach(animation => animation.cancel());
       elements.forEach(el => el.removeAttribute("data-scene-visible"));
     };
-  }, [pathname, reduced, theme]);
+  }, [pathname, reduced]);
   return null;
 }
