@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
 import { usePortfolioTheme } from "./providers/ThemeProvider";
 import type { HeroScene } from "@/lib/hero-artwork";
 import type { ThemeId } from "@/lib/themes";
+import { useThemeViewportVisible } from "./ViewportThemeScope";
 
 const treatments = {
   editorial: { name: "Floating paths", hint: "Move to bend · Click to send a wave", action: "Send a wave through the floating paths", response: "A soft wave flows through the paths." },
@@ -16,6 +17,7 @@ const treatments = {
 export function HeroArtwork() {
   const [desktop, setDesktop] = useState(false);
   const { theme, resolvedAppearance, reduced } = usePortfolioTheme();
+  const visible = useThemeViewportVisible();
   useEffect(() => {
     const media = window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)");
     const sync = () => setDesktop(media.matches);
@@ -23,7 +25,7 @@ export function HeroArtwork() {
     media.addEventListener("change", sync);
     return () => media.removeEventListener("change", sync);
   }, []);
-  return desktop ? <Artwork key={`${theme}-${resolvedAppearance}-${reduced}`} theme={theme} reduced={reduced} /> : null;
+  return desktop && visible ? <Artwork key={`${theme}-${resolvedAppearance}-${reduced}`} theme={theme} reduced={reduced} /> : null;
 }
 
 function Artwork({ theme, reduced }: { theme: ThemeId; reduced: boolean }) {

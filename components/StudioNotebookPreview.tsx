@@ -6,7 +6,7 @@ import { Check, Layers, Monitor, MousePointer2, Smartphone, Sparkles, Tablet } f
 import { StudioInterface } from "./StudioInterface";
 import { WorkflowStudy } from "./WorkflowStudy";
 import { MakeItYoursStudy } from "./MakeItYoursStudy";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
 
 const deviceModes = [
   { id: "phone", label: "Phone", width: 244, icon: Smartphone },
@@ -18,7 +18,7 @@ type DeviceMode = (typeof deviceModes)[number]["id"];
 export function NotebookArtwork({ chapter }: { chapter: number }) {
   const root = useRef<HTMLDivElement>(null);
   const visible = useInView(root, { amount: .2 });
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   return <div ref={root} className={`notebook-art notebook-art-${chapter}`} data-live={visible && !reduced} aria-hidden={chapter >= 4 ? undefined : true}>
     {chapter === 0 ? <><span className="notebook-art-label">A study in visual feeling</span><div className="notebook-type">Aa<span>.</span></div><div className="notebook-color-strip"><i /><i /><i /><i /></div><span className="notebook-art-caption">Type. Color. A point of view.</span></>
       : chapter === 1 ? <><div className="notebook-motion-orbit"><i /><i /><Sparkles size={54} /></div><div className="notebook-feedback"><Check size={16} />A little action. A clear answer.</div></>
@@ -37,7 +37,7 @@ export function StudioNotebookPreview({ chapter, onDiscover, workflowStage, prac
   const [deviceMode, setDeviceMode] = useState<DeviceMode>("phone");
   const [saved, setSaved] = useState(false);
   const [note, setNote] = useState({ x: 0, y: 0 });
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   const visible = useInView(host, { amount: 0 });
   const currentMode = deviceModes.find(mode => mode.id === deviceMode)!;
   const frameWidth = chapter === 2 ? currentMode.width : 244;

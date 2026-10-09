@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, BookOpen, Check, CreditCard, FileText, GitCompareArrows, Layers, MessageSquare, Pause, Play, ReceiptText, RotateCcw, ScanText, ShoppingBag, ShoppingCart, SlidersHorizontal, Target } from "lucide-react";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
 
 type DemoKind = "point-of-sale" | "causasent" | "lawmate";
 const stories = {
@@ -46,7 +46,7 @@ const reviews = [
 ] as const;
 
 export function AcademicMotionDemo({ kind }: { kind: DemoKind }) {
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   const story = stories[kind];
   const [step, setStep] = useState(0);
   const [paused, setPaused] = useState(false);

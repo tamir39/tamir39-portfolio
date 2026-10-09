@@ -10,8 +10,18 @@ import { HeroArtwork } from "./HeroArtwork";
 import { HeroHeading } from "./HeroHeading";
 import { HeroIntro } from "./HeroIntro";
 import { useHeroOpening } from "@/lib/hooks/useHeroOpening";
+import { ViewportThemeScope } from "./ViewportThemeScope";
 
 export function InteractionLab() {
+  return <section id="lab" className="portfolio-hero px-6 pb-20 sm:px-10 lg:px-16">
+    <div className="mx-auto max-w-[1312px]">
+      <ViewportThemeScope target=".hero-layout"><HeroPanel /></ViewportThemeScope>
+      <ViewportThemeScope target="#exploration"><Exploration /></ViewportThemeScope>
+    </div>
+  </section>;
+}
+
+function HeroPanel() {
   const hero = useRef<HTMLDivElement>(null);
   const { theme, setTheme, reduced } = usePortfolioTheme();
   const stage = useHeroOpening(hero, theme, reduced);
@@ -28,8 +38,7 @@ export function InteractionLab() {
     const liveTheme = document.documentElement.dataset.theme;
     setTheme(themes[(themes.findIndex(item => item.id === liveTheme) + 1) % themes.length].id);
   };
-  return <section id="lab" className="portfolio-hero px-6 pb-20 sm:px-10 lg:px-16">
-    <div className="mx-auto max-w-[1312px]">
+  return <>
       <div ref={hero} className="hero-layout" data-hero-stage={stage} data-theme-cycle-ignore>
         <HeroArtwork />
         <div className="hero-atmosphere" aria-hidden="true"><i /><i /><i /></div>
@@ -38,7 +47,5 @@ export function InteractionLab() {
         <HeroIntro stage={stage} reduced={reduced} nextTheme={nextTheme} />
       </div>
       <a className="hero-studio-cue" href="#exploration"><span>Curiosity, in practice</span><span>Inside my studio<ArrowDown size={15} aria-hidden="true" /></span></a>
-      <Exploration />
-    </div>
-  </section>;
+  </>;
 }

@@ -2,10 +2,10 @@
 
 import { Check, Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
 
 export function StudioInterface({ saved, onSave, saveHintId }: { saved: boolean; onSave: () => void; saveHintId?: string }) {
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   return <div className="studio-interface">
     <div className="journey-phone-nav"><span>T / Studio</span><span aria-hidden="true">✳</span></div>
     <div className="studio-interface-body">

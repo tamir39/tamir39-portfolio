@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { ArrowUpRight, Check, Code2, Layers, Lightbulb, Sparkles } from "lucide-react";
-import { usePortfolioTheme } from "./providers/ThemeProvider";
+import { usePortfolioMotion } from "./providers/ThemeProvider";
 
 export const workflowStages = [
   { name: "Idea", icon: Lightbulb, title: "Find the reason to build.", copy: "Start with a purpose. Collect a feeling, then choose a direction." },
@@ -16,7 +16,7 @@ export const workflowStages = [
 export function WorkflowStudy({ stage = 3, scrollDriven = false }: { stage?: number; scrollDriven?: boolean }) {
   const root = useRef<HTMLDivElement>(null);
   const visible = useInView(root, { amount: .25 });
-  const { reduced } = usePortfolioTheme();
+  const { reduced } = usePortfolioMotion();
   const currentStage = Math.max(0, Math.min(workflowStages.length - 1, stage));
   const current = workflowStages[currentStage];
   return <div ref={root} className="workflow-study" data-stage={currentStage} data-scroll-driven={scrollDriven} data-live={visible && !reduced} data-theme-cycle-ignore>

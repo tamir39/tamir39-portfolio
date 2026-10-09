@@ -7,8 +7,7 @@ import { usePathname } from "next/navigation";
 import { usePrefersReducedMotion } from "@/lib/hooks/usePrefersReducedMotion";
 import { DESKTOP_THEME_CYCLE_MEDIA, isTheme, MOTION_STORAGE_KEY, THEME_STORAGE_KEY, themes, themeTransition, type ThemeId } from "@/lib/themes";
 import { APPEARANCE_STORAGE_KEY, darkSwatches, isAppearance, type Appearance, type ResolvedAppearance } from "@/lib/appearance";
-import { themeClickOrigin, themeControlAtPoint, themeRevealCircle, type ThemeOrigin } from "@/lib/theme-reveal";
-import { LIGHTWEIGHT_THEME_REVEAL_MEDIA, startThemeCoverReveal, type ThemeRevealHandle } from "@/lib/theme-cover-reveal";
+import { startThemeCircleReveal, themeClickOrigin, themeControlAtPoint, themeRevealCircle, type ThemeOrigin, type ThemeRevealHandle } from "@/lib/theme-reveal";
 
 type ThemeContextValue = {
   theme: ThemeId;
@@ -22,6 +21,8 @@ type ThemeContextValue = {
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
+const MotionContext = createContext<Pick<ThemeContextValue, "reduced"> | null>(null);
+export const PortfolioThemeScope = ThemeContext.Provider;
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, updateTheme] = useState<ThemeId>("editorial");
@@ -32,7 +33,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const reduced = motionPaused || Boolean(systemReduced);
   const reveal = useRef<ThemeRevealHandle | null>(null);
-  const revealRing = useRef<HTMLDivElement | null>(null);
   const revealVersion = useRef(0);
   const reducedPreference = useRef(reduced);
   const activation = useRef<{ origin: ThemeOrigin | undefined; at: number } | null>(null);
@@ -49,7 +49,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       document.removeEventListener("click", capture, true);
       revealVersion.current++;
       reveal.current?.skipTransition();
-      revealRing.current?.remove();
       delete document.documentElement.dataset.themeReveal;
       delete document.documentElement.dataset.themeRevealPaint;
       document.documentElement.style.removeProperty("--theme-reveal-color");
@@ -59,8 +58,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const changeWithReveal = useCallback((commit: () => void, destination: { theme: ThemeId; appearance: ResolvedAppearance }, origin?: ThemeOrigin) => {
     const version = ++revealVersion.current;
     reveal.current?.skipTransition();
-    revealRing.current?.remove();
-    revealRing.current = null;
     const root = document.documentElement;
     delete root.dataset.themeRevealPaint;
     const apply = () => {
@@ -71,7 +68,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const finish = () => {
       if (version !== revealVersion.current) return;
       reveal.current = null;
-      revealRing.current = null;
       delete root.dataset.themeReveal;
       delete root.dataset.themeRevealPaint;
       root.style.removeProperty("--theme-reveal-color");
@@ -87,42 +83,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const recent = activation.current;
     const point = origin ?? (recent && performance.now() - recent.at < 300 ? recent.origin : undefined);
     const circle = themeRevealCircle(point, window.innerWidth, window.innerHeight);
-    const { x, y, radius } = circle;
     const target = themes.find(item => item.id === destination.theme)!;
     const palette = destination.appearance === "dark" ? darkSwatches[destination.theme] : { paper: target.paper, ink: target.color };
-    if (window.matchMedia(LIGHTWEIGHT_THEME_REVEAL_MEDIA).matches) {
-      root.dataset.themeReveal = "true";
-      reveal.current = startThemeCoverReveal({ circle, paper: palette.paper, accent: palette.ink, apply, isCurrent: () => version === revealVersion.current, onFinish: finish });
-      return;
-    }
-    if (typeof document.startViewTransition !== "function") { apply(); finish(); return; }
-    root.style.setProperty("--theme-reveal-color", palette.ink);
-    // A named, transparent participant gives the reveal its own crisp rim above
-    // the page snapshot. Animate its box rather than scaling the stroke width.
-    const ring = document.createElement("div");
-    ring.className = "theme-reveal-ring";
-    ring.setAttribute("aria-hidden", "true");
-    Object.assign(ring.style, { left: `${x}px`, top: `${y}px` });
-    document.body.append(ring);
-    revealRing.current = ring;
     root.dataset.themeReveal = "true";
-    root.dataset.themeRevealPaint = "true";
-    const transition = document.startViewTransition(apply);
-    reveal.current = transition;
-    void transition.ready.then(() => {
-      if (version !== revealVersion.current) return;
-      root.animate({ clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] }, {
-        duration: 560, easing: "cubic-bezier(.2,.65,.3,1)", pseudoElement: "::view-transition-new(root)",
-      });
-      root.animate([
-        { width: "0px", height: "0px", transform: `translate(${x}px, ${y}px)` },
-        { width: `${radius * 2}px`, height: `${radius * 2}px`, transform: `translate(${x - radius}px, ${y - radius}px)` },
-      ], { duration: 560, easing: "cubic-bezier(.2,.65,.3,1)", pseudoElement: "::view-transition-group(theme-reveal-rim)" });
-    }).catch(() => { /* Skipping an interrupted reveal still commits the latest choice. */ });
-    void transition.finished.catch(() => {}).finally(() => {
-      ring.remove();
-      finish();
-    });
+    reveal.current = startThemeCircleReveal({ circle, accent: palette.ink, apply, isCurrent: () => version === revealVersion.current, onFinish: finish });
   }, []);
 
   const setAppearance = useCallback((next: Appearance) => {
@@ -266,11 +230,19 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, [motionPaused]);
 
   const value = useMemo(() => ({ theme, setTheme, appearance, resolvedAppearance, setAppearance, motionPaused, toggleMotion, reduced }), [theme, setTheme, appearance, resolvedAppearance, setAppearance, motionPaused, toggleMotion, reduced]);
-  return <ThemeContext.Provider value={value}><MotionConfig reducedMotion={reduced ? "always" : "user"} transition={themeTransition(theme, reduced)}>{children}</MotionConfig></ThemeContext.Provider>;
+  const motionValue = useMemo(() => ({ reduced }), [reduced]);
+  return <ThemeContext.Provider value={value}><MotionContext.Provider value={motionValue}><MotionConfig reducedMotion={reduced ? "always" : "user"} transition={themeTransition(theme, reduced)}>{children}</MotionConfig></MotionContext.Provider></ThemeContext.Provider>;
 }
 
 export function usePortfolioTheme() {
   const context = useContext(ThemeContext);
   if (!context) throw new Error("usePortfolioTheme must be used inside ThemeProvider");
+  return context;
+}
+
+/** Motion-only consumers do not subscribe to every theme and palette change. */
+export function usePortfolioMotion() {
+  const context = useContext(MotionContext);
+  if (!context) throw new Error("usePortfolioMotion must be used inside ThemeProvider");
   return context;
 }
