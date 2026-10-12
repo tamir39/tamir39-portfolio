@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="title description">
+  <title id="title">Interface Atlas mark</title>
+  <desc id="description">An original A built from three folded atlas planes, with a split apex and open center.</desc>
+  <g fill="#493b61">
+    <path d="M7 52 28 10v21L18 52Z"/>
+    <path d="M32 10 57 52H44L32 31Z"/>
+    <path d="M23 38H38l6 10H18Z"/>
+  </g>
+</svg>

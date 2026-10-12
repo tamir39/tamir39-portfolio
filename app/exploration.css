@@ -49,12 +49,20 @@
 .studio-swatches i:nth-child(3) { background:var(--theme-tint-a); }
 .studio-swatches i:nth-child(4) { background:var(--theme-tint-b); }
 .studio-swatches i:nth-child(5) { background:var(--theme-tint-c); }
-.studio-shelf { margin-block-start:18px; border-block:1px solid var(--theme-line); }
-.studio-shelf summary { cursor:pointer; min-block-size:56px; padding-block:18px; font-size:12px; }
-.studio-shelf summary > span { float:right; font:10px var(--font-mono); color:var(--color-muted); }
-.studio-shelf > p { font-size:12px; color:var(--color-muted); line-height:1.8; max-inline-size:540px; }
-.studio-shelf > div { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 28px; margin-block:18px; }
-.studio-shelf a { display:flex; align-items:center; justify-content:space-between; min-block-size:44px; border-block-end:1px solid var(--theme-line); font-size:12px; color:var(--color-muted); }
+.studio-atlas { display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:clamp(24px,4vw,64px); margin-block-start:18px; padding-block:32px; border-block:1px solid var(--theme-line); }
+.atlas-identity { display:flex; align-items:center; gap:14px; }
+.atlas-identity h3 { font-size:clamp(1.5rem,2.5vw,2.25rem); font-weight:500; line-height:1.2; letter-spacing:-.045em; }
+.atlas-mark { display:block; flex-shrink:0; inline-size:48px; block-size:48px; }
+.atlas-mark .atlas-logo-light { display:block; }
+.atlas-mark .atlas-logo-dark { display:none; }
+html[data-appearance="dark"] .atlas-mark .atlas-logo-light { display:none; }
+html[data-appearance="dark"] .atlas-mark .atlas-logo-dark { display:block; }
+.atlas-status { margin-block-start:12px; color:var(--color-muted); font:10px/1.7 var(--font-mono); }
+.atlas-overview > p { max-inline-size:65ch; color:var(--color-muted); font-size:13px; line-height:1.85; }
+.atlas-overview > p + p { margin-block-start:16px; }
+.atlas-links { display:flex; flex-wrap:wrap; gap:4px 24px; margin-block-start:16px; }
+.atlas-links a { display:inline-flex; align-items:center; gap:8px; min-block-size:44px; font-size:12px; text-decoration:underline; text-underline-offset:4px; }
+.atlas-links svg { flex-shrink:0; }
 .studio-skill-picker { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; margin-block-end:16px; }
 .studio-skill-picker button { display:flex; align-items:center; gap:10px; min-block-size:78px; padding:14px; text-align:start; border:1px solid var(--theme-line); border-radius:var(--theme-control-radius); background:var(--theme-panel); cursor:pointer; }
 .studio-skill-picker button > svg { flex-shrink:0; color:var(--color-accent); }
@@ -109,13 +117,12 @@
   .studio-workbench { grid-template-columns:1fr; }
   .studio-preview { border-inline-end:0; border-block-end:1px solid var(--theme-line); }
   .studio-canvas { min-block-size:330px; padding:32px 20px; }
-  .studio-shelf > div { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .studio-atlas { grid-template-columns:1fr; gap:24px; }
 }
 @media (max-width:399px) {
   .studio-canvas { padding:28px 14px; }
   .studio-visual-sample { padding:16px; }
   .studio-sample-nav > span:last-child { display:none; }
-  .studio-shelf > div { grid-template-columns:1fr; }
 }
 
 /* A continuous studio notebook: chapters lead, controls live in the preview. */

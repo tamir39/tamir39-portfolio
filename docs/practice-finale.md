@@ -2,7 +2,7 @@
 
 The sixth Exploration chapter closes with a signature poster rather than a static checklist. It progresses from a shared foundation, through a considered direction, to oversized “Make it yours” typography and a “Made with intent” stamp.
 
-Desktop scrolling activates three short notes at the same 52% reading line as the Design workflow chapter. Both chapters share one passive, animation-frame-batched scroll listener and one resize observer. Scrolling backwards reverses the composition. The active note has larger, accented typography. The final native link continues to Selected work; the guide sources remain available in the existing disclosure.
+Desktop scrolling activates three short notes at the same 52% reading line as the Design workflow chapter. Both chapters share one passive, animation-frame-batched scroll listener and one resize observer. Scrolling backwards reverses the composition. The active note has larger, accented typography. The notes describe Tamir's Interface Atlas workflow: select relevant theme guidance, adapt it to the project, and give coding agents a self-contained design brief. The final native link continues to Selected work; Atlas and its preparation workflow remain available in the existing disclosure.
 
 The study never changes the portfolio theme and is not an additional discovery game. Its three progress labels are informational. Mobile shows the finished poster with one brief entrance, without controls or a scroll sequence. The global motion switch and OS reduced-motion setting disable transitions and entrance animations while preserving the final visual and normal scrolling.
 

@@ -7,39 +7,22 @@ import { StudioNotebookPreview, NotebookArtwork } from "./StudioNotebookPreview"
 import { GameCoachmark } from "./GameCoachmark";
 import { workflowStages } from "./WorkflowStudy";
 import { practiceSteps } from "./MakeItYoursStudy";
-import { designSkills } from "@/lib/design-skills";
+import { interfaceAtlas } from "@/lib/interface-atlas";
+import { InterfaceAtlas } from "./InterfaceAtlas";
 import { usePortfolioTheme } from "./providers/ThemeProvider";
 import { themes } from "@/lib/themes";
 import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, Check, Compass, Layers, Palette, Sparkles, Workflow } from "lucide-react";
 
-const sources = {
-  awwwards: { name: "Awwwards", href: "https://www.awwwards.com/" },
-  pinterest: { name: "Pinterest", href: "https://www.pinterest.com/" },
-  colors: { name: "Color Hunt", href: "https://colorhunt.co/" },
-  md: { name: "DESIGN.md directory", href: "https://designdotmd.directory/" },
-  prompts: { name: "Design Prompts", href: "https://www.designprompts.dev/" },
-  motion: { name: "Motion", href: "https://motion.dev/" },
-  ux: { name: "Laws of UX", href: "https://lawsofux.com/" },
-  shadcn: { name: "shadcn/ui", href: "https://ui.shadcn.com/" },
-  components: { name: "21st.dev", href: "https://21st.dev/" },
-  impeccable: { name: "Impeccable", href: "https://impeccable.style/" },
-  open: { name: "Open Design", href: "https://open-design.ai/" },
-  pencil: { name: "Pencil", href: "https://www.pencil.dev/" },
-  miro: { name: "Miro", href: "https://miro.com/" },
-  firecrawl: { name: "Firecrawl", href: "https://www.firecrawl.dev/" },
-  composio: { name: "Composio", href: "https://composio.dev/" },
-};
+const sources = interfaceAtlas.references;
 
 const studies = [
-  { name: "Visual direction", icon: Palette, title: "Borrow the feeling. Find my own expression.", study: "I explore palettes, editorial layouts, typography, and the way a page creates a mood.", combine: "I combine visual references with shared design tokens, then adjust hierarchy and spacing to fit the content and screen.", sources: [sources.awwwards, sources.pinterest, sources.colors, sources.md, sources.prompts], example: "Compare this portfolio’s five themes", href: "/#lab", result: "One experience, five visual directions" },
-  { name: "Motion & feeling", icon: Sparkles, title: "Give movement a reason.", study: "I look at transitions, spring motion, hover feedback, and how movement can connect two states.", combine: "I bring expressive motion together with useful feedback, viewport-aware playback, and controls for people who prefer less movement.", sources: [sources.motion, sources.components, sources.awwwards], example: "Explore CausaSent’s animated flow", href: "/missions/causasent", result: "A process you can follow at your own pace" },
-  { name: "UX & logic", icon: Workflow, title: "Make the next step feel obvious.", study: "I explore choice, proximity, target size, and how familiar patterns help people understand an interface.", combine: "I connect those principles to real task flows, then adapt the hierarchy and controls for the screen. Discover, choose, review, and confirm should stay clear at every size.", sources: [sources.ux, sources.miro], example: "See Joi’s menu and checkout flow", href: "/missions/joi-vn", result: "Visual clarity connected to application logic" },
-  { name: "Component craft", icon: Layers, title: "A good pattern is a starting point.", study: "I explore reusable controls, component composition, and the details that make an interface feel consistent.", combine: "I adapt patterns to the product’s roles, content, and responsive layout, then refine empty, loading, and interaction states.", sources: [sources.shadcn, sources.components, sources.impeccable], example: "Explore Moza’s role-based interfaces", href: "/missions/moza", result: "Different responsibilities, a familiar workspace" },
-  { name: "Design workflow", icon: Compass, title: "Explore widely. Refine in the browser.", study: "I explore canvas tools, design guidance, and ways to organize references before turning an idea into an interface.", combine: "I move from references to a prototype, then refine the layout, copy, and interaction around the actual task. The tools support the decisions; I keep shaping the result.", sources: [sources.open, sources.pencil, sources.impeccable, sources.miro], example: "See how I built our studio’s website", href: "/missions/100b-studio", result: "References → experiments → working interfaces" },
-  { name: "Skills & practice", icon: BookOpen, title: "Turn guidance into decisions.", study: "", combine: "", sources: [], example: "", href: "/#lab", result: "" },
+  { name: "Visual direction", icon: Palette, title: "Borrow the feeling. Find my own expression.", study: "I explore palettes, editorial layouts, typography, and the way a page creates a mood.", combine: "I combine visual references with shared design tokens, then adjust hierarchy and spacing to fit the content and screen.", sources: [sources.editorial, sources.design], example: "Compare this portfolio’s five themes", href: "/#lab", result: "One experience, five visual directions" },
+  { name: "Motion & feeling", icon: Sparkles, title: "Give movement a reason.", study: "I look at transitions, spring motion, hover feedback, and how movement can connect two states.", combine: "I bring expressive motion together with useful feedback, viewport-aware playback, and controls for people who prefer less movement.", sources: [sources.motion], example: "Explore CausaSent’s animated flow", href: "/missions/causasent", result: "A process you can follow at your own pace" },
+  { name: "UX & logic", icon: Workflow, title: "Make the next step feel obvious.", study: "I explore choice, proximity, target size, and how familiar patterns help people understand an interface.", combine: "I connect those principles to real task flows, then adapt the hierarchy and controls for the screen. Discover, choose, review, and confirm should stay clear at every size.", sources: [sources.design, sources.agentExperience], example: "See Joi’s menu and checkout flow", href: "/missions/joi-vn", result: "Visual clarity connected to application logic" },
+  { name: "Component craft", icon: Layers, title: "A good pattern is a starting point.", study: "I explore reusable controls, component composition, and the details that make an interface feel consistent.", combine: "I adapt patterns to the product’s roles, content, and responsive layout, then refine empty, loading, and interaction states.", sources: [sources.design, sources.preview], example: "Explore Moza’s role-based interfaces", href: "/missions/moza", result: "Different responsibilities, a familiar workspace" },
+  { name: "Design workflow", icon: Compass, title: "Explore widely. Refine in the browser.", study: "I explore design guidance and ways to organize decisions before turning an idea into an interface.", combine: "I move from a design direction to a prototype, then refine the layout, copy, and interaction around the actual task. The project brief gives my agents a shared starting point; I keep shaping the result.", sources: [sources.preparation, sources.examples], example: "See how I built our studio’s website", href: "/missions/100b-studio", result: "References → experiments → working interfaces" },
+  { name: "Knowledge & practice", icon: BookOpen, title: "Turn guidance into decisions.", study: "", combine: "", sources: [], example: "", href: "/#lab", result: "" },
 ];
-
-const referenceShelf = [...Object.values(sources), ...designSkills.map(skill => ({ name: `${skill.name} · skill`, href: skill.href }))];
 
 const chapterIds = ["visual", "motion", "ux", "components", "workflow", "practice"];
 const notebookSections = [
@@ -52,7 +35,7 @@ const openings = [
   { title: "Give every screen room.", copy: "I adapt the layout so the next step stays clear, from a phone to a wider screen." },
   { title: "Small pieces. One language.", copy: "Reusable components bring familiar behavior to different parts of a product." },
   { title: "Good ideas need a way forward.", copy: "I turn a loose direction into something people can use. Shape the flow, build the interface, then refine the details that make it feel right." },
-  { title: "Learn it. Make it yours.", copy: "Good guidance is a starting point. The choices I make with it give the work a point of view." },
+  { title: "Learn it. Make it yours.", copy: "I keep frontend knowledge in Interface Atlas, then turn the relevant guidance into a design direction for each project." },
 ];
 const challenges = [
   { title: "Give the studio a new mood.", success: "New mood discovered.", hint: "Change the style. Watch the same interface transform.", done: "You changed the style. Your mood discovery is saved.", stamp: "Mood" },
@@ -221,9 +204,9 @@ export function Exploration() {
               : !complete && <p className="notebook-preview-cue"><ArrowLeft size={14} aria-hidden="true" />{index === 2 ? "Choose Tablet below the preview" : index === 3 ? "Try the loose note in the preview" : "Try the heart in the preview"}</p>}
             <div className="notebook-discoveries" data-all-complete={discoveries.length === challenges.length}><span>{discoveries.length === challenges.length ? "All 4 discoveries unlocked" : <><strong>{discoveries.length}</strong> of {challenges.length} discoveries</>}</span><ol aria-label="Studio discoveries">{challenges.map((challenge, number) => <li key={challenge.stamp} data-complete={discoveries.includes(number)} aria-label={`${challenge.stamp}: ${discoveries.includes(number) ? "discovered" : "still to explore"}`} title={challenge.stamp}>{discoveries.includes(number) ? <Check size={14} strokeWidth={2.5} aria-hidden="true" /> : <span aria-hidden="true">{number + 1}</span>}</li>)}</ol>{discoveries.length === challenges.length && index === discoveries[discoveries.length - 1] && <CompletionBurst />}</div>
           </div>}
-          <details className="notebook-study-notes"><summary>{index === 5 ? "Guides I put into practice" : "Notes & references"}</summary>
-            {index === 5 ? <div className="notebook-skill-list">{designSkills.map(skill => <a key={skill.id} href={skill.href} target="_blank" rel="noopener noreferrer"><span><strong>{skill.name}</strong><small>{skill.focus} · {skill.author}</small></span><ArrowUpRight size={14} aria-hidden="true" /></a>)}</div>
-              : <><div className="notebook-margin-note"><div><h4>How I approach it</h4><p>{study.combine}</p></div></div><div className="notebook-sources"><span>On my reference shelf</span><div>{study.sources.map(source => <a key={source.href} href={source.href} target="_blank" rel="noopener noreferrer">{source.name}<ArrowUpRight size={10} aria-hidden="true" /></a>)}</div></div></>}
+          <details className="notebook-study-notes"><summary>{index === 5 ? "How I use Interface Atlas" : "Notes & references"}</summary>
+            {index === 5 ? <><div className="notebook-margin-note"><div><h4>A shared direction for the build</h4><p>{interfaceAtlas.workflow}</p></div></div><div className="notebook-skill-list"><a href={interfaceAtlas.href} target="_blank" rel="noopener noreferrer"><span><strong>{interfaceAtlas.name}</strong><small>Frontend UI/UX knowledge library · Tamir</small></span><ArrowUpRight size={14} aria-hidden="true" /></a><a href={sources.preparation.href} target="_blank" rel="noopener noreferrer"><span><strong>{sources.preparation.name}</strong><small>The workflow from theme guidance to project decisions</small></span><ArrowUpRight size={14} aria-hidden="true" /></a></div></>
+              : <><div className="notebook-margin-note"><div><h4>How I approach it</h4><p>{study.combine}</p></div></div><div className="notebook-sources"><span>Inside Interface Atlas</span><div>{study.sources.map(source => <a key={source.href} href={source.href} target="_blank" rel="noopener noreferrer">{source.name}<ArrowUpRight size={10} aria-hidden="true" /></a>)}</div></div></>}
           </details>
           {index > 0 && index !== 5 && <Link href={study.href} className="notebook-work-link">{study.example}<ArrowRight size={16} aria-hidden="true" /></Link>}
           {index === 5 && <a href="#work" className="notebook-work-link practice-work-link">See what I made<ArrowRight size={16} aria-hidden="true" /></a>}
@@ -234,6 +217,6 @@ export function Exploration() {
       {desktop && active < gameTips.length && <GameCoachmark key={active} root={notebook} target={gameTips[active].target} message={gameTips[active].message} visible={!discoveries.includes(active) && !dismissedTips.includes(active)} onDismiss={() => dismissTip(active)} />}
     </div>
     {desktop && <p className="sr-only" role="status">{discoveries.length ? `${challenges[discoveries[discoveries.length - 1]].success} ${discoveries.length === challenges.length ? "All 4 studio discoveries unlocked." : `${discoveries.length} of ${challenges.length} studio discoveries unlocked.`}` : ""}</p>}
-    <details className="studio-shelf"><summary>Open the full reference shelf <span>{referenceShelf.length} sources ↗</span></summary><p>Design references, workflow tools, and AI skill guides I explore. Each source belongs to its original creators.</p><div>{referenceShelf.map(source => <a key={source.href} href={source.href} target="_blank" rel="noopener noreferrer">{source.name}<ArrowUpRight size={13} aria-hidden="true" /></a>)}</div></details>
+    <InterfaceAtlas />
   </section>;
 }

@@ -7,9 +7,9 @@ import { usePortfolioTheme } from "./providers/ThemeProvider";
 import { themes } from "@/lib/themes";
 
 export const practiceSteps = [
-  { name: "Learn", icon: Lightbulb, title: "Keep the principle.", copy: "Understand why the pattern works. Hierarchy, contrast, and feedback give the idea a foundation." },
-  { name: "Choose", icon: PenTool, title: "Choose what belongs.", copy: "Keep what helps the experience. Shape the type, rhythm, and response around the idea." },
-  { name: "Own it", icon: Fingerprint, title: "Leave your mark.", copy: "Bring the decisions together until the result feels intentional, distinctive, and your own." },
+  { name: "Learn", icon: Lightbulb, title: "Start with a direction.", copy: "I read the theme’s purpose and design rules in Interface Atlas. Editorial is the first theme, drawn from this portfolio." },
+  { name: "Choose", icon: PenTool, title: "Choose what belongs.", copy: "I adapt type, color, spacing, motion, and interaction states to the project. Interfaces for agent work also need clear activity and human control." },
+  { name: "Own it", icon: Fingerprint, title: "Give the build a clear brief.", copy: "I put the decisions and source credits in a project design document, so my coding agents can build from a shared direction." },
 ] as const;
 
 /** The last chapter turns shared principles into a visible point of view. */
