@@ -2,7 +2,7 @@
 
 Reviewed 2026-10-08. These notes support the portfolio copy in `lib/data/projects.ts` and the selected-work cards in `components/Portfolio.tsx`. The sibling projects were inspected read-only. User-confirmed frontend/UI/UX scope supplies the role; repository features alone do not establish sole authorship.
 
-## Joi.vn — Whitelable
+## thejoifactory.com — Whitelable
 
 Source root: `D:/Projects/Whitelable`.
 
@@ -14,9 +14,11 @@ Source root: `D:/Projects/Whitelable`.
 - `src/components/Delivery/DeliveryPage.tsx`: search, category selection, shared browsing state, and deals shelf.
 - `src/components/MenuItemDetail/MenuItemDetailModal.tsx` and `src/components/Layout/index.tsx`: responsive product surface, keyboard/viewport sizing, cart/chat ownership, and shared background continuity.
 
-Joi.vn is the user-supplied portfolio destination. The local code also names The Joi Factory and its own deployment domains; this inspection does not independently establish which build currently serves Joi.vn.
+The user confirmed `https://thejoifactory.com` as the portfolio destination on October 20, 2026. The local code also uses The Joi Factory branding; repository inspection establishes the frontend implementation, not which revision currently serves the domain.
 
 ## Twohearts.vn — standalone landing
+
+Removed from Selected work and the project-page data on October 19, 2026 at the user's request. These source notes remain as a historical record.
 
 Source root: `D:/Projects/TwoheartsMissonControl/landing` (the actual folder is spelled **MissonControl**).
 

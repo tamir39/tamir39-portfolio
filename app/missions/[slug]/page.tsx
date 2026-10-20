@@ -12,6 +12,8 @@ import { AcademicMotionDemo } from "@/components/AcademicMotionDemo";
 import { ProjectLogo } from "@/components/ProjectLogo";
 import { ProjectRecognition } from "@/components/ProjectRecognition";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return projects.map(project => ({ slug: project.slug }));
 }
