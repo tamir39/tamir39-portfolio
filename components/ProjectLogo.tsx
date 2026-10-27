@@ -2,7 +2,6 @@ import Image from "next/image";
 
 const logos: Record<string, string> = {
   "100b-studio": "/projects/icons/100b-studio.png",
-  "joi-vn": "/projects/icons/joi.svg",
   zuno: "/projects/icons/zuno.svg",
   moza: "/projects/icons/moza.svg",
   selfnest: "/projects/icons/selfnest.svg",

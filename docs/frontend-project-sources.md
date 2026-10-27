@@ -4,6 +4,8 @@ Reviewed 2026-10-08. These notes support the portfolio copy in `lib/data/project
 
 ## thejoifactory.com — Whitelable
 
+Removed from Selected work, the project-page data, and named resume references on October 27, 2026 at the user's request. These source notes remain as a historical record.
+
 Source root: `D:/Projects/Whitelable`.
 
 - `FRONTEND_CONTEXT.md` and `FRONTEND_UPDATE_LOG.md`: current responsive refinements, availability behavior, persistent background, bilingual feedback, and compact ordering surfaces.

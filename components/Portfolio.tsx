@@ -25,7 +25,6 @@ export function Portfolio() {
         <div className="mb-16 grid grid-cols-1 gap-5">
           {[
             { slug: "100b-studio", name: "100b.studio", icon: "/projects/icons/100b-studio.png", href: "https://100b.studio/", label: "Co-founder & Frontend Developer", text: "A cinematic studio landing page with an adjustable wireframe hero, animated diagrams, a scroll-linked process, and a project-inquiry flow." },
-            { slug: "joi-vn", name: "thejoifactory.com", icon: "/projects/icons/joi.svg", href: "https://thejoifactory.com", label: "Menu & ordering · UI/UX design", text: "A food-first storefront connecting menu discovery, product customization, and a guided four-step checkout." },
             { slug: "zuno", name: "Zuno app", icon: "/projects/icons/zuno.svg", href: "https://www.zuno.page/", label: "Full-stack PWA", text: "A full-stack PWA connecting authentication, private Class Zones, posts, and votes with expressive timelines and app-style installation." },
             { slug: "enstudy-hub", name: "EnStudy-Hub", icon: "/projects/icons/enstudy-hub.svg", href: "https://en-study-hub.vercel.app/", label: "Frontend Developer & UI/UX Designer", text: "A vocabulary app with personal collections, CSV preview and validation, spaced review sessions, and learning-progress charts." },
           ].map(project => <article key={project.slug} className="portfolio-project project-card-link-surface grid gap-6 border p-7 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_auto] lg:items-center lg:gap-10">
