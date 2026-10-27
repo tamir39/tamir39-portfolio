@@ -60,9 +60,9 @@ entry('TON DUC THANG UNIVERSITY | Ho Chi Minh City', 'Bachelor of Computer Scien
 
 heading('Professional Experience')
 entry('TWOHEARTS TECHNOLOGY', 'Frontend Developer &amp; UI/UX Designer', [
-    'Design and implement responsive interfaces, user flows, visual refinements, and frontend integrations for dashboard and storefront experiences.',
-    'Built the Twohearts.vn landing experience with interactive product demos, a savings calculator, and a bilingual signup flow; worked on Joi.vn menu discovery, product customization, and checkout interfaces.',
-], 'Jun 2026 - Present')
+    'Designed and implemented responsive interfaces, user flows, visual refinements, and frontend integrations for dashboard and storefront experiences.',
+    'Built the Twohearts.vn landing experience with interactive product demos, a savings calculator, and a bilingual signup flow; worked on thejoifactory.com menu discovery, product customization, and checkout interfaces.',
+], '6 months')
 entry('100B.STUDIO', 'Co-founder &amp; Frontend Developer', [
     'Co-founded an engineering studio and developed its public website using Next.js, React, TypeScript, Tailwind CSS, Canvas 2D, and Framer Motion.',
     'Implemented a configurable wireframe hero, animated capability diagrams, a scroll-linked process timeline, and a project-inquiry flow.',

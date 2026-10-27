@@ -11,7 +11,7 @@ import { AppearanceDock } from "@/components/AppearanceDock";
 import { appearanceInitScript } from "@/lib/appearance";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { currentRole } from "@/lib/data/profile";
+import { professionalProfile } from "@/lib/data/profile";
 import { PageIntro } from "@/components/PageIntro";
 import { pageIntroInitScript } from "@/lib/page-intro";
 
@@ -37,7 +37,7 @@ const baseUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 export const metadata: Metadata = {
   title: "Tamir — UI/UX & Frontend",
   description:
-    `Tamir (Phi Vuong Tuong Tam) — frontend developer and UI/UX designer at ${currentRole.company}. Interfaces, application flows, and PWA experiences. Based in Ho Chi Minh City.`,
+    `Tamir (Phi Vuong Tuong Tam) — ${professionalProfile.title}. Interfaces, application flows, and PWA experiences. Based in Ho Chi Minh City.`,
   metadataBase: new URL(baseUrl),
   icons: {
     icon: { url: "/brand/favicons/editorial-light.png?v=circle-1", type: "image/png", sizes: "64x64" },
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Tamir — UI/UX & Frontend",
-    description: `${currentRole.title} at ${currentRole.company}. Interfaces, application flows, and PWA experiences.`,
+    description: `${professionalProfile.title}. Interfaces, application flows, and PWA experiences.`,
     type: "website",
   },
 };

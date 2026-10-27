@@ -3,14 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Repeat2 } from "lucide-react";
 import { Portrait } from "./Portrait";
-import { currentRole } from "@/lib/data/profile";
+import { professionalProfile } from "@/lib/data/profile";
 
 export type HeroOpeningStage = "showcase" | "settling" | "revealing" | "ready";
 
 const copy = [
   "Hi, I’m Tamir.",
-  currentRole.title,
-  `at ${currentRole.company}`,
+  professionalProfile.title,
   "I turn ideas into digital experiences that feel as good as they work. I bring design and code together to make every interaction clear, intuitive, and memorable.",
 ];
 const length = copy.join("").length;
@@ -71,8 +70,8 @@ export function HeroIntro({ stage, reduced, nextTheme }: { stage: HeroOpeningSta
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || event.shiftKey || window.getSelection()?.isCollapsed === false || !(event.target instanceof Element) || event.target.closest('a,button,input,select,textarea,label,[contenteditable="true"]')) return;
     nextTheme();
   }}>
-    <div className="hero-profile"><Portrait className="portrait-frame size-20 border-4 shadow-sm" sizes="90px" priority /><div className="min-w-0"><p className="text-lg font-medium"><IntroCopy part={0} revealed={visible} /></p><p className="mt-2 text-sm font-medium leading-relaxed"><IntroCopy part={1} revealed={visible} /></p><p className="mt-1 text-xs text-muted"><IntroCopy part={2} revealed={visible} /></p></div></div>
-    <p className="hero-description text-base leading-relaxed text-muted"><IntroCopy part={3} revealed={visible} /></p>
+    <div className="hero-profile"><Portrait className="portrait-frame size-20 border-4 shadow-sm" sizes="90px" priority /><div className="min-w-0"><p className="text-lg font-medium"><IntroCopy part={0} revealed={visible} /></p><p className="mt-2 text-sm font-medium leading-relaxed"><IntroCopy part={1} revealed={visible} /></p></div></div>
+    <p className="hero-description text-base leading-relaxed text-muted"><IntroCopy part={2} revealed={visible} /></p>
     <div className="hero-intro-actions"><a href="#work" className="hero-projects-link theme-button inline-flex min-h-12 items-center gap-3 px-6 text-sm font-medium">Explore my projects<ArrowUpRight size={16} aria-hidden="true" /></a><button type="button" className="hero-theme-hint" onClick={nextTheme}><Repeat2 size={12} aria-hidden="true" /><span>Tap to change theme</span></button></div>
   </div>;
 }
